@@ -1,97 +1,78 @@
 import React, { useState } from 'react';
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
-import IconButton from '@mui/material/IconButton';
-import MenuIcon from '@mui/icons-material/Menu';
-import Menu from '@mui/material/Menu';
-import Avatar from '@mui/material/Avatar';
-import Tooltip from '@mui/material/Tooltip';
-import MenuItem from '@mui/material/MenuItem';
+import {
+  Box,
+  Flex,
+  Button,
+  IconButton,
+  Menu,
+  MenuButton,
+  MenuList,
+  MenuItem,
+  useMediaQuery,
+  Spacer,
+} from '@chakra-ui/react';
+import { HamburgerIcon } from '@chakra-ui/icons';
 
-import SearchBar from './SearchBar';
+function NavigationBar() {
+  const [isSmallScreen] = useMediaQuery("(max-width: 600px)");
+  const [isLoggedIn, setIsLoggedIn] = useState(false); //TODO: get this from the Redux store
 
-const loggedInSettings = ['My Profile', 'My recepies', 'Logout'];
+  const onLogout = async (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    event.preventDefault();
 
-export default function Navbar() {
-    const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
-    const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
+    //TODO: use redux saga for logout
+  }
 
-    const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
-        setAnchorElNav(event.currentTarget);
-    };
-    const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
-        setAnchorElUser(event.currentTarget);
-    };
+  const onLogin = async (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    event.preventDefault();
 
-    const handleCloseNavMenu = () => {
-        setAnchorElNav(null);
-    };
+    //TODO: use redux saga for login
+  }
 
-    const handleCloseUserMenu = () => {
-        setAnchorElUser(null);
-    };
+  const renderMenuItems = () => (
+    <>
+      <MenuItem onClick={() => console.log('Home')}>Home</MenuItem>
+      <MenuItem onClick={() => console.log('Recipes')}>Recipes</MenuItem>
+      {isLoggedIn ? (
+        <>
+          <MenuItem onClick={() => console.log('My Account')}>My Account</MenuItem>
+          <MenuItem onClick={() => console.log('My Recipes')}>My Recipes</MenuItem>
+          <MenuItem onClick={onLogout}>Logout</MenuItem>
+        </>
+      ) : (
+        <MenuItem onClick={onLogin}>Login</MenuItem>
+      )}
+    </>
+  );
 
   return (
-    <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="sticky">
-        <Toolbar>
-            {/* render this only on small screens */}
-          {/* <IconButton
-            size="large"
-            edge="start"
-            color="inherit"
-            aria-label="menu"
-            sx={{ mr: 2 }}
-          >
-            <MenuIcon /> 
-          </IconButton> */}
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            YUM!
-          </Typography>
-
-          <SearchBar />
-
-          <Button color="inherit">Home</Button>
-          <Button color="inherit">Recepies</Button>
-
-          {/* render when logged in */}
-          <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
-              </IconButton>
-            </Tooltip>
-            <Menu
-              sx={{ mt: '45px' }}
-              id="menu-appbar"
-              anchorEl={anchorElUser}
-              anchorOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              open={Boolean(anchorElUser)}
-              onClose={handleCloseUserMenu}
-            >
-              {loggedInSettings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
-                </MenuItem>
-              ))}
-            </Menu>
-          </Box>
-
-          {/* render only when not logged */}
-          <Button color="inherit">Login</Button>
-        </Toolbar>
-      </AppBar>
-    </Box>
+    <Flex px="4" py="2" align="center" bg="gray.100" position="fixed" top="0" width="100%" zIndex="1">
+      <Box>Logo</Box>
+      <Spacer />
+      {isSmallScreen ? (
+        <Menu>
+          <MenuButton as={IconButton} icon={<HamburgerIcon />} />
+          <MenuList>
+            {renderMenuItems()}
+          </MenuList>
+        </Menu>
+      ) : (
+        <>
+          <Button variant="ghost" mx="2">Home</Button>
+          <Button variant="ghost" mx="2">Recipes</Button>
+          {isLoggedIn ? (
+            <>
+              <Button variant="ghost" mx="2">My Account</Button>
+              <Button variant="ghost" mx="2">My Recipes</Button>
+              <Button mx="2" onClick={onLogout}>Logout</Button>
+            </>
+          ) : (
+            <Button mx="2" onClick={onLogin}>Login</Button>
+          )}
+        </>
+      )}
+    </Flex>
   );
 }
+
+export default NavigationBar;
