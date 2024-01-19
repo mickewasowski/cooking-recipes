@@ -29,6 +29,10 @@ function LoginForm() {
     }
   };
 
+  const handleRegisterRedirect = () => {
+    //TODO: route to the register page
+  };
+
   return (
     <Box maxW="sm" mx="auto" mt="10">
       <Heading mb="6" textAlign="center">Login</Heading>
@@ -54,6 +58,9 @@ function LoginForm() {
           </FormControl>
           <Button type="submit" colorScheme="blue" size="lg" fontSize="md">
             Sign in
+          </Button>
+          <Button variant="link" onClick={handleRegisterRedirect} mt="4">
+            Don't have an account? Sign up now.
           </Button>
         </Stack>
       </form>

@@ -4,6 +4,7 @@ import NavBar from './components/misc/Navbar'
 import RecipeCard from './components/recepe/RecipeCard';
 import LoginForm from './components/user/Login';
 import SearchBar from './components/misc/SearchBar';
+import RegistrationForm from './components/user/Register';
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
       <RecipeCard id='uytyfgfh' imageUrl='example.com/image' title='test title' description='vdhjt hvfvghfjnvfghjf  hvdcfgvhs gfhdvfvg fgvfg' />
       <LoginForm />
       <SearchBar />
+      <RegistrationForm />
     </ChakraProvider>
   )
 }
