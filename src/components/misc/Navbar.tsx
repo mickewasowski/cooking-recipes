@@ -46,7 +46,7 @@ function NavigationBar() {
   );
 
   return (
-    <Flex px="4" py="2" align="center" bg="gray.100" position="fixed" top="0" width="100%" zIndex="1">
+    <Flex px="4" py="2" align="center" bg="gray.100" position="sticky" top="0" width="100%" zIndex="1">
       <Box>Logo</Box>
       <Spacer />
       {isSmallScreen ? (
