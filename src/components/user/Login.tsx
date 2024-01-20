@@ -11,8 +11,11 @@ import {
   FormErrorMessage,
 } from '@chakra-ui/react';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { signInWithEmail } from '../../store/user/user.action';
 
 function LoginForm() {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -29,6 +32,8 @@ function LoginForm() {
     if (email !== '' && password !== '') {
       // Handle the form submission logic here
     }
+
+    dispatch(signInWithEmail({ email, password }));
   };
 
   return (

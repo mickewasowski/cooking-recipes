@@ -1,7 +1,7 @@
-import { all } from 'redux-saga/effects';
+import { call, all } from 'typed-redux-saga';
+import { userSagas } from './user/user.saga';
 
-export default function* rootSaga() {
-    yield all([
-        //TODO: add user saga and recipe saga here
-    ]);
+export function* rootSaga() {
+    //TODO: add user saga and recipe saga here
+    yield* all([call(userSagas)]);
 }
