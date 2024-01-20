@@ -10,8 +10,10 @@ import {
   FormHelperText,
   FormErrorMessage,
 } from '@chakra-ui/react';
+import { useNavigate } from 'react-router-dom';
 
 function LoginForm() {
+  const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isEmailError, setEmailError] = useState(false);
@@ -27,10 +29,6 @@ function LoginForm() {
     if (email !== '' && password !== '') {
       // Handle the form submission logic here
     }
-  };
-
-  const handleRegisterRedirect = () => {
-    //TODO: route to the register page
   };
 
   return (
@@ -59,7 +57,7 @@ function LoginForm() {
           <Button type="submit" colorScheme="blue" size="lg" fontSize="md">
             Sign in
           </Button>
-          <Button variant="link" onClick={handleRegisterRedirect} mt="4">
+          <Button variant="link" onClick={() => navigate('/register')} mt="4">
             Don't have an account? Sign up now.
           </Button>
         </Stack>

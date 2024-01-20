@@ -12,8 +12,10 @@ import {
   Spacer,
 } from '@chakra-ui/react';
 import { HamburgerIcon } from '@chakra-ui/icons';
+import { Outlet, useNavigate } from 'react-router-dom';
 
 function NavigationBar() {
+  const navigate = useNavigate();
   const [isSmallScreen] = useMediaQuery("(max-width: 600px)");
   const [isLoggedIn, setIsLoggedIn] = useState(false); //TODO: get this from the Redux store
 
@@ -31,47 +33,50 @@ function NavigationBar() {
 
   const renderMenuItems = () => (
     <>
-      <MenuItem onClick={() => console.log('Home')}>Home</MenuItem>
-      <MenuItem onClick={() => console.log('Recipes')}>Recipes</MenuItem>
+      <MenuItem onClick={() => navigate('/')}>Home</MenuItem>
+      <MenuItem onClick={() => navigate('recipies')}>Recipes</MenuItem>
       {isLoggedIn ? (
         <>
-          <MenuItem onClick={() => console.log('My Account')}>My Account</MenuItem>
-          <MenuItem onClick={() => console.log('My Recipes')}>My Recipes</MenuItem>
+          <MenuItem onClick={() => navigate('myaccount')}>My Account</MenuItem>
+          <MenuItem onClick={() => navigate('myrecipies')}>My Recipes</MenuItem>
           <MenuItem onClick={onLogout}>Logout</MenuItem>
         </>
       ) : (
-        <MenuItem onClick={onLogin}>Login</MenuItem>
+        <MenuItem onClick={() => navigate('login')}>Login</MenuItem>
       )}
     </>
   );
 
   return (
-    <Flex px="4" py="2" align="center" bg="gray.100" position="sticky" top="0" width="100%" zIndex="1">
-      <Box>Logo</Box>
-      <Spacer />
-      {isSmallScreen ? (
-        <Menu>
-          <MenuButton as={IconButton} icon={<HamburgerIcon />} />
-          <MenuList>
-            {renderMenuItems()}
-          </MenuList>
-        </Menu>
-      ) : (
-        <>
-          <Button variant="ghost" mx="2">Home</Button>
-          <Button variant="ghost" mx="2">Recipes</Button>
-          {isLoggedIn ? (
-            <>
-              <Button variant="ghost" mx="2">My Account</Button>
-              <Button variant="ghost" mx="2">My Recipes</Button>
-              <Button mx="2" onClick={onLogout}>Logout</Button>
-            </>
-          ) : (
-            <Button mx="2" onClick={onLogin}>Login</Button>
-          )}
-        </>
-      )}
-    </Flex>
+    <>
+      <Flex px="4" py="2" align="center" bg="gray.100" position="sticky" top="0" width="100%" zIndex="1">
+        <Box>Logo</Box>
+        <Spacer />
+        {isSmallScreen ? (
+          <Menu>
+            <MenuButton as={IconButton} icon={<HamburgerIcon />} />
+            <MenuList>
+              {renderMenuItems()}
+            </MenuList>
+          </Menu>
+        ) : (
+          <>
+            <Button variant="ghost" mx="2" onClick={() => navigate('/')}>Home</Button>
+            <Button variant="ghost" mx="2" onClick={() => navigate('recipies')}>Recipes</Button>
+            {isLoggedIn ? (
+              <>
+                <Button variant="ghost" mx="2" onClick={() => navigate('myaccount')}>My Account</Button>
+                <Button variant="ghost" mx="2" onClick={() => navigate('myrecipies')}>My Recipes</Button>
+                <Button mx="2" onClick={onLogout}>Logout</Button>
+              </>
+            ) : (
+              <Button mx="2" onClick={() => navigate('login')}>Login</Button>
+            )}
+          </>
+        )}
+      </Flex>
+      <Outlet />
+    </>
   );
 }
 
