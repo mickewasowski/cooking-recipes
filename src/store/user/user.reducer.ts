@@ -4,11 +4,14 @@ import { AnyAction } from "redux-saga";
 export type User = {
     email: string;
     fullName: string;
-    bearerToken: string;
+    token: string;
+    id: string;
 };
 
 export type UserState = {
-    readonly currentUser: User;
+    readonly currentUser: User | null;
+    readonly isLoading: boolean;
+    readonly error: Error | null;
 };
 
 export const INITIAL_STATE = {
@@ -22,10 +25,9 @@ export const userReducer = (state = INITIAL_STATE, action: AnyAction) => {
         case USER_ACTION_TYPES.EMAIL_SIGN_IN_START:
             return { ...state, isLoading: true };
         case USER_ACTION_TYPES.SIGN_IN_SUCCESS:
-            console.log(action);
             return { ...state, isLoading: false, currentUser: action.payload };
         case USER_ACTION_TYPES.SIGN_IN_FAILED:
-            return { ...state, isLoading: false, error: action.payload };
+            return { ...state, isLoading: false, error: action.payload.message };
         default:
             return state;
     }

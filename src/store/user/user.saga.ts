@@ -6,9 +6,14 @@ import { USER_ACTION_TYPES } from './user.types';
 export function* loginUserWithEmail({ payload: { email, password }}) {
     try {
         const response = yield* call(emailSignIn, { email, password });
-        yield* put(signInSuccess(response.user));
+        if (response.success) {
+            yield* put(signInSuccess(response.user));
+        } else {
+            const errorMessage = new Error(response.message);
+            yield put(signInFailed(errorMessage));
+        }
     } catch (error) {
-        yield put(signInFailed(error));
+        yield put(signInFailed(error as Error));
     }
 }
 
@@ -19,5 +24,5 @@ export function* onEmailSignInStart() {
 export function* userSagas() {
     yield* all([
         call(onEmailSignInStart),
-    ])
+    ]);
 }
