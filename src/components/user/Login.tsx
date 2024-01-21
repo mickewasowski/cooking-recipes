@@ -1,4 +1,4 @@
-import React, { ChangeEvent, FormEvent, useState } from 'react';
+import { ChangeEvent, FormEvent, useState, useEffect } from 'react';
 import {
   Button,
   FormControl,
@@ -13,10 +13,15 @@ import {
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { signInWithEmail } from '../../store/user/user.action';
+import { useSelector } from 'react-redux';
+import { getCurrentUser } from '../../store/user/user.selector';
+import { IRootState } from '../../store/root-reducer';
 
 function LoginForm() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const user = useSelector((state: IRootState) => getCurrentUser(state.user));
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isEmailError, setEmailError] = useState(false);
@@ -30,11 +35,17 @@ function LoginForm() {
     setEmailError(email === '');
     setPasswordError(password === '');
     if (email !== '' && password !== '') {
-      // Handle the form submission logic here
+      //TODO: Handle the form submission logic here
     }
 
     dispatch(signInWithEmail({ email, password }));
   };
+
+  useEffect(() => {
+    if (user) {
+      navigate('/');
+    }
+  }, [user]);
 
   return (
     <Box maxW="sm" mx="auto" mt="10">
