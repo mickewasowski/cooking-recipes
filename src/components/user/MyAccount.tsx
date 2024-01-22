@@ -10,6 +10,7 @@ import {
   Stack,
   Heading
 } from '@chakra-ui/react';
+import { isAuth } from '../../hoc/isAuth';
 
 function MyAccount() {
   const [isEditable, setIsEditable] = useState(false);
@@ -68,4 +69,6 @@ function MyAccount() {
   );
 }
 
-export default MyAccount;
+const EnhancedComponent = isAuth(MyAccount);
+
+export default EnhancedComponent;

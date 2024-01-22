@@ -10,6 +10,7 @@ import {
   Button,
   VStack
 } from '@chakra-ui/react';
+import { isAuth } from '../../hoc/isAuth';
 
 function AddRecipeForm() {
   const [formData, setFormData] = useState({
@@ -88,4 +89,6 @@ function AddRecipeForm() {
   );
 }
 
-export default AddRecipeForm;
+const EnhancedComponent = isAuth(AddRecipeForm);
+
+export default EnhancedComponent;
