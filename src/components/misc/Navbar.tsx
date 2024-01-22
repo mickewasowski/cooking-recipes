@@ -16,9 +16,13 @@ import { Outlet, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { getCurrentUser } from '../../store/user/user.selector';
 import { IRootState } from '../../store/root-reducer';
+import { useDispatch } from 'react-redux';
+import { signOutStart } from '../../store/user/user.action';
+
 
 function NavigationBar() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [isSmallScreen] = useMediaQuery("(max-width: 600px)");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const user = useSelector((state: IRootState) => getCurrentUser(state.user));
@@ -35,6 +39,7 @@ function NavigationBar() {
     event.preventDefault();
 
     //TODO: use redux saga for logout
+    dispatch(signOutStart());
   }
 
   const renderMenuItems = () => (

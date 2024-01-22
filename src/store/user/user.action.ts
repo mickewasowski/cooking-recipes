@@ -2,5 +2,8 @@ import { USER_ACTION_TYPES } from "./user.types";
 import { User } from "./user.reducer";
 
 export const signInWithEmail = ({ email, password }) => ({ type: USER_ACTION_TYPES.EMAIL_SIGN_IN_START, payload: { email, password } });
-export const signInSuccess = (data: User) => ({ type: USER_ACTION_TYPES.SIGN_IN_SUCCESS, payload: data });
+export const signInSuccess = (user: User) => ({ type: USER_ACTION_TYPES.SIGN_IN_SUCCESS, payload: user });
 export const signInFailed = (error: Error) => ({ type: USER_ACTION_TYPES.SIGN_IN_FAILED, payload: error });
+export const signOutStart = () => ({ type: USER_ACTION_TYPES.SIGN_OUT_START });
+export const signOutSuccess = () => ({ type: USER_ACTION_TYPES.SIGN_OUT_SUCCESS });
+export const signOutFailed = (error: Error) => ({ type: USER_ACTION_TYPES.SIGN_OUT_FAILED, payload: error });
