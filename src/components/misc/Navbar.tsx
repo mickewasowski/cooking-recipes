@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Box,
   Flex,
@@ -13,22 +13,28 @@ import {
 } from '@chakra-ui/react';
 import { HamburgerIcon } from '@chakra-ui/icons';
 import { Outlet, useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { getCurrentUser } from '../../store/user/user.selector';
+import { IRootState } from '../../store/root-reducer';
 
 function NavigationBar() {
   const navigate = useNavigate();
   const [isSmallScreen] = useMediaQuery("(max-width: 600px)");
-  const [isLoggedIn, setIsLoggedIn] = useState(false); //TODO: get this from the Redux store
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const user = useSelector((state: IRootState) => getCurrentUser(state.user));
+
+  useEffect(() => {
+    if (user) {
+      setIsLoggedIn(true);
+    } else {
+      setIsLoggedIn(false);
+    }
+  }, [user]);
 
   const onLogout = async (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     event.preventDefault();
 
     //TODO: use redux saga for logout
-  }
-
-  const onLogin = async (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    event.preventDefault();
-
-    //TODO: use redux saga for login
   }
 
   const renderMenuItems = () => (
@@ -67,6 +73,7 @@ function NavigationBar() {
               <>
                 <Button variant="ghost" mx="2" onClick={() => navigate('myaccount')}>My Account</Button>
                 <Button variant="ghost" mx="2" onClick={() => navigate('myrecipies')}>My Recipes</Button>
+                <Button variant="ghost" mx="2" onClick={() => navigate('addrecipe')}>Add Recipe</Button>
                 <Button mx="2" onClick={onLogout}>Logout</Button>
               </>
             ) : (

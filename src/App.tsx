@@ -10,6 +10,7 @@ import MyAccount from './components/user/MyAccount';
 import AlertBanner from './components/misc/AlertBanner';
 import { useSelector } from 'react-redux';
 import { getUserError } from './store/user/user.selector';
+import AddRecipeForm from './components/recepe/AddRecipeForm';
 
 function App() {
   const [isAlertBannerVisible, setIsAlertBannerVisible] = useState(false);
@@ -34,6 +35,7 @@ function App() {
             <Route path='register' element={<RegistrationForm />} />
             <Route path='myaccount' element={<MyAccount />} />
             <Route path='myrecipies' element={<RecipesWrapper wrapperType='owned'/>} />
+            <Route path='addrecipe' element={<AddRecipeForm />} />
           </Route>
         </Routes>
       </BrowserRouter>
