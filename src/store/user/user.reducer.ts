@@ -31,7 +31,6 @@ export const userReducer = (state = INITIAL_STATE, action: AnyAction) => {
         case USER_ACTION_TYPES.SIGN_OUT_START:
             return { ...state, isLoading: true };
         case USER_ACTION_TYPES.SIGN_OUT_SUCCESS:
-            console.log('here')
             return { ...state, isLoading: false, currentUser: null };
         case USER_ACTION_TYPES.SIGN_OUT_FAILED:
             return { ...state, isLoading: false, error: action.payload.error };
