@@ -1,56 +1,66 @@
 import React, { useState, useEffect } from 'react';
-import { Box, Button } from '@chakra-ui/react';
-import RecipeCard from './RecipeCard'; // Import your RecipeCard component
+import { Flex, Button, Text, Box } from '@chakra-ui/react';
+import RecipeCard from './RecipeCard';
+import { useDispatch, useSelector } from 'react-redux';
+ import { IRootState } from '../../store/root-reducer';
+ import { getRecipeCount, getRecipies } from '../../store/recipe/recipe.selector';
+ import { getRecipeCountStart, getRecipiesStart } from '../../store/recipe/recipe.action';
 
-const RECIPES_PER_LOAD = 10;
+const AllRecipes = () => {
+  const recipesPerPage = 10; // We will display 10 recipes per page
+  
+  const dispatcher = useDispatch();
+  const recipeCount = useSelector((state: IRootState) => getRecipeCount(state.recipe));
+  const allRecipies = useSelector((state: IRootState) => getRecipies(state.recipe));
 
-type Recipe = {
-    imageUrl: string;
-    title: string;
-    id: string;
-    description: string;
-}
-
-//TODO: all renders all recipes, owned renders only the recipies owned by the currently logged user
-function RecipesWrapper({ wrapperType: string = 'all' }) {
-  const [recipes, setRecipes] = useState<Recipe[]>([]);
-  const [loaded, setLoaded] = useState(RECIPES_PER_LOAD);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(0);
 
   useEffect(() => {
-    // Initially load the first set of recipes
-    loadMoreRecipes();
+      dispatcher(getRecipeCountStart());
   }, []);
 
-  const loadMoreRecipes = async () => {
-    // Fetch next set of recipes (you'll need to implement this logic)
-    // For example, fetch from an API endpoint
-    // const newRecipes = await fetchRecipes(loaded, RECIPES_PER_LOAD);
-    // setRecipes([...recipes, ...newRecipes]);
-    // setLoaded(loaded + RECIPES_PER_LOAD);
+  useEffect(() => {
+    const totalPages = Math.ceil(recipeCount/recipesPerPage);
+    setTotalPages(totalPages);
+  }, [recipeCount]);
 
+  useEffect(() => {
+    if (totalPages) {
+      dispatcher(getRecipiesStart({ page: currentPage, limit: recipesPerPage }));
+    }
+  }, [totalPages]);
 
-    //TODO: think of a way to fetch only a range of recipies by index
+  useEffect(() => {
+    dispatcher(getRecipiesStart({ page: currentPage, limit: recipesPerPage }));
+  }, [currentPage]);
+
+  const handlePreviousClick = () => {
+      setCurrentPage(currentPage => Math.max(currentPage - 1, 1));
   };
 
-  // Placeholder function to simulate fetching recipes
-  const fetchRecipes = async (start: number, count: number) => {
-    // Implement fetching logic here
-    // Return an array of recipes
+  const handleNextClick = () => {
+      setCurrentPage(currentPage => Math.min(currentPage + 1, totalPages));
   };
 
-  //TODO: how will i be rendering the new recipies?
-  //I don't want to rerender the entire list
-  //I want only the newly fetched to appear at the bottom of the currently loaded ones
   return (
     <Box>
-      {recipes.map(recipe => (
-        <RecipeCard {...recipe}/>
-      ))}
-      <Button onClick={loadMoreRecipes} mt="4">
-        Load More Recipes
-      </Button>
+        <Flex wrap="wrap" justify="center" gap="20px">
+            {allRecipies.map(recipe => (
+                <RecipeCard key={recipe.id} {...recipe} />
+            ))}
+        </Flex>
+        <Flex justify="center" align="center" mt="20px">
+            <Button onClick={handlePreviousClick} disabled={currentPage === 1}>
+                Previous
+            </Button>
+            <Text mx="15px">Page {currentPage} of {totalPages}</Text>
+            <Button onClick={handleNextClick} disabled={currentPage === totalPages}>
+                Next
+            </Button>
+        </Flex>
     </Box>
   );
-}
+};
 
-export default RecipesWrapper;
+export default AllRecipes;

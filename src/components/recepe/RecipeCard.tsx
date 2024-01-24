@@ -18,7 +18,7 @@ type RecipeCardProps = {
 function RecipeCard({ id, imageUrl, title, description }: RecipeCardProps) {
 
   function truncateDescription(text: string, maxLength: number) {
-    if (text.length > maxLength) {
+    if (text?.length > maxLength) {
       return text.substring(0, maxLength - 3) + '...';
     }
     return text;
