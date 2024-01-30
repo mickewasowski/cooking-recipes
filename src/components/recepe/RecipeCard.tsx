@@ -7,6 +7,7 @@ import {
   Button,
   Stack,
 } from '@chakra-ui/react';
+import { useNavigate } from 'react-router-dom';
 
 type RecipeCardProps = {
   imageUrl: string;
@@ -16,6 +17,7 @@ type RecipeCardProps = {
 }
 
 function RecipeCard({ id, imageUrl, title, description }: RecipeCardProps) {
+  const navigate = useNavigate();
 
   function truncateDescription(text: string, maxLength: number) {
     if (text?.length > maxLength) {
@@ -29,14 +31,26 @@ function RecipeCard({ id, imageUrl, title, description }: RecipeCardProps) {
     event.preventDefault();
 
     //TODO: route to the details page of the recipe
+    navigate(`/recipeDetails/${id}`);
   }
 
   return (
-    <Box maxW="sm" borderWidth="1px" borderRadius="lg" overflow="hidden" p="5" key={id}>
-      <Image src={imageUrl} alt={`Image of ${title}`} />
-
-      <Box p="6">
-        <Stack spacing="4">
+    <Box
+        display='flex'
+        flexDirection='column'
+        justifyContent='center'
+        alignItems='center'
+        w='350px'
+        h='350px'
+        borderWidth="1px"
+        borderRadius="md"
+        overflow="hidden"
+        p="1"
+        key={id}
+      >
+      <Image boxSize='200px' objectFit='cover' src={imageUrl} alt={`Image of ${title}`} />
+      <Box p="3">
+        <Stack spacing="2">
           <Heading fontSize="xl">{title}</Heading>
           <Text fontSize="md">{truncateDescription(description, 30)}</Text>
           <Button colorScheme="blue" onClick={openRecipe}>Details</Button>

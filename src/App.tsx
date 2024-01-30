@@ -8,6 +8,7 @@ import LoginForm from './components/user/Login';
 import RegistrationForm from './components/user/Register';
 import MyAccount from './components/user/MyAccount';
 import AlertBanner from './components/misc/AlertBanner';
+import RecipeDetailsWrapper from './components/recepe/details/RecipeDetailsWrapper';
 import { useSelector } from 'react-redux';
 import { getUserError } from './store/user/user.selector';
 import AddRecipeForm from './components/recepe/AddRecipeForm';
@@ -36,6 +37,7 @@ function App() {
             <Route path='myaccount' element={<MyAccount />} />
             <Route path='myrecipies' element={<RecipesWrapper wrapperType='owned'/>} />
             <Route path='addrecipe' element={<AddRecipeForm />} />
+            <Route path='recipeDetails/:recipeId' element={<RecipeDetailsWrapper />} />
           </Route>
         </Routes>
       </BrowserRouter>
