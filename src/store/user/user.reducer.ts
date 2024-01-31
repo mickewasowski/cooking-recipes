@@ -46,6 +46,12 @@ export const userReducer = (state = INITIAL_STATE, action: AnyAction) => {
             return { ...state, isLoading: false, successMessage: UserSuccessMessage.registrationSuccess };
         case USER_ACTION_TYPES.REGISTER_FAILED:
             return { ...state, isLoading: false, error: action.payload.error };
+        case USER_ACTION_TYPES.EDIT_USER_START:
+            return { ...state, isLoading: true };
+        case USER_ACTION_TYPES.EDIT_USER_SUCCESS:
+            return { ...state, isLoading: false, currentUser: action.payload };
+        case USER_ACTION_TYPES.EDIT_USER_FAILED:
+            return { ...state, isLoading: false, error: action.payload.error };
         default:
             return state;
     }

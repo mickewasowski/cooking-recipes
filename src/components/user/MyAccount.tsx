@@ -11,23 +11,36 @@ import {
   Heading
 } from '@chakra-ui/react';
 import { isAuth } from '../../hoc/isAuth';
+import { useSelector } from 'react-redux';
+import { getCurrentUser } from '../../store/user/user.selector';
+import { IRootState } from '../../store/root-reducer';
+import { useDispatch } from 'react-redux';
+import { editUserStart } from '../../store/user/user.action';
 
 function MyAccount() {
+  const dispatch = useDispatch();
+  const currentUser = useSelector((state: IRootState) => getCurrentUser(state.user));
   const [isEditable, setIsEditable] = useState(false);
-  const [userInfo, setUserInfo] = useState({ email: '', fullName: '', password: '' });
+  const [userInfo, setUserInfo] = useState({ email: currentUser?.email, fullName: currentUser?.fullName, password: null, newPassword: null });
 
   const handleToggle = () => {
     setIsEditable(!isEditable);
   };
 
   const handleCancel = () => {
-    setUserInfo({ email: '', fullName: '', password: '' });
+    setUserInfo({ ...userInfo, password: null, newPassword: null });
     setIsEditable(false);
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUserInfo({ ...userInfo, [e.target.name]: e.target.value });
   };
+
+  const handleUpdateUser = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    event.preventDefault();
+
+    dispatch(editUserStart({ ...userInfo, token: currentUser?.token }));
+  }
 
   return (
     <Box maxW="sm" mx="auto" mt="10">
@@ -49,14 +62,18 @@ function MyAccount() {
           <FormLabel>Full Name</FormLabel>
           <Input type="text" name="fullName" value={userInfo.fullName} onChange={handleChange} />
         </FormControl>
-        <FormControl isDisabled={!isEditable}>
+        <FormControl isDisabled={!isEditable} isRequired>
           <FormLabel>Password</FormLabel>
           <Input type="password" name="password" value={userInfo.password} onChange={handleChange} />
+        </FormControl>
+        <FormControl isDisabled={!isEditable}>
+          <FormLabel>New Password</FormLabel>
+          <Input type="password" name="newPassword" value={userInfo.newPassword} onChange={handleChange} />
         </FormControl>
 
         {isEditable && (
           <>
-            <Button colorScheme="blue" onClick={() => console.log('Save Changes', userInfo)}>
+            <Button colorScheme="blue" onClick={handleUpdateUser}>
               Save Changes
             </Button>
             <Button colorScheme="red" onClick={handleCancel}>

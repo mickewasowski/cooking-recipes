@@ -1,6 +1,15 @@
-import { emailSignIn, registerUser } from '../../utils/userUtils';
+import { emailSignIn, registerUser, updateUserData } from '../../utils/userUtils';
 import { call, takeLatest, put, all } from 'typed-redux-saga';
-import { signInFailed, signInSuccess, signOutSuccess, signOutFailed, registerSuccess, registerFailed } from './user.action';
+import {
+    signInFailed,
+    signInSuccess,
+    signOutSuccess,
+    signOutFailed,
+    registerSuccess,
+    registerFailed,
+    editUserSuccess,
+    editUserFailed
+} from './user.action';
 import { USER_ACTION_TYPES } from './user.types';
 
 function* loginUserWithEmail({ payload: { email, password }}) {
@@ -39,6 +48,20 @@ export function* userRegister({ payload: { email, fullName, password }}) {
     }
 }
 
+export function* userEdit({ payload: { email, fullName, password, newPassword, token }}) {
+    try {
+        const response = yield* call(updateUserData, { email, fullName, password, newPassword, token });
+
+        if (response.success) {
+            yield* put(editUserSuccess(response.user));
+        } else {
+            yield* put(editUserFailed(response.message as Error));
+        }
+    } catch (error) {
+        yield* put(editUserFailed(error as Error));
+    }
+}
+
 export function* onEmailSignInStart() {
     yield* takeLatest(USER_ACTION_TYPES.EMAIL_SIGN_IN_START, loginUserWithEmail);
 }
@@ -51,10 +74,15 @@ export function* onRegisterStart() {
     yield* takeLatest(USER_ACTION_TYPES.REGISTER_START, userRegister);
 }
 
+export function* onEditUserStart() {
+    yield* takeLatest(USER_ACTION_TYPES.EDIT_USER_START, userEdit);
+}
+
 export function* userSagas() {
     yield* all([
         call(onEmailSignInStart),
         call(onSignOutStart),
         call(onRegisterStart),
+        call(onEditUserStart),
     ]);
 }
