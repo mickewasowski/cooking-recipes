@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
   FormControl,
   FormLabel,
@@ -9,6 +10,10 @@ import {
   Box,
   Heading
 } from '@chakra-ui/react';
+import { useDispatch, useSelector } from 'react-redux';
+import { registerStart } from '../../store/user/user.action';
+import { getSuccessMessage } from '../../store/user/user.selector';
+import { IRootState } from '../../store/root-reducer';
 
 type ErrorsType = {
     email?: string;
@@ -17,6 +22,9 @@ type ErrorsType = {
 }
 
 function RegistrationForm() {
+  const dispatcher = useDispatch();
+  const navigate = useNavigate();
+  const successMessage = useSelector((state: IRootState) => getSuccessMessage(state.user));
   const [email, setEmail] = useState('');
   const [fullName, setFullName] = useState('');
   const [password, setPassword] = useState('');
@@ -37,10 +45,17 @@ function RegistrationForm() {
 
     if (Object.keys(newErrors).length === 0) {
       // Handle registration logic here
+      dispatcher(registerStart({ email, fullName, password }));
     }
-
-    //TODO: redux saga for registration
   };
+
+  useEffect(() => {
+    if (successMessage) {
+      setTimeout(() => {
+        navigate('/login');
+      }, 5000);
+    }
+  }, [successMessage]);
 
   return (
     <Box maxW="sm" mx="auto" mt="10">

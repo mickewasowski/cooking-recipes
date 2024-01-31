@@ -10,20 +10,22 @@ import MyAccount from './components/user/MyAccount';
 import AlertBanner from './components/misc/AlertBanner';
 import RecipeDetailsWrapper from './components/recepe/details/RecipeDetailsWrapper';
 import { useSelector } from 'react-redux';
-import { getUserError } from './store/user/user.selector';
+import { getUserError, getSuccessMessage } from './store/user/user.selector';
 import AddRecipeForm from './components/recepe/AddRecipeForm';
+import { IRootState } from './store/root-reducer';
 
 function App() {
   const [isAlertBannerVisible, setIsAlertBannerVisible] = useState(false);
-  const userError = useSelector((state) => getUserError(state.user));
+  const userError = useSelector((state: IRootState) => getUserError(state.user));
+  const userSuccessRegisterMessage = useSelector((state: IRootState) => getSuccessMessage(state.user));
 
   useEffect(() => {
-    if (userError) {
+    if (userError || userSuccessRegisterMessage) {
       setIsAlertBannerVisible(true);
     } else {
       setIsAlertBannerVisible(false);
     }
-  }, [userError]);
+  }, [userError, userSuccessRegisterMessage]);
 
   return (
     <>
@@ -43,7 +45,7 @@ function App() {
       </BrowserRouter>
       {
         isAlertBannerVisible
-        ? <AlertBanner message={userError} onClosed={() => setIsAlertBannerVisible(false)} />
+        ? <AlertBanner message={userError || userSuccessRegisterMessage} onClosed={() => setIsAlertBannerVisible(false)} />
         : null
       }
     </>
