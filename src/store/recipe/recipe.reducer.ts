@@ -5,7 +5,7 @@ export type Recipe = {
     title: string,
     description: string,
     type: string,
-    image: string,
+    imageUrl: string,
     owner: string,
     id: string,
     createdAt: Date,
