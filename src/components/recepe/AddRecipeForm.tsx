@@ -34,10 +34,7 @@ function AddRecipeForm() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        // Implement what should happen on form submit
-        //console.log(formData);
 
-        console.log('user token: ', user.token);
         dispatch(addRecipeStart({ title: formData.title, image: formData.imageUrl, description: formData.description, type: formData.type, userToken: user.token }));
     };
 

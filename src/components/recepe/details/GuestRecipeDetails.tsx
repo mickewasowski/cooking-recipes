@@ -1,7 +1,7 @@
 import React from 'react';
 import { Box, Text, Image } from '@chakra-ui/react';
 
-function GuestRecipeDetails({ title, description, type, image }) {
+function GuestRecipeDetails({ title, description, type, image, additionalData }) {
   return (
     <Box p={4}>
       <Image src={image} alt="Recipe Image" />

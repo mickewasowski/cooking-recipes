@@ -22,8 +22,8 @@ function RecipeDetailsWrapper() {
         >
             {
                 user?.id !== undefined && user?.id === recipe?.owner
-                ? <OwnerRecipeDetails title={recipe.title} description={recipe.description} type={recipe.type} image={recipe.imageUrl} />
-                : <GuestRecipeDetails title={recipe.title} description={recipe.description} type={recipe.type} image={recipe.imageUrl} />
+                ? <OwnerRecipeDetails id={recipeId} title={recipe.title} description={recipe.description} type={recipe.type} image={recipe.imageUrl} additionalData={recipe.additionalData} />
+                : <GuestRecipeDetails title={recipe.title} description={recipe.description} type={recipe.type} image={recipe.imageUrl} additionalData={recipe.additionalData} />
             }
         </Box>
     )

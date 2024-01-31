@@ -7,6 +7,7 @@ export type Recipe = {
     type: string,
     imageUrl: string,
     owner: string,
+    additionalData?: Map<string, any>,
     id: string,
     createdAt: Date,
     updatedAt: Date,
@@ -45,6 +46,12 @@ export const recipeReducer = (state = INITIAL_STATE, action: AnyAction) => {
         case RECIPE_ACTION_TYPES.GET_RECIPE_COUNT_SUCCESS:
             return { ...state, isLoading: false, recipeCount: action.payload.recipeCount };
         case RECIPE_ACTION_TYPES.GET_RECIPE_COUNT_FAILED:
+            return { ...state, isLoading: false, error: action.payload.error };
+        case RECIPE_ACTION_TYPES.UPDATE_RECIPE_START:
+            return { ...state, isLoading: true };
+        case RECIPE_ACTION_TYPES.UPDATE_RECIPE_SUCCESS:
+            return { ...state, isLoading: false, recipies: [ ...state.recipies, { ...action.payload } ]};
+        case RECIPE_ACTION_TYPES.UPDATE_RECIPE_FAILED:
             return { ...state, isLoading: false, error: action.payload.error };
         default:
             return state;

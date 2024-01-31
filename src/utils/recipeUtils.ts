@@ -1,9 +1,10 @@
-export const addRecipeRequest = ({ title, description, image, userToken, type }) => {
+export const addRecipeRequest = ({ title, description, image, userToken, type, additionalData }) => {
     const itemObject = {
         name: title,
         description,
         image,
-        type
+        type,
+        additionalData
     }
 
     return fetch('http://localhost:5000/api/item', {
@@ -33,6 +34,27 @@ export const getRecipeCountFromDatabase = () => {
         headers: {
             'Content-Type': 'application/json',
         },
+    })
+    .then(res => res.json());
+}
+
+export const updateRecipeData = ({ _id, title, description, image, userToken, type, additionalData }) => {
+    const itemObject = {
+        _id,
+        name: title,
+        description,
+        image,
+        type,
+        additionalData
+    }
+
+    return fetch('http://localhost:5000/api/item', {
+        method: 'PATCH',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${userToken}`
+        },
+        body: JSON.stringify(itemObject)
     })
     .then(res => res.json());
 }
