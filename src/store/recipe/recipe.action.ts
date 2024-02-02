@@ -19,3 +19,7 @@ export const updateRecipeFailed = (error: Error) => ({ type: RECIPE_ACTION_TYPES
 export const searchRecipiesStart = (searchString: string) => ({ type: RECIPE_ACTION_TYPES.SEARCH_RECIPIES_START, payload: searchString });
 export const searchRecipiesSuccess = ({ recipies, count }) => ({ type: RECIPE_ACTION_TYPES.SEARCH_RECIPIES_SUCCESS, payload: { recipies, count } });
 export const searchRecipiesFailed = (error: Error) => ({ type: RECIPE_ACTION_TYPES.SEARCH_RECIPIES_FAILED, payload: error });
+
+export const getRecipiesForOwnerStart = ({ ownerId, userToken }) => ({ type: RECIPE_ACTION_TYPES.GET_OWNER_RECIPIES_START, payload: { ownerId, userToken }});
+export const getRecipiesForOwnerSuccess = ({ recipies, count }) => ({ type: RECIPE_ACTION_TYPES.GET_OWNER_RECIPIES_SUCCESS, payload: { recipies, count }});
+export const getRecipiesForOwnerFailed = (error: Error) => ({ type: RECIPE_ACTION_TYPES.GET_OWNER_RECIPIES_FAILED, payload: error });

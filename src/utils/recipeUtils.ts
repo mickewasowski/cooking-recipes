@@ -78,6 +78,19 @@ export const searchRecipiesByQueryString = (querySearch: string) => {
     .then(res => res.json());
 }
 
+export const getRecipiesPerOwner = (data) => {
+    const { ownerId, userToken } = data;
+
+    return fetch(`http://localhost:5000/api/item/owned?ownerId=${ownerId}`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${userToken}`
+        },
+    })
+    .then(res => res.json());
+}
+
 export const mapItemsFromDB = (items) => {
     const mappedRecipies = items.map(recipe => {
         return mapSingleItemFromDB(recipe)
