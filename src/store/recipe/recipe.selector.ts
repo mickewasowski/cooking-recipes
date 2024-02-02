@@ -1,7 +1,7 @@
 import { RecipeState } from "./recipe.reducer";
 
 export const getRecipies = (state: RecipeState) => state.recipies;
-export const getRecipeCount = (state: RecipeState) => state.recipeCount;
+export const getRecipeCount = (state: RecipeState) => state.totalRecipeCount;
 export const getRecipeById = (state: RecipeState, id: string) => getRecipeObjectById(state, id);
 
 

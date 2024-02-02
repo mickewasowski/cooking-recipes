@@ -58,3 +58,46 @@ export const updateRecipeData = ({ _id, title, description, image, userToken, ty
     })
     .then(res => res.json());
 }
+
+export const searchRecipiesByQueryString = (querySearch: string) => {
+    const arrayOfWords = querySearch.split(' ');
+    const mappedSearchWords: string[] = [];
+    arrayOfWords.forEach((word, index) => {
+        let constructedString = `q${index + 1}=${word}`;
+        mappedSearchWords.push(constructedString);
+    });
+
+    const searchQuery = mappedSearchWords.join('&');
+
+    return fetch(`http://localhost:5000/api/item/search?${searchQuery}`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    })
+    .then(res => res.json());
+}
+
+export const mapItemsFromDB = (items) => {
+    const mappedRecipies = items.map(recipe => {
+        return mapSingleItemFromDB(recipe)
+    });
+
+    return mappedRecipies;
+}
+
+export const mapSingleItemFromDB = (item) => {
+    const mappedItem = {
+        id: item._id,
+        title: item.name,
+        description: item.description,
+        imageUrl: item.image,
+        type: item.type,
+        owner: item.owner,
+        additionalData: item.additionalData,
+        createdAt: item.createdAt,
+        updatedAt: item.updatedAt
+    };
+
+    return mappedItem;
+}

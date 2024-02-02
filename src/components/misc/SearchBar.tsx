@@ -1,30 +1,38 @@
 import React, { useState } from 'react';
-import { Input, InputGroup, InputLeftElement } from '@chakra-ui/react';
+import { Input, InputGroup, InputRightElement, Button } from '@chakra-ui/react';
 import { SearchIcon } from '@chakra-ui/icons';
+import { useDispatch } from 'react-redux';
+import { searchRecipiesStart } from '../../store/recipe/recipe.action';
 
 function SearchBar() {
+  const dispatcher = useDispatch();
   const [searchQuery, setSearchQuery] = useState('');
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    event.preventDefault();
+    setSearchQuery(event.target.value);
+  };
 
-    setSearchQuery(event.target.value)
-    //TODO: on each key press make a new request with a saga to find all elements containing the word
+  const handleSearch = () => {
+    //TODO: Make the search request with a saga to find all elements containing the word
+    console.log('Searching for:', searchQuery);
+    // Implement your search logic here
+    dispatcher(searchRecipiesStart(searchQuery));
   };
 
   return (
     <InputGroup size="md">
-      <InputLeftElement
-        pointerEvents="none"
-        children={<SearchIcon color="gray.300" />}
-      />
       <Input
-        pl="2.5rem"
+        pr="2.5rem"
         type="text"
         placeholder="Search..."
         value={searchQuery}
         onChange={handleInputChange}
       />
+      <InputRightElement width="4.5rem">
+        <Button h="1.75rem" size="sm" onClick={handleSearch}>
+          <SearchIcon />
+        </Button>
+      </InputRightElement>
     </InputGroup>
   );
 }

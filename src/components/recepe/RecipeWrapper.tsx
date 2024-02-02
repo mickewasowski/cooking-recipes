@@ -2,9 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { Flex, Button, Text, Box } from '@chakra-ui/react';
 import RecipeCard from './RecipeCard';
 import { useDispatch, useSelector } from 'react-redux';
- import { IRootState } from '../../store/root-reducer';
- import { getRecipeCount, getRecipies } from '../../store/recipe/recipe.selector';
- import { getRecipeCountStart, getRecipiesStart } from '../../store/recipe/recipe.action';
+import { IRootState } from '../../store/root-reducer';
+import { getRecipeCount, getRecipies } from '../../store/recipe/recipe.selector';
+import { getRecipeCountStart, getRecipiesStart } from '../../store/recipe/recipe.action';
+import SearchBar from '../misc/SearchBar';
 
 const AllRecipes = () => {
   const recipesPerPage = 10; // We will display 10 recipes per page
@@ -45,9 +46,10 @@ const AllRecipes = () => {
 
   return (
     <Box>
+      <SearchBar />
         <Flex wrap="wrap" justify="center" gap="20px">
-            {allRecipies.map(recipe => (
-                <RecipeCard key={recipe.id} {...recipe} />
+            {allRecipies?.map(recipe => (
+                <RecipeCard key={recipe?.id} {...recipe} />
             ))}
         </Flex>
         <Flex justify="center" align="center" mt="20px">
