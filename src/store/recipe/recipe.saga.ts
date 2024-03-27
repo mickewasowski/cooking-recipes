@@ -33,7 +33,7 @@ function* addRecipe(data) {
         if (response.success) {
             const recipe = mapSingleItemFromDB(response.item);
 
-            yield* put(addRecipeSuccess({ title: recipe.title, description: recipe.description, image: recipe.imageUrl, type: recipe.type, owner: recipe.owner, additionalData: recipe.additionalData, id: recipe.id, createdAt: recipe.createdAt, updatedAt: recipe.updatedAt }));
+            yield* put(addRecipeSuccess(recipe));
         } else {
             yield* put(addRecipeFailed(new Error(response.message)));
         }
@@ -47,9 +47,9 @@ function* getRecipies(data) {
         const response = yield* call(getRecipiesFromDatabase, { page: data.payload.page, limit: data.payload.limit });
 
         if (response.success) {
-            const mappedRecipies = mapItemsFromDB(response.items);
+            const recipies = mapItemsFromDB(response.items);
 
-            yield* put(getRecipiesSuccess({ recipies: mappedRecipies }));
+            yield* put(getRecipiesSuccess(recipies));
         } else {
             yield* put(getRecipiesFailed(new Error(response.message)));
         }
@@ -72,9 +72,9 @@ function* getRecipeCount() {
     }
 }
 
-function* updateRecipe({ payload: { _id, title, description, image, userToken, type, additionalData }}) {
+function* updateRecipe({ payload: { id, title, description, image, userToken, type, additionalData }}) {
     try {
-        const response = yield* call(updateRecipeData, { _id, title, description, image, userToken, type, additionalData });
+        const response = yield* call(updateRecipeData, { id, title, description, image, userToken, type, additionalData });
 
         if (response.success) {
             const recipe = mapSingleItemFromDB(response.item);

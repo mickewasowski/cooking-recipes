@@ -18,3 +18,45 @@ export enum RECIPE_ACTION_TYPES {
     GET_OWNER_RECIPIES_SUCCESS = 'recipe/GET_OWNER_RECIPIES_SUCCESS',
     GET_OWNER_RECIPIES_FAILED = 'recipe/GET_OWNER_RECIPIES_FAILED',
 }
+
+export type TotalRecipesCount = {
+    totalRecipeCount: number;
+}
+
+export type Recipe = {
+    title: string;
+    image: string;
+    type: string;
+    description: string;
+    additionalData?: Map<string, any>;
+}
+
+export type RecipeAddStart = Recipe & {
+    userToken: string;
+}
+
+export type RecipeUpdate = RecipeAddStart & {
+    id: string;
+}
+
+export type RecipeCreated = Recipe & {
+    id: string;
+    owner: string;
+    createdAt: Date;
+    updatedAt: Date;
+}
+
+export type GetRecipes = {
+    page: number;
+    limit: number;
+}
+
+export type SearchRecipesSuccess = {
+    recipies: RecipeCreated[];
+    count: number;
+}
+
+export type RecipesForOwner = {
+    ownerId: string;
+    userToken: string;
+}

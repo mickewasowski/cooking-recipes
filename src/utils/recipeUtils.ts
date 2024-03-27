@@ -38,9 +38,9 @@ export const getRecipeCountFromDatabase = () => {
     .then(res => res.json());
 }
 
-export const updateRecipeData = ({ _id, title, description, image, userToken, type, additionalData }) => {
+export const updateRecipeData = ({ id, title, description, image, userToken, type, additionalData }) => {
     const itemObject = {
-        _id,
+        _id: id,
         name: title,
         description,
         image,
@@ -104,7 +104,7 @@ export const mapSingleItemFromDB = (item) => {
         id: item._id,
         title: item.name,
         description: item.description,
-        imageUrl: item.image,
+        image: item.image,
         type: item.type,
         owner: item.owner,
         additionalData: item.additionalData,

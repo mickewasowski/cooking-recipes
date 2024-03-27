@@ -10,13 +10,13 @@ import {
 import { useNavigate } from 'react-router-dom';
 
 type RecipeCardProps = {
-  imageUrl: string;
+  image: string;
   title: string;
   id: string;
   description: string;
 }
 
-function RecipeCard({ id, imageUrl, title, description }: RecipeCardProps) {
+function RecipeCard({ id, image, title, description }: RecipeCardProps) {
   const navigate = useNavigate();
 
   function truncateDescription(text: string, maxLength: number) {
@@ -50,7 +50,7 @@ function RecipeCard({ id, imageUrl, title, description }: RecipeCardProps) {
         p="1"
         key={id}
       >
-      <Image boxSize='200px' objectFit='cover' src={imageUrl} alt={`Image of ${title}`} />
+      <Image boxSize='200px' objectFit='cover' src={image} alt={`Image of ${title}`} />
       <Box p="3">
         <Stack spacing="2">
           <Heading fontSize="xl">{title}</Heading>

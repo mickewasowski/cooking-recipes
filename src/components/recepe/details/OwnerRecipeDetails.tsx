@@ -1,4 +1,4 @@
-import React, { MouseEventHandler, useState } from 'react';
+import React, { ChangeEvent, MouseEventHandler, useState } from 'react';
 import { Box, Input, Textarea, Image, Button, Switch, FormControl, FormLabel, IconButton } from '@chakra-ui/react';
 import { AddIcon } from '@chakra-ui/icons';
 import { useDispatch } from 'react-redux';
@@ -19,7 +19,7 @@ interface IRecipe {
   title: string;
   description: string;
   type: string;
-  imageUrl: string;
+  image: string;
   additionalData?: IAdditionalData;
 }
 
@@ -28,14 +28,14 @@ export interface IProps {
 }
 
 function OwnerRecipeDetails({ recipe }: IProps) {
-  const { id, title, description, type, imageUrl, additionalData } = recipe;
+  const { id, title, description, type, image, additionalData } = recipe;
   const user = useSelector((state: IRootState) => getCurrentUser(state.user));
   const dispatch = useDispatch();
   const [isEditable, setIsEditable] = useState(false);
   const [recipeState, setRecipe] = useState({
     title,
     description,
-    imageURL: imageUrl,
+    image,
     timeToPrepare: additionalData?.timeToPrep ?? '',
     numberOfPortions: additionalData?.numberOfPortions ?? '',
     ingredients: additionalData?.ingredients ? [...additionalData.ingredients] : [''],
@@ -70,10 +70,10 @@ function OwnerRecipeDetails({ recipe }: IProps) {
     event.preventDefault();
 
     const updatedRecipeData = {
-      _id: id,
+      id,
       title: recipeState.title,
       description: recipeState.description,
-      image: recipeState.imageURL,
+      image: recipeState.image,
       type,
       additionalData: {
         timeToPrep: recipeState.timeToPrepare,
@@ -91,7 +91,7 @@ function OwnerRecipeDetails({ recipe }: IProps) {
     <Box p={2} display='flex' flexDirection='column' width='90%' alignItems='center' justifyItems='center'>
       <Box display='flex' flexDirection='row' gap='5' alignItems='center' justifyContent='center' width='100%'>
         <Box width='40%'>
-          {imageUrl && <Image src={imageUrl} alt="Recipe Image" />}
+          {image && <Image src={image} alt="Recipe Image" />}
         </Box>
         <Box width='60%'>
           <FormControl display="flex" alignItems="center">
@@ -124,7 +124,7 @@ function OwnerRecipeDetails({ recipe }: IProps) {
             <FormLabel>Image URL</FormLabel>
             <Input
               placeholder="Image URL"
-              value={recipeState.imageURL}
+              value={recipeState.image}
               isDisabled={!isEditable}
               name="imageURL"
               onChange={handleChange}
