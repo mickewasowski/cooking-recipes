@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { MouseEventHandler, useState } from 'react';
 import { Box, Input, Textarea, Image, Button, Switch, FormControl, FormLabel, IconButton } from '@chakra-ui/react';
 import { AddIcon } from '@chakra-ui/icons';
 import { useDispatch } from 'react-redux';
@@ -7,14 +7,35 @@ import { useSelector } from 'react-redux';
 import { IRootState } from '../../../store/root-reducer';
 import { getCurrentUser } from '../../../store/user/user.selector';
 
-function OwnerRecipeDetails({ id, title, description, type, image, additionalData }) {
+interface IAdditionalData {
+  timeToPrep?: number;
+  numberOfPortions?: number;
+  ingredients?: string[];
+  howToPrepare?: string;
+}
+
+interface IRecipe {
+  id: string;
+  title: string;
+  description: string;
+  type: string;
+  imageUrl: string;
+  additionalData?: IAdditionalData;
+}
+
+export interface IProps {
+  recipe: IRecipe;
+}
+
+function OwnerRecipeDetails({ recipe }: IProps) {
+  const { id, title, description, type, imageUrl, additionalData } = recipe;
   const user = useSelector((state: IRootState) => getCurrentUser(state.user));
   const dispatch = useDispatch();
   const [isEditable, setIsEditable] = useState(false);
-  const [recipe, setRecipe] = useState({
+  const [recipeState, setRecipe] = useState({
     title,
     description,
-    imageURL: image,
+    imageURL: imageUrl,
     timeToPrepare: additionalData?.timeToPrep ?? '',
     numberOfPortions: additionalData?.numberOfPortions ?? '',
     ingredients: additionalData?.ingredients ? [...additionalData.ingredients] : [''],
@@ -25,19 +46,19 @@ function OwnerRecipeDetails({ id, title, description, type, image, additionalDat
     setIsEditable(!isEditable);
   };
 
-  const handleChange = (e) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.name.startsWith('ingredient-')) {
       const index = parseInt(e.target.name.split('-')[1], 10);
-      const newIngredients = [...recipe.ingredients];
+      const newIngredients = [...recipeState.ingredients];
       newIngredients[index] = e.target.value;
-      setRecipe({ ...recipe, ingredients: newIngredients });
+      setRecipe({ ...recipeState, ingredients: newIngredients });
     } else {
-      setRecipe({ ...recipe, [e.target.name]: e.target.value });
+      setRecipe({ ...recipeState, [e.target.name]: e.target.value });
     }
   };
 
   const addIngredientField = () => {
-    setRecipe({ ...recipe, ingredients: [...recipe.ingredients, ''] });
+    setRecipe({ ...recipeState, ingredients: [...recipeState.ingredients, ''] });
   };
 
   const handleCancel = () => {
@@ -45,20 +66,20 @@ function OwnerRecipeDetails({ id, title, description, type, image, additionalDat
     setIsEditable(false);
   };
 
-  const handleUpdateRecipe = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleUpdateRecipe = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     event.preventDefault();
 
     const updatedRecipeData = {
       _id: id,
-      title: recipe.title,
-      description: recipe.description,
-      image: recipe.imageURL,
+      title: recipeState.title,
+      description: recipeState.description,
+      image: recipeState.imageURL,
       type,
       additionalData: {
-        timeToPrep: recipe.timeToPrepare,
-        ingredients: recipe.ingredients,
-        howToPrepare: recipe.howToPrepare,
-        numberOfPortions: recipe.numberOfPortions
+        timeToPrep: recipeState.timeToPrepare,
+        ingredients: recipeState.ingredients,
+        howToPrepare: recipeState.howToPrepare,
+        numberOfPortions: recipeState.numberOfPortions
       },
       userToken: user?.token,
     };
@@ -70,7 +91,7 @@ function OwnerRecipeDetails({ id, title, description, type, image, additionalDat
     <Box p={2} display='flex' flexDirection='column' width='90%' alignItems='center' justifyItems='center'>
       <Box display='flex' flexDirection='row' gap='5' alignItems='center' justifyContent='center' width='100%'>
         <Box width='40%'>
-          {image && <Image src={image} alt="Recipe Image" />}
+          {imageUrl && <Image src={imageUrl} alt="Recipe Image" />}
         </Box>
         <Box width='60%'>
           <FormControl display="flex" alignItems="center">
@@ -83,7 +104,7 @@ function OwnerRecipeDetails({ id, title, description, type, image, additionalDat
             <FormLabel>Title</FormLabel>
             <Input
               placeholder="Title"
-              value={recipe.title}
+              value={recipeState.title}
               isDisabled={!isEditable}
               name="title"
               onChange={handleChange}
@@ -93,7 +114,7 @@ function OwnerRecipeDetails({ id, title, description, type, image, additionalDat
             <FormLabel>Description</FormLabel>
             <Textarea
               placeholder="Description"
-              value={recipe.description}
+              value={recipeState.description}
               isDisabled={!isEditable}
               name="description"
               onChange={handleChange}
@@ -103,7 +124,7 @@ function OwnerRecipeDetails({ id, title, description, type, image, additionalDat
             <FormLabel>Image URL</FormLabel>
             <Input
               placeholder="Image URL"
-              value={recipe.imageURL}
+              value={recipeState.imageURL}
               isDisabled={!isEditable}
               name="imageURL"
               onChange={handleChange}
@@ -115,7 +136,7 @@ function OwnerRecipeDetails({ id, title, description, type, image, additionalDat
             <Input
               placeholder="Time to Prepare (minutes)"
               type="number"
-              value={recipe.timeToPrepare}
+              value={recipeState.timeToPrepare}
               isDisabled={!isEditable}
               name="timeToPrepare"
               onChange={handleChange}
@@ -126,7 +147,7 @@ function OwnerRecipeDetails({ id, title, description, type, image, additionalDat
             <Input
               placeholder="Number of Portions"
               type="number"
-              value={recipe.numberOfPortions}
+              value={recipeState.numberOfPortions}
               isDisabled={!isEditable}
               name="numberOfPortions"
               onChange={handleChange}
@@ -134,7 +155,7 @@ function OwnerRecipeDetails({ id, title, description, type, image, additionalDat
           </FormControl>
           <FormControl isDisabled={!isEditable} mt="4">
             <FormLabel>Ingredients</FormLabel>
-            {recipe.ingredients.map((ingredient, index) => (
+            {recipeState.ingredients.map((ingredient, index) => (
               <Box key={index} display="flex" flexDirection='column' alignItems="center" marginY={2}>
                 <Input
                   placeholder={`Ingredient ${index + 1}`}
@@ -143,7 +164,7 @@ function OwnerRecipeDetails({ id, title, description, type, image, additionalDat
                   name={`ingredient-${index}`}
                   onChange={handleChange}
                 />
-                {isEditable && index === recipe.ingredients.length - 1 && (
+                {isEditable && index === recipeState.ingredients.length - 1 && (
                   <IconButton
                     aria-label="Add ingredient"
                     icon={<AddIcon />}
@@ -157,7 +178,7 @@ function OwnerRecipeDetails({ id, title, description, type, image, additionalDat
           </FormControl>
           <FormControl isDisabled={!isEditable} mt="4">
             <FormLabel>How to Prepare</FormLabel>
-            <Textarea name="howToPrepare" value={recipe.howToPrepare} onChange={handleChange} />
+            <Textarea name="howToPrepare" value={recipeState.howToPrepare} onChange={handleChange} />
           </FormControl>
         </Box>
       </Box>

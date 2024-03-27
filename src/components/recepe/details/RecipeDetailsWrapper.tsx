@@ -19,11 +19,15 @@ function RecipeDetailsWrapper() {
             display='flex'
             alignContent='center'
             justifyContent='center'
+            flexDirection='column'
+            paddingLeft={20}
+            paddingRight={20}
+
         >
             {
                 user?.id !== undefined && user?.id === recipe?.owner
-                ? <OwnerRecipeDetails id={recipeId} title={recipe.title} description={recipe.description} type={recipe.type} image={recipe.imageUrl} additionalData={recipe.additionalData} />
-                : <GuestRecipeDetails title={recipe.title} description={recipe.description} type={recipe.type} image={recipe.imageUrl} additionalData={recipe.additionalData} />
+                ? <OwnerRecipeDetails recipe={recipe} />
+                : <GuestRecipeDetails recipe={recipe} />
             }
         </Box>
     )

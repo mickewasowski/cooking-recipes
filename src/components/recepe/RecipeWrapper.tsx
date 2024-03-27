@@ -46,7 +46,6 @@ const AllRecipes = () => {
 
   return (
     <Box>
-      <SearchBar />
         <Flex wrap="wrap" justify="center" gap="20px">
             {allRecipies?.map(recipe => (
                 <RecipeCard key={recipe?.id} {...recipe} />

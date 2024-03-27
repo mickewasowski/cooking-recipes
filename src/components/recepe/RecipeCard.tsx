@@ -45,6 +45,8 @@ function RecipeCard({ id, imageUrl, title, description }: RecipeCardProps) {
         borderWidth="1px"
         borderRadius="md"
         overflow="hidden"
+        borderColor='#D5E7B8'
+        bg='#bfdaa41a'
         p="1"
         key={id}
       >
@@ -53,7 +55,7 @@ function RecipeCard({ id, imageUrl, title, description }: RecipeCardProps) {
         <Stack spacing="2">
           <Heading fontSize="xl">{title}</Heading>
           <Text fontSize="md">{truncateDescription(description, 30)}</Text>
-          <Button colorScheme="blue" onClick={openRecipe}>Details</Button>
+          <Button color='#384031' bgColor='#D5E7B8' _hover={{ bg: "#505C45", color: '#D4F3B7' }} onClick={openRecipe}>Details</Button>
         </Stack>
       </Box>
     </Box>

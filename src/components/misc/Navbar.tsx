@@ -19,7 +19,6 @@ import { IRootState } from '../../store/root-reducer';
 import { useDispatch } from 'react-redux';
 import { signOutStart } from '../../store/user/user.action';
 
-
 function NavigationBar() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -60,9 +59,7 @@ function NavigationBar() {
 
   return (
     <>
-      <Flex px="4" py="2" marginBottom='5' align="center" bg="gray.100" position="sticky" top="0" width="100%" zIndex="1">
-        <Box>Logo</Box>
-        <Spacer />
+      <Flex px="4" py="2" color='#FEECEB' marginBottom='5' align="center" justifyContent='flex-end' bg="#191815" position="sticky" top="0" width="100%" zIndex="1">
         {isSmallScreen ? (
           <Menu>
             <MenuButton as={IconButton} icon={<HamburgerIcon />} />
@@ -72,17 +69,17 @@ function NavigationBar() {
           </Menu>
         ) : (
           <>
-            <Button variant="ghost" mx="2" onClick={() => navigate('/')}>Home</Button>
-            <Button variant="ghost" mx="2" onClick={() => navigate('recipies')}>Recipes</Button>
+            <Button color='#F1FAFF' variant="ghost" _hover={{ bg: '#bfdaa41a' }} mx="2" onClick={() => navigate('/')}>Home</Button>
+            <Button color='#F1FAFF' variant="ghost" _hover={{ bg: '#bfdaa41a' }} mx="2" onClick={() => navigate('recipies')}>Recipes</Button>
             {isLoggedIn ? (
               <>
-                <Button variant="ghost" mx="2" onClick={() => navigate('myaccount')}>My Account</Button>
-                <Button variant="ghost" mx="2" onClick={() => navigate('myrecipies')}>My Recipes</Button>
-                <Button variant="ghost" mx="2" onClick={() => navigate('addrecipe')}>Add Recipe</Button>
-                <Button mx="2" onClick={onLogout}>Logout</Button>
+                <Button color='#F1FAFF' variant="ghost" _hover={{ bg: '#bfdaa41a' }} mx="2" onClick={() => navigate('myaccount')}>My Account</Button>
+                <Button color='#F1FAFF' variant="ghost" _hover={{ bg: '#bfdaa41a' }} mx="2" onClick={() => navigate('myrecipies')}>My Recipes</Button>
+                <Button color='#F1FAFF' variant="ghost" _hover={{ bg: '#bfdaa41a' }} mx="2" onClick={() => navigate('addrecipe')}>Add Recipe</Button>
+                <Button color='#F1FAFF' variant="ghost" _hover={{ bg: '#bfdaa41a' }} mx="2" onClick={onLogout}>Logout</Button>
               </>
             ) : (
-              <Button mx="2" onClick={() => navigate('login')}>Login</Button>
+              <Button color='#F1FAFF' variant="ghost" mx="2" _hover={{ bg: '#bfdaa41a' }} onClick={() => navigate('login')}>Login</Button>
             )}
           </>
         )}
