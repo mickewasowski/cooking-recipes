@@ -1,4 +1,15 @@
 import { RECIPE_ACTION_TYPES, TotalRecipesCount, RecipeCreated, GetRecipes, RecipeAddStart, RecipeUpdate, SearchRecipesSuccess, RecipesForOwner } from "./recipe.types";
+import { ActionWithPayload } from "../../utils/reducerUtils";
+
+export type AddRecipeStart = ActionWithPayload<RECIPE_ACTION_TYPES.ADD_RECIPE_START, RecipeAddStart>;
+
+export type UpdateRecipeStart = ActionWithPayload<RECIPE_ACTION_TYPES.UPDATE_RECIPE_START, RecipeUpdate>;
+
+export type SearchRecipeStart = ActionWithPayload<RECIPE_ACTION_TYPES.SEARCH_RECIPIES_START, string>;
+
+export type GetOwnerRecipes = ActionWithPayload<RECIPE_ACTION_TYPES.GET_OWNER_RECIPIES_START, RecipesForOwner>;
+
+export type GetRecipes = ActionWithPayload<RECIPE_ACTION_TYPES.GET_RECIPIES_START, GetRecipes>;
 
 export const addRecipeStart = (recipeData: RecipeAddStart) => ({ type: RECIPE_ACTION_TYPES.ADD_RECIPE_START, payload: recipeData});
 export const addRecipeSuccess = (recipeData: RecipeCreated) => ({ type: RECIPE_ACTION_TYPES.ADD_RECIPE_SUCCESS, payload: recipeData });

@@ -13,6 +13,11 @@ import {
     searchRecipiesFailed,
     getRecipiesForOwnerSuccess,
     getRecipiesForOwnerFailed,
+    AddRecipeStart,
+    UpdateRecipeStart,
+    SearchRecipeStart,
+    GetOwnerRecipes,
+    GetRecipes,
 } from './recipe.action';
 import {
     addRecipeRequest,
@@ -25,7 +30,7 @@ import {
     getRecipiesPerOwner
 } from '../../utils/recipeUtils';
 
-function* addRecipe(data) {
+function* addRecipe(data: AddRecipeStart) {
     try {
         const { title, description, image, userToken, type, additionalData } = data.payload;
         const response = yield* call(addRecipeRequest, { title, description, image, userToken, type, additionalData });
@@ -42,9 +47,10 @@ function* addRecipe(data) {
     }
 }
 
-function* getRecipies(data) {
+function* getRecipies(data: GetRecipes) {
     try {
-        const response = yield* call(getRecipiesFromDatabase, { page: data.payload.page, limit: data.payload.limit });
+        const { payload: { page, limit }} = data;
+        const response = yield* call(getRecipiesFromDatabase, { page, limit });
 
         if (response.success) {
             const recipies = mapItemsFromDB(response.items);
@@ -72,7 +78,7 @@ function* getRecipeCount() {
     }
 }
 
-function* updateRecipe({ payload: { id, title, description, image, userToken, type, additionalData }}) {
+function* updateRecipe({ payload: { id, title, description, image, userToken, type, additionalData }}: UpdateRecipeStart) {
     try {
         const response = yield* call(updateRecipeData, { id, title, description, image, userToken, type, additionalData });
 
@@ -88,7 +94,7 @@ function* updateRecipe({ payload: { id, title, description, image, userToken, ty
     }
 }
 
-function* searchRecipies({ payload: searchString }) {
+function* searchRecipies({ payload: searchString }: SearchRecipeStart) {
     try {
         const response = yield* call(searchRecipiesByQueryString, searchString);
 
@@ -103,7 +109,7 @@ function* searchRecipies({ payload: searchString }) {
     }
 }
 
-function* getOwnerRecipies({ payload: { ownerId, userToken }}) {
+function* getOwnerRecipies({ payload: { ownerId, userToken }}: GetOwnerRecipes) {
     try {
         const response = yield* call(getRecipiesPerOwner, { ownerId, userToken });
 
