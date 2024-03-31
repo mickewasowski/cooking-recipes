@@ -12,3 +12,24 @@ export enum USER_ACTION_TYPES {
     EDIT_USER_SUCCESS = 'user/EDIT_USER_SUCCESS',
     EDIT_USER_FAILED = 'user/EDIT_USER_FAILED',
 }
+
+export type UserSignIn = {
+    email: string;
+    password: string;
+}
+
+export type UserRegisterStart = UserSignIn & {
+    fullName: string;
+}
+
+export type UserEditStart = UserRegisterStart & {
+    newPassword: string;
+    token: string;
+}
+
+export type UserEditSuccess = {
+    id: string;
+    email: string;
+    fullName: string;
+    token: string;
+}
