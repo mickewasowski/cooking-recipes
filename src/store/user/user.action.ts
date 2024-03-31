@@ -1,5 +1,12 @@
 import { USER_ACTION_TYPES, UserSignIn, UserRegisterStart, UserEditStart, UserEditSuccess } from "./user.types";
 import { User } from "./user.reducer";
+import { ActionWithPayload } from '../../utils/reducerUtils';
+
+export type EmailSignInStart = ActionWithPayload<USER_ACTION_TYPES.EMAIL_SIGN_IN_START, UserSignIn>;
+
+export type RegisterStart = ActionWithPayload<USER_ACTION_TYPES.REGISTER_START, UserRegisterStart>;
+
+export type EditStart = ActionWithPayload<USER_ACTION_TYPES.EDIT_USER_START, UserEditStart>;
 
 export const signInWithEmail = (userData: UserSignIn) => ({ type: USER_ACTION_TYPES.EMAIL_SIGN_IN_START, payload: userData });
 export const signInSuccess = (user: User) => ({ type: USER_ACTION_TYPES.SIGN_IN_SUCCESS, payload: user });

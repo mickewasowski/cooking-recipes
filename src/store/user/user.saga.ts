@@ -8,11 +8,14 @@ import {
     registerSuccess,
     registerFailed,
     editUserSuccess,
-    editUserFailed
+    editUserFailed,
+    EmailSignInStart,
+    RegisterStart,
+    EditStart
 } from './user.action';
 import { USER_ACTION_TYPES } from './user.types';
 
-function* loginUserWithEmail({ payload: { email, password }}) {
+function* loginUserWithEmail({ payload: { email, password } }: EmailSignInStart) {
     try {
         const response = yield* call(emailSignIn, { email, password });
         if (response.success) {
@@ -34,7 +37,7 @@ export function* userSignOut() {
     }
 }
 
-export function* userRegister({ payload: { email, fullName, password }}) {
+export function* userRegister({ payload: { email, fullName, password }}: RegisterStart) {
     try {
         const response = yield* call(registerUser, { email, fullName, password });
 
@@ -48,7 +51,7 @@ export function* userRegister({ payload: { email, fullName, password }}) {
     }
 }
 
-export function* userEdit({ payload: { email, fullName, password, newPassword, token }}) {
+export function* userEdit({ payload: { email, fullName, password, newPassword, token }}: EditStart) {
     try {
         const response = yield* call(updateUserData, { email, fullName, password, newPassword, token });
 
