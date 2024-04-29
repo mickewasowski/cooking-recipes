@@ -18,6 +18,7 @@ export type RecipeState = {
     readonly isLoading: boolean,
     readonly error: Error | null,
     readonly totalRecipeCount: number,
+    readonly latestAdded: Recipe[] | [],
 }
 
 export const INITIAL_STATE = {
@@ -25,6 +26,7 @@ export const INITIAL_STATE = {
     isLoading: false,
     error: null,
     totalRecipeCount: 0,
+    latestAdded: [],
 }
 
 export const recipeReducer = (state = INITIAL_STATE, action: AnyAction) => {
@@ -64,6 +66,12 @@ export const recipeReducer = (state = INITIAL_STATE, action: AnyAction) => {
         case RECIPE_ACTION_TYPES.GET_OWNER_RECIPIES_SUCCESS:
             return { ...state, isLoading: false, recipies: action.payload.recipies, totalRecipeCount: action.payload.count };
         case RECIPE_ACTION_TYPES.GET_OWNER_RECIPIES_FAILED:
+            return { ...state, isLoading: false, error: action.payload.error };
+        case RECIPE_ACTION_TYPES.GET_LATEST_ADDED_RECIPES_START:
+            return { ...state, isLoading: true };
+        case RECIPE_ACTION_TYPES.GET_LATEST_ADDED_RECIPES_SUCCESS:
+            return { ...state, isLoading: false, latestAdded: action.payload };
+        case RECIPE_ACTION_TYPES.GET_LATEST_ADDED_RECIPES_FAILED:
             return { ...state, isLoading: false, error: action.payload.error };
         default:
             return state;

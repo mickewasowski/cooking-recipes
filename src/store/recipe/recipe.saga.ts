@@ -18,6 +18,8 @@ import {
     SearchRecipeStart,
     GetOwnerRecipes,
     GetRecipes,
+    getLatestRecipiesSuccess,
+    getLatestRecipiesFailed,
 } from './recipe.action';
 import {
     addRecipeRequest,
@@ -27,7 +29,8 @@ import {
     searchRecipiesByQueryString,
     mapItemsFromDB,
     mapSingleItemFromDB,
-    getRecipiesPerOwner
+    getRecipiesPerOwner,
+    getLatestRecipes
 } from '../../utils/recipeUtils';
 
 function* addRecipe(data: AddRecipeStart) {
@@ -124,6 +127,18 @@ function* getOwnerRecipies({ payload: { ownerId, userToken }}: GetOwnerRecipes) 
     }
 }
 
+function* getLatestAddedRecipes() {
+    try {
+        const response = yield* call(getLatestRecipes);
+        if (response.success) {
+            const mappedRecipies = mapItemsFromDB(response.items);
+            yield* put(getLatestRecipiesSuccess(mappedRecipies));
+        }
+    } catch (error) {
+        yield* put(getLatestRecipiesFailed(error as Error));
+    }
+}
+
 export function* onAddRecipeStart() {
     yield* takeLatest(RECIPE_ACTION_TYPES.ADD_RECIPE_START, addRecipe);
 }
@@ -148,6 +163,10 @@ export function* onGetRecipiesPerOwner() {
     yield* takeLatest(RECIPE_ACTION_TYPES.GET_OWNER_RECIPIES_START, getOwnerRecipies);
 }
 
+export function* onGetLatestAddedRecipes() {
+    yield* takeLatest(RECIPE_ACTION_TYPES.GET_LATEST_ADDED_RECIPES_START, getLatestAddedRecipes);
+}
+
 export function* recipeSaga() {
     yield* all([
         call(onAddRecipeStart),
@@ -156,5 +175,6 @@ export function* recipeSaga() {
         call(onUpdateRecipeStart),
         call(onSearchRecipiesStart),
         call(onGetRecipiesPerOwner),
+        call(onGetLatestAddedRecipes),
     ])
 }

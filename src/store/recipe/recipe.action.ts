@@ -19,6 +19,10 @@ export const getRecipiesStart = (data: GetRecipes) => ({ type: RECIPE_ACTION_TYP
 export const getRecipiesSuccess = (recipies: RecipeCreated[]) => ({ type: RECIPE_ACTION_TYPES.GET_RECIPIES_SUCCESS, payload: recipies });
 export const getRecipiesFailed = (error: Error) => ({ type: RECIPE_ACTION_TYPES.GET_RECIPIES_FAILED, payload: error });
 
+export const getLatestRecipiesStart = () => ({ type: RECIPE_ACTION_TYPES.GET_LATEST_ADDED_RECIPES_START });
+export const getLatestRecipiesSuccess = (recipes: RecipeCreated[]) => ({ type: RECIPE_ACTION_TYPES.GET_LATEST_ADDED_RECIPES_SUCCESS, payload: recipes });
+export const getLatestRecipiesFailed = (error: Error) => ({ type: RECIPE_ACTION_TYPES.GET_LATEST_ADDED_RECIPES_FAILED, payload: error });
+
 export const getRecipeCountStart = () => ({ type: RECIPE_ACTION_TYPES.GET_RECIPE_COUNT_START });
 export const getRecipeCountSuccess = ({ totalRecipeCount }: TotalRecipesCount) => ({ type: RECIPE_ACTION_TYPES.GET_RECIPE_COUNT_SUCCESS, payload: { totalRecipeCount } });
 export const getRecipeCountFailed = (error: Error) => ({ type: RECIPE_ACTION_TYPES.GET_RECIPE_COUNT_FAILED, payload: error });

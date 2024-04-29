@@ -114,3 +114,13 @@ export const mapSingleItemFromDB = (item) => {
 
     return mappedItem;
 }
+
+export const getLatestRecipes = () => {
+    return fetch(`http://localhost:5000/api/item/latest`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    })
+    .then(res => res.json());
+}
