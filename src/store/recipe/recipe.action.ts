@@ -9,13 +9,13 @@ export type SearchRecipeStart = ActionWithPayload<RECIPE_ACTION_TYPES.SEARCH_REC
 
 export type GetOwnerRecipes = ActionWithPayload<RECIPE_ACTION_TYPES.GET_OWNER_RECIPIES_START, RecipesForOwner>;
 
-export type GetRecipes = ActionWithPayload<RECIPE_ACTION_TYPES.GET_RECIPIES_START, GetRecipes>;
+export type GetRecipesType = ActionWithPayload<RECIPE_ACTION_TYPES.GET_RECIPIES_START, GetRecipes>;
 
 export const addRecipeStart = (recipeData: RecipeAddStart) => ({ type: RECIPE_ACTION_TYPES.ADD_RECIPE_START, payload: recipeData});
 export const addRecipeSuccess = (recipeData: RecipeCreated) => ({ type: RECIPE_ACTION_TYPES.ADD_RECIPE_SUCCESS, payload: recipeData });
 export const addRecipeFailed = (error: Error) => ({ type: RECIPE_ACTION_TYPES.ADD_RECIPE_FAILED, payload: error });
 
-export const getRecipiesStart = (data: GetRecipes) => ({ type: RECIPE_ACTION_TYPES.GET_RECIPIES_START, payload: data });
+export const getRecipiesStart = (data: GetRecipesType) => ({ type: RECIPE_ACTION_TYPES.GET_RECIPIES_START, payload: data });
 export const getRecipiesSuccess = (recipies: RecipeCreated[]) => ({ type: RECIPE_ACTION_TYPES.GET_RECIPIES_SUCCESS, payload: recipies });
 export const getRecipiesFailed = (error: Error) => ({ type: RECIPE_ACTION_TYPES.GET_RECIPIES_FAILED, payload: error });
 

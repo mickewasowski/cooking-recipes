@@ -36,19 +36,19 @@ export const recipeReducer = (state = INITIAL_STATE, action: AnyAction) => {
         case RECIPE_ACTION_TYPES.ADD_RECIPE_SUCCESS:
             return { ...state, isLoading: false, recipies: [ ...state.recipies, { ...action.payload } ]};
         case RECIPE_ACTION_TYPES.ADD_RECIPE_FAILED:
-            return { ...state, isLoading: false, error: action.payload.error };
+            return { ...state, isLoading: false, error: action.payload };
         case RECIPE_ACTION_TYPES.GET_RECIPIES_START:
             return { ...state, isLoading: true };
         case RECIPE_ACTION_TYPES.GET_RECIPIES_SUCCESS:
             return { ...state, isLoading: false, recipies: action.payload };
         case RECIPE_ACTION_TYPES.GET_RECIPIES_FAILED:
-            return { ...state, isLoading: false, error: action.payload.error };
+            return { ...state, isLoading: false, error: action.payload };
         case RECIPE_ACTION_TYPES.GET_RECIPE_COUNT_START:
             return { ...state, isLoading: true };
         case RECIPE_ACTION_TYPES.GET_RECIPE_COUNT_SUCCESS:
             return { ...state, isLoading: false, totalRecipeCount: action.payload.totalRecipeCount };
         case RECIPE_ACTION_TYPES.GET_RECIPE_COUNT_FAILED:
-            return { ...state, isLoading: false, error: action.payload.error };
+            return { ...state, isLoading: false, error: action.payload };
         case RECIPE_ACTION_TYPES.UPDATE_RECIPE_START:
             return { ...state, isLoading: true };
         case RECIPE_ACTION_TYPES.UPDATE_RECIPE_SUCCESS:
@@ -72,7 +72,7 @@ export const recipeReducer = (state = INITIAL_STATE, action: AnyAction) => {
         case RECIPE_ACTION_TYPES.GET_LATEST_ADDED_RECIPES_SUCCESS:
             return { ...state, isLoading: false, latestAdded: action.payload };
         case RECIPE_ACTION_TYPES.GET_LATEST_ADDED_RECIPES_FAILED:
-            return { ...state, isLoading: false, error: action.payload.error };
+            return { ...state, isLoading: false, error: action.payload };
         default:
             return state;
     }
