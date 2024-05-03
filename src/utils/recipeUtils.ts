@@ -1,4 +1,14 @@
-export const addRecipeRequest = ({ title, description, image, userToken, type, additionalData }) => {
+import {
+    ItemFromDB
+} from './recipeUtils.types';
+import {
+    RecipeAddStart,
+    GetRecipes,
+    RecipeUpdate,
+    RecipesForOwner
+} from '../store/recipe/recipe.types';
+
+export const addRecipeRequest = ({ title, description, image, userToken, type, additionalData }: RecipeAddStart) => {
     const itemObject = {
         name: title,
         description,
@@ -15,17 +25,31 @@ export const addRecipeRequest = ({ title, description, image, userToken, type, a
         },
         body: JSON.stringify(itemObject)
     })
-    .then(res => res.json());
+    .then(res => res.json())
+    .then((res) => {
+        if (res.success) {
+            return res;
+        } else {
+            throw new Error(res.message);
+        }
+    });
 };
 
-export const getRecipiesFromDatabase = ({ page, limit }) => {
+export const getRecipiesFromDatabase = ({ page, limit }: GetRecipes) => {
     return fetch(`http://localhost:5000/api/item?page=${page}&limit=${limit}`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
         },
     })
-    .then(res => res.json());
+    .then(res => res.json())
+    .then((res) => {
+        if (res.success) {
+            return res;
+        } else {
+            throw new Error(res.message);
+        }
+    });
 }
 
 export const getRecipeCountFromDatabase = () => {
@@ -35,10 +59,17 @@ export const getRecipeCountFromDatabase = () => {
             'Content-Type': 'application/json',
         },
     })
-    .then(res => res.json());
+    .then(res => res.json())
+    .then((res) => {
+        if (res.success) {
+            return res;
+        } else {
+            throw new Error(res.message);
+        }
+    });
 }
 
-export const updateRecipeData = ({ id, title, description, image, userToken, type, additionalData }) => {
+export const updateRecipeData = ({ id, title, description, image, userToken, type, additionalData }: RecipeUpdate) => {
     const itemObject = {
         _id: id,
         name: title,
@@ -56,7 +87,14 @@ export const updateRecipeData = ({ id, title, description, image, userToken, typ
         },
         body: JSON.stringify(itemObject)
     })
-    .then(res => res.json());
+    .then(res => res.json())
+    .then((res) => {
+        if (res.success) {
+            return res;
+        } else {
+            throw new Error(res.message);
+        }
+    });
 }
 
 export const searchRecipiesByQueryString = (querySearch: string) => {
@@ -75,10 +113,17 @@ export const searchRecipiesByQueryString = (querySearch: string) => {
             'Content-Type': 'application/json',
         },
     })
-    .then(res => res.json());
+    .then(res => res.json())
+    .then((res) => {
+        if (res.success) {
+            return res;
+        } else {
+            throw new Error(res.message);
+        }
+    });
 }
 
-export const getRecipiesPerOwner = (data) => {
+export const getRecipiesPerOwner = (data: RecipesForOwner) => {
     const { ownerId, userToken } = data;
 
     return fetch(`http://localhost:5000/api/item/owned?ownerId=${ownerId}`, {
@@ -88,10 +133,34 @@ export const getRecipiesPerOwner = (data) => {
             'Authorization': `Bearer ${userToken}`
         },
     })
-    .then(res => res.json());
+    .then(res => res.json())
+    .then((res) => {
+        if (res.success) {
+            return res;
+        } else {
+            throw new Error(res.message);
+        }
+    });
 }
 
-export const mapItemsFromDB = (items) => {
+export const getLatestRecipes = () => {
+    return fetch(`http://localhost:5000/api/item/latest`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    })
+    .then(res => res.json())
+    .then((res) => {
+        if (res.success) {
+            return res;
+        } else {
+            throw new Error(res.message);
+        }
+    });
+}
+
+export const mapItemsFromDB = (items: ItemFromDB[]) => {
     const mappedRecipies = items.map(recipe => {
         return mapSingleItemFromDB(recipe)
     });
@@ -99,7 +168,7 @@ export const mapItemsFromDB = (items) => {
     return mappedRecipies;
 }
 
-export const mapSingleItemFromDB = (item) => {
+export const mapSingleItemFromDB = (item: ItemFromDB) => {
     const mappedItem = {
         id: item._id,
         title: item.name,
@@ -113,14 +182,4 @@ export const mapSingleItemFromDB = (item) => {
     };
 
     return mappedItem;
-}
-
-export const getLatestRecipes = () => {
-    return fetch(`http://localhost:5000/api/item/latest`, {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-    })
-    .then(res => res.json());
 }

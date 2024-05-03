@@ -17,7 +17,7 @@ import {
     UpdateRecipeStart,
     SearchRecipeStart,
     GetOwnerRecipes,
-    GetRecipes,
+    GetRecipesType,
     getLatestRecipiesSuccess,
     getLatestRecipiesFailed,
 } from './recipe.action';
@@ -33,107 +33,70 @@ import {
     getLatestRecipes
 } from '../../utils/recipeUtils';
 
-function* addRecipe(data: AddRecipeStart) {
+export function* addRecipe(data: AddRecipeStart) {
     try {
-        const { title, description, image, userToken, type, additionalData } = data.payload;
-        const response = yield* call(addRecipeRequest, { title, description, image, userToken, type, additionalData });
-
-        if (response.success) {
-            const recipe = mapSingleItemFromDB(response.item);
-
-            yield* put(addRecipeSuccess(recipe));
-        } else {
-            yield* put(addRecipeFailed(new Error(response.message)));
-        }
+        const response = yield* call(addRecipeRequest, data.payload);
+        const recipe = mapSingleItemFromDB(response.item);
+        yield* put(addRecipeSuccess(recipe));
     } catch (error) {
         yield* put(addRecipeFailed(error as Error));
     }
 }
 
-function* getRecipies(data: GetRecipes) {
+export function* getRecipies(data: GetRecipesType) {
     try {
-        const { payload: { page, limit }} = data;
-        const response = yield* call(getRecipiesFromDatabase, { page, limit });
-
-        if (response.success) {
-            const recipies = mapItemsFromDB(response.items);
-
-            yield* put(getRecipiesSuccess(recipies));
-        } else {
-            yield* put(getRecipiesFailed(new Error(response.message)));
-        }
+        const response = yield* call(getRecipiesFromDatabase, data.payload);
+        const recipies = mapItemsFromDB(response.items);
+        yield* put(getRecipiesSuccess(recipies));
     } catch (error) {
         yield* put(getRecipiesFailed(error as Error));
     }
 }
 
-function* getRecipeCount() {
+export function* getRecipeCount() {
     try {
         const response = yield* call(getRecipeCountFromDatabase);
-
-        if (response.success) {
-            yield* put(getRecipeCountSuccess({ totalRecipeCount: response.count }));
-        } else {
-            yield* put(getRecipeCountFailed(new Error(response.message)));
-        }
+        yield* put(getRecipeCountSuccess({ totalRecipeCount: response.count }));
     } catch (error) {
         yield* put(getRecipeCountFailed(error as Error));
     }
 }
 
-function* updateRecipe({ payload: { id, title, description, image, userToken, type, additionalData }}: UpdateRecipeStart) {
+export function* updateRecipe(data: UpdateRecipeStart) {
     try {
-        const response = yield* call(updateRecipeData, { id, title, description, image, userToken, type, additionalData });
-
-        if (response.success) {
-            const recipe = mapSingleItemFromDB(response.item);
-
-            yield* put(updateRecipeSuccess({...recipe}));
-        } else {
-            yield* put(updateRecipeFailed(response.message as Error));
-        }
+        const response = yield* call(updateRecipeData, data.payload);
+        const recipe = mapSingleItemFromDB(response.item);
+        yield* put(updateRecipeSuccess({...recipe}));
     } catch (error) {
         yield* put(updateRecipeFailed(error as Error));
     }
 }
 
-function* searchRecipies({ payload: searchString }: SearchRecipeStart) {
+export function* searchRecipies({ payload: searchString }: SearchRecipeStart) {
     try {
         const response = yield* call(searchRecipiesByQueryString, searchString);
-
-        if (response.success) {
-            const mappedRecipies = mapItemsFromDB(response.items);
-            yield* put(searchRecipiesSuccess({ recipies: mappedRecipies, count: response.count }));
-        } else {
-            yield* put(searchRecipiesFailed(response.message as Error));
-        }
+        const mappedRecipies = mapItemsFromDB(response.items);
+        yield* put(searchRecipiesSuccess({ recipies: mappedRecipies, count: response.count }));
     } catch (error) {
         yield* put(searchRecipiesFailed(error as Error));
     }
 }
 
-function* getOwnerRecipies({ payload: { ownerId, userToken }}: GetOwnerRecipes) {
+export function* getOwnerRecipies({ payload: { ownerId, userToken }}: GetOwnerRecipes) {
     try {
         const response = yield* call(getRecipiesPerOwner, { ownerId, userToken });
-
-        if (response.success) {
-            const mappedRecipies = mapItemsFromDB(response.items);
-            yield* put(getRecipiesForOwnerSuccess({ recipies: mappedRecipies, count: response.count }));
-        } else {
-            yield* put(getRecipiesForOwnerFailed(response.message as Error));
-        }
+        const mappedRecipies = mapItemsFromDB(response.items);
+        yield* put(getRecipiesForOwnerSuccess({ recipies: mappedRecipies, count: response.count }));
     } catch (error) {
         yield* put(getRecipiesForOwnerFailed(error as Error));
     }
 }
 
-function* getLatestAddedRecipes() {
+export function* getLatestAddedRecipes() {
     try {
         const response = yield* call(getLatestRecipes);
-        if (response.success) {
-            const mappedRecipies = mapItemsFromDB(response.items);
-            yield* put(getLatestRecipiesSuccess(mappedRecipies));
-        }
+        const mappedRecipies = mapItemsFromDB(response.items);
+        yield* put(getLatestRecipiesSuccess(mappedRecipies));
     } catch (error) {
         yield* put(getLatestRecipiesFailed(error as Error));
     }
@@ -176,5 +139,5 @@ export function* recipeSaga() {
         call(onSearchRecipiesStart),
         call(onGetRecipiesPerOwner),
         call(onGetLatestAddedRecipes),
-    ])
+    ]);
 }
