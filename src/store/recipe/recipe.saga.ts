@@ -1,4 +1,4 @@
-import { all, put, call, takeLatest } from 'typed-redux-saga';
+import { all, put, call, takeLatest } from 'typed-redux-saga/macro';
 import { RECIPE_ACTION_TYPES } from './recipe.types';
 import {
     addRecipeFailed,
