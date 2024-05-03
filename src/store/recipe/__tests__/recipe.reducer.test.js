@@ -14,7 +14,16 @@ import {
     getLatestRecipiesFailed,
     getRecipeCountStart,
     getRecipeCountSuccess,
-    getRecipeCountFailed
+    getRecipeCountFailed,
+    updateRecipeStart,
+    updateRecipeSuccess,
+    updateRecipeFailed,
+    searchRecipiesStart,
+    searchRecipiesSuccess,
+    searchRecipiesFailed,
+    getRecipiesForOwnerStart,
+    getRecipiesForOwnerSuccess,
+    getRecipiesForOwnerFailed,
 } from '../recipe.action';
 
 describe('Recipe reducer tests', () => {
@@ -176,5 +185,172 @@ describe('Recipe reducer tests', () => {
         expect(recipeReducer(INITIAL_STATE, getRecipeCountFailed(mockError))).toEqual(expectedState);
     });
 
-    //TODO: write tests for the rest of the reducer actions
+    test('updateRecipeStart', () => {
+        const expectedState = {
+            ...INITIAL_STATE,
+            isLoading: true,
+        };
+
+        expect(recipeReducer(INITIAL_STATE, updateRecipeStart())).toEqual(expectedState);
+    });
+
+    test('updateRecipeSuccess', () => {
+        const mockRecipe1 = {
+            title: 'Chicken salad',
+            image: 'https://i2.wp.com/www.downshiftology.com/wp-content/uploads/2023/10/Chicken-Salad-main-1.jpg',
+            type: 'salad',
+            description: 'tasty salad with chicken and grapes',
+            id: 'chickenSaladGrapes',
+            owner: 'someTestUser123',
+            createdAt: Date.now(),
+            updatedAt: Date.now(),
+        };
+        const mockRecipe2 = {
+            title: 'Chicken soup',
+            image: 'testUrl',
+            type: 'soup',
+            description: 'tasty chicken soup',
+            id: 'chickenSoup',
+            owner: 'someTestUser123',
+            createdAt: Date.now(),
+            updatedAt: Date.now(),
+        };
+
+        const mockInitialState = {
+            ...INITIAL_STATE,
+            recipies: [ mockRecipe1 ],
+        };
+
+        const expectedState = {
+            ...INITIAL_STATE,
+            isLoading: false,
+            recipies: [ mockRecipe1, mockRecipe2 ],
+        };
+
+        expect(recipeReducer(mockInitialState, updateRecipeSuccess(mockRecipe2))).toEqual(expectedState);
+    });
+
+    test('updateRecipeFailed', () => {
+        const mockError = new Error('Something went wrong!');
+        const expectedState = {
+            ...INITIAL_STATE,
+            error: mockError,
+        };
+
+        expect(recipeReducer(INITIAL_STATE, updateRecipeFailed(mockError))).toEqual(expectedState);
+    });
+
+    test('searchRecipiesStart', () => {
+        const expectedState = {
+            ...INITIAL_STATE,
+            isLoading: true,
+        };
+
+        expect(recipeReducer(INITIAL_STATE, searchRecipiesStart())).toEqual(expectedState);
+    });
+
+    test('searchRecipiesSuccess', () => {
+        const mockRecipies = [
+            {
+                title: 'Chicken salad',
+                image: 'https://i2.wp.com/www.downshiftology.com/wp-content/uploads/2023/10/Chicken-Salad-main-1.jpg',
+                type: 'salad',
+                description: 'tasty salad with chicken and grapes',
+                id: 'chickenSaladGrapes',
+                owner: 'someTestUser123',
+                createdAt: Date.now(),
+                updatedAt: Date.now(),
+            },
+            {
+                title: 'Chicken soup',
+                image: 'testUrl',
+                type: 'soup',
+                description: 'tasty chicken soup',
+                id: 'chickenSoup',
+                owner: 'someTestUser123',
+                createdAt: Date.now(),
+                updatedAt: Date.now(),
+            }
+        ];
+        const mockData = {
+            recipies: mockRecipies,
+            count: 2
+        };
+
+        const expectedState = {
+            ...INITIAL_STATE,
+            isLoading: false,
+            recipies: mockRecipies,
+            totalRecipeCount: 2,
+        };
+
+        expect(recipeReducer(INITIAL_STATE, searchRecipiesSuccess(mockData))).toEqual(expectedState);
+    });
+
+    test('searchRecipiesFailed', () => {
+        const mockError = new Error('Something went wrong!');
+        const expectedState = {
+            ...INITIAL_STATE,
+            error: mockError,
+        };
+
+        expect(recipeReducer(INITIAL_STATE, searchRecipiesFailed(mockError))).toEqual(expectedState);
+    });
+
+    test('getRecipiesForOwnerStart', () => {
+        const expectedState = {
+            ...INITIAL_STATE,
+            isLoading: true,
+        };
+
+        expect(recipeReducer(INITIAL_STATE, getRecipiesForOwnerStart())).toEqual(expectedState);
+    });
+
+    test('getRecipiesForOwnerSuccess', () => {
+        const mockRecipies = [
+            {
+                title: 'Chicken salad',
+                image: 'https://i2.wp.com/www.downshiftology.com/wp-content/uploads/2023/10/Chicken-Salad-main-1.jpg',
+                type: 'salad',
+                description: 'tasty salad with chicken and grapes',
+                id: 'chickenSaladGrapes',
+                owner: 'someTestUser123',
+                createdAt: Date.now(),
+                updatedAt: Date.now(),
+            },
+            {
+                title: 'Chicken soup',
+                image: 'testUrl',
+                type: 'soup',
+                description: 'tasty chicken soup',
+                id: 'chickenSoup',
+                owner: 'someTestUser123',
+                createdAt: Date.now(),
+                updatedAt: Date.now(),
+            }
+        ];
+        const mockData = {
+            recipies: mockRecipies,
+            count: 2
+        };
+
+        const expectedState = {
+            ...INITIAL_STATE,
+            isLoading: false,
+            recipies: mockRecipies,
+            totalRecipeCount: 2,
+        };
+
+        expect(recipeReducer(INITIAL_STATE, getRecipiesForOwnerSuccess(mockData))).toEqual(expectedState);
+    });
+
+    test('getRecipiesForOwnerFailed', () => {
+        const mockError = new Error('Something went wrong!');
+        const expectedState = {
+            ...INITIAL_STATE,
+            error: mockError,
+        };
+
+        expect(recipeReducer(INITIAL_STATE, getRecipiesForOwnerFailed(mockError))).toEqual(expectedState);
+    });
 });
