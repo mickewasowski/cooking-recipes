@@ -1,7 +1,7 @@
 import { USER_ACTION_TYPES } from "./user.types";
 import { AnyAction } from "redux-saga";
 
-enum UserSuccessMessage {
+export enum UserSuccessMessage {
     registrationSuccess = 'You have registered successfully! You will be redirected to sign in page automatically.'
 }
 
