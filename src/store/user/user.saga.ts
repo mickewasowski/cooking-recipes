@@ -1,5 +1,5 @@
 import { emailSignIn, registerUser, updateUserData } from '../../utils/userUtils';
-import { call, takeLatest, put, all } from 'typed-redux-saga';
+import { call, takeLatest, put, all } from 'typed-redux-saga/macro';
 import {
     signInFailed,
     signInSuccess,
@@ -13,17 +13,13 @@ import {
     RegisterStart,
     EditStart
 } from './user.action';
-import { USER_ACTION_TYPES } from './user.types';
+import { USER_ACTION_TYPES, UserEditSuccess } from './user.types';
+import { User } from './user.reducer';
 
-function* loginUserWithEmail({ payload: { email, password } }: EmailSignInStart) {
+export function* loginUserWithEmail({ payload: { email, password } }: EmailSignInStart) {
     try {
         const response = yield* call(emailSignIn, { email, password });
-        if (response.success) {
-            yield* put(signInSuccess(response.user));
-        } else {
-            const errorMessage = new Error(response.message);
-            yield put(signInFailed(errorMessage));
-        }
+        yield* put(signInSuccess(response.user as User));
     } catch (error) {
         yield put(signInFailed(error as Error));
     }
@@ -39,13 +35,8 @@ export function* userSignOut() {
 
 export function* userRegister({ payload: { email, fullName, password }}: RegisterStart) {
     try {
-        const response = yield* call(registerUser, { email, fullName, password });
-
-        if (response.success) {
-            yield* put(registerSuccess());
-        } else {
-            yield* put(registerFailed(response.message as Error));
-        }
+        yield* call(registerUser, { email, fullName, password });
+        yield* put(registerSuccess());
     } catch (error) {
         yield* put(registerFailed(error as Error));
     }
@@ -54,12 +45,7 @@ export function* userRegister({ payload: { email, fullName, password }}: Registe
 export function* userEdit({ payload: { email, fullName, password, newPassword, token }}: EditStart) {
     try {
         const response = yield* call(updateUserData, { email, fullName, password, newPassword, token });
-
-        if (response.success) {
-            yield* put(editUserSuccess(response.user));
-        } else {
-            yield* put(editUserFailed(response.message as Error));
-        }
+        yield* put(editUserSuccess(response.user as UserEditSuccess));
     } catch (error) {
         yield* put(editUserFailed(error as Error));
     }
