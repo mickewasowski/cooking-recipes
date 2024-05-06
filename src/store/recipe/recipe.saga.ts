@@ -86,6 +86,7 @@ export function* getOwnerRecipies({ payload: { ownerId, userToken }}: GetOwnerRe
     try {
         const response = yield* call(getRecipiesPerOwner, { ownerId, userToken });
         const mappedRecipies = mapItemsFromDB(response.items);
+        //TODO: implement a separate state in the store for these recipes
         yield* put(getRecipiesForOwnerSuccess({ recipies: mappedRecipies, count: response.count }));
     } catch (error) {
         yield* put(getRecipiesForOwnerFailed(error as Error));

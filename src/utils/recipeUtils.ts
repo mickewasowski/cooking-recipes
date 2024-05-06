@@ -32,7 +32,8 @@ export const addRecipeRequest = ({ title, description, image, userToken, type, a
         } else {
             throw new Error(res.message);
         }
-    });
+    })
+    .catch((error) => { throw new Error(error.message) });
 };
 
 export const getRecipiesFromDatabase = ({ page, limit }: GetRecipes) => {
@@ -49,7 +50,8 @@ export const getRecipiesFromDatabase = ({ page, limit }: GetRecipes) => {
         } else {
             throw new Error(res.message);
         }
-    });
+    })
+    .catch((error) => { throw new Error(error.message) });
 }
 
 export const getRecipeCountFromDatabase = () => {
@@ -66,7 +68,8 @@ export const getRecipeCountFromDatabase = () => {
         } else {
             throw new Error(res.message);
         }
-    });
+    })
+    .catch((error) => { throw new Error(error.message) });
 }
 
 export const updateRecipeData = ({ id, title, description, image, userToken, type, additionalData }: RecipeUpdate) => {
@@ -94,7 +97,8 @@ export const updateRecipeData = ({ id, title, description, image, userToken, typ
         } else {
             throw new Error(res.message);
         }
-    });
+    })
+    .catch((error) => { throw new Error(error.message) });
 }
 
 export const searchRecipiesByQueryString = (querySearch: string) => {
@@ -120,7 +124,8 @@ export const searchRecipiesByQueryString = (querySearch: string) => {
         } else {
             throw new Error(res.message);
         }
-    });
+    })
+    .catch((error) => { throw new Error(error.message) });
 }
 
 export const getRecipiesPerOwner = (data: RecipesForOwner) => {
@@ -140,7 +145,8 @@ export const getRecipiesPerOwner = (data: RecipesForOwner) => {
         } else {
             throw new Error(res.message);
         }
-    });
+    })
+    .catch((error) => { throw new Error(error.message) });
 }
 
 export const getLatestRecipes = () => {
@@ -157,7 +163,8 @@ export const getLatestRecipes = () => {
         } else {
             throw new Error(res.message);
         }
-    });
+    })
+    .catch((error) => { throw new Error(error.message) });
 }
 
 export const mapItemsFromDB = (items: ItemFromDB[]) => {
