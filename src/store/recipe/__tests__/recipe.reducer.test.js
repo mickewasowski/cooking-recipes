@@ -337,8 +337,8 @@ describe('Recipe reducer tests', () => {
         const expectedState = {
             ...INITIAL_STATE,
             isLoading: false,
-            recipies: mockRecipies,
-            totalRecipeCount: 2,
+            ownedRecipes: mockRecipies,
+            ownedRecipesCount: 2,
         };
 
         expect(recipeReducer(INITIAL_STATE, getRecipiesForOwnerSuccess(mockData))).toEqual(expectedState);
