@@ -11,7 +11,7 @@ import {
 } from '../user.saga';
 import {
     call
-} from 'typed-redux-saga/macro';
+} from 'redux-saga/effects';
 import {
     testSaga,
     expectSaga
