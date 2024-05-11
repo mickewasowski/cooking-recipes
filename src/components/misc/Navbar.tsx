@@ -18,6 +18,7 @@ import { getCurrentUser } from '../../store/user/user.selector';
 import { IRootState } from '../../store/root-reducer';
 import { useDispatch } from 'react-redux';
 import { signOutStart } from '../../store/user/user.action';
+import './Navbar.styles.scss';
 
 function NavigationBar() {
   const navigate = useNavigate();
@@ -59,7 +60,7 @@ function NavigationBar() {
 
   return (
     <>
-      <Flex px="4" py="2" color='#FEECEB' marginBottom='5' align="center" justifyContent='flex-end' bg="#191815" position="sticky" top="0" width="100%" zIndex="1">
+      {/* <Flex px="4" py="2" color='#FEECEB' marginBottom='5' align="center" justifyContent='flex-end' bg="#191815" position="sticky" top="0" width="100%" zIndex="1">
         {isSmallScreen ? (
           <Menu>
             <MenuButton as={IconButton} icon={<HamburgerIcon />} />
@@ -83,7 +84,19 @@ function NavigationBar() {
             )}
           </>
         )}
-      </Flex>
+      </Flex> */}
+      <nav className='navigation-wrapper'>
+        <ul>
+          <li>Home</li>
+          <li>All Recipes</li>
+          <li>Login</li>
+          <li>Register</li>
+          <li>Logout</li>
+          <li>Account</li>
+          <li>My recipes</li>
+          <li>Add recipe</li>
+        </ul>
+      </nav>
       <Outlet />
     </>
   );

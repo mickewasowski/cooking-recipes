@@ -1,19 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import {
-  FormControl,
-  FormLabel,
-  Input,
-  FormErrorMessage,
-  Button,
-  Stack,
-  Box,
-  Heading
-} from '@chakra-ui/react';
 import { useDispatch, useSelector } from 'react-redux';
 import { registerStart } from '../../store/user/user.action';
 import { getSuccessMessage } from '../../store/user/user.selector';
 import { IRootState } from '../../store/root-reducer';
+import './Register.styles.scss';
 
 type ErrorsType = {
     email?: string;
@@ -58,35 +49,26 @@ function RegistrationForm() {
   }, [successMessage]);
 
   return (
-    <Box maxW="sm" mx="auto" mt="10">
-      <Heading mb="6" textAlign="center">Register</Heading>
-      <form onSubmit={handleSubmit}>
-        <Stack spacing="4">
-          <FormControl id="email" isInvalid={!!(errors.email)} isRequired>
-            <FormLabel>Email</FormLabel>
-            <Input type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
-            <FormErrorMessage>{errors.email}</FormErrorMessage>
-          </FormControl>
-          <FormControl id="fullName" isInvalid={!!(errors.fullName)} isRequired>
-            <FormLabel>Full Name</FormLabel>
-            <Input type="text" value={fullName} onChange={(e) => setFullName(e.target.value)} />
-            <FormErrorMessage>{errors.fullName}</FormErrorMessage>
-          </FormControl>
-          <FormControl id="password" isRequired>
-            <FormLabel>Password</FormLabel>
-            <Input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
-          </FormControl>
-          <FormControl id="confirmPassword" isInvalid={!!(errors.confirmPassword)} isRequired>
-            <FormLabel>Confirm Password</FormLabel>
-            <Input type="password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} />
-            <FormErrorMessage>{errors.confirmPassword}</FormErrorMessage>
-          </FormControl>
-          <Button type="submit" colorScheme="blue" size="lg" fontSize="md">
-            Register
-          </Button>
-        </Stack>
-      </form>
-    </Box>
+    <div className='register-wrapper'>
+      <div id='overlay'></div>
+      <header>
+        <h2>Online Food World</h2>
+      </header>
+      <main>
+        <section className='form-section'>
+          <h2>Sign Up!</h2>
+          <form onSubmit={handleSubmit}>
+            <label>Fullname</label>
+            <input type='text' onChange={(e) => setFullName(e.target.value)}/>
+            <label>Email</label>
+            <input type='email' onChange={(e) => setEmail(e.target.value)}/>
+            <label>Password</label>
+            <input type='password' onChange={(e) => setPassword(e.target.value)}/>
+            <input type='submit' value="Register"/>
+          </form>
+        </section>
+      </main>
+    </div>
   );
 }
 

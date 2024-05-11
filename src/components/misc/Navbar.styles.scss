@@ -1,0 +1,13 @@
+.navigation-wrapper {
+    display: flex;
+    justify-content: flex-end;
+    height: 50px;
+    ul {
+        display: flex;
+
+        li {
+            list-style-type: none;
+            padding: 1rem;
+        }
+    }
+}

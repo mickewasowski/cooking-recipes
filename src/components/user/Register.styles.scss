@@ -1,0 +1,115 @@
+@mixin flexColumn {
+    display: flex;
+    flex-direction: column;
+}
+
+.register-wrapper {
+    @include flexColumn;
+    align-items: center;
+    justify-content: flex-start;
+    height: 100%;
+    background-image: url('images/register-background.jpg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-origin: content-box;
+    background-attachment: fixed;
+
+    #overlay {
+        position: fixed;
+        /* display: none; */
+        width: 100%;
+        height: 100%;
+        top: 50px;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 1;
+    }
+
+    header {
+        z-index: 2;
+        h2 {
+            font-size: xx-large;
+            font-family: cursive;
+            margin-bottom: 20px;
+            margin-top: 50px;
+            text-shadow: 1px 1px 2px #181818;
+        }
+    }
+
+    main {
+        z-index: 2;
+        display: flex;
+        justify-content: center;
+        height: 100%;
+        width: 100%;
+        color: #181818;
+
+        .form-section,
+        form {
+            @include flexColumn;
+        }
+
+        .form-section {
+            width: 400px;
+            height: 400px;
+            background: url('images/notebook-page1.jpg') no-repeat center center;
+            background-size: cover;
+            justify-content: center;
+            align-items: center;
+            border-radius: 5px;
+            -webkit-box-shadow: 10px 10px 19px 0px rgba(255, 255, 255, 0.377);
+            -moz-box-shadow: 10px 10px 19px 0px rgba(255, 255, 255, 0.26);
+            box-shadow: 10px 10px 19px 0px rgba(255, 255, 255, 0.336);
+
+            h2 {
+                position: relative;
+                bottom: 17%;
+                font-size: x-large;
+                font-family: cursive;
+            }
+
+            form {
+                width: 250px;
+                height: 200px;
+                position: relative;
+                bottom: 10%;
+                gap: 5px;
+                font-family: cursive;
+
+                input[type="text"],
+                input[type="password"],
+                input[type="email"] {
+                    background-color: transparent;
+                    border-bottom: solid 1px #18181841;
+                    height: 20px;
+                    outline: none;
+
+                    &:hover {
+                        cursor: pointer;
+                    }
+                }
+
+                input[type="submit"] {
+                    width: 90px;
+                    padding: 10px;
+                    border-radius: 5px;
+                    background-color: #96B864;
+                    color: white;
+                    margin: auto;
+                    margin-top: 10px;
+                    -webkit-box-shadow: 10px 10px 19px 0px rgba(0, 0, 0, 0.377);
+                    -moz-box-shadow: 10px 10px 19px 0px rgba(0, 0, 0, 0.26);
+                    box-shadow: 10px 10px 19px 0px rgba(0, 0, 0, 0.336);
+
+                    &:hover {
+                        cursor: pointer;
+                        background-color: #87a55a;
+                    }
+                }
+            }
+        }
+    }
+}
