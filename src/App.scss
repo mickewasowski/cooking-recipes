@@ -1,0 +1,35 @@
+@import url('../src/components/misc/Navbar.styles.scss');
+@import url('../src/components/user/RegisterAndLoginWrapper.styles.scss');
+
+$light-green-outline: #469856;
+$lighter-green-outline: #62a365;
+$very-dark-grey: #181818;
+$white: #FFFFFF;
+$light-grey: #989797;
+
+:root {
+    --light-green-outline: #{$light-green-outline};
+    --lighter-green-outline: #{$lighter-green-outline};
+    --very-dark-grey: #{$very-dark-grey};
+    --white: #{$white};
+    --light-grey: #{$light-grey};
+}
+
+* {
+    margin: 0;
+}
+
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+#root {
+    background-color: $white;
+    color: #F1FAFF;
+    font-family: "Roboto", sans-serif;
+    height: 100%;
+    width: 100%;
+}

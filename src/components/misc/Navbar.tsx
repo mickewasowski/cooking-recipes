@@ -1,29 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import {
-  Box,
-  Flex,
-  Button,
-  IconButton,
-  Menu,
-  MenuButton,
-  MenuList,
-  MenuItem,
-  useMediaQuery,
-  Spacer,
-} from '@chakra-ui/react';
-import { HamburgerIcon } from '@chakra-ui/icons';
 import { Outlet, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { getCurrentUser } from '../../store/user/user.selector';
 import { IRootState } from '../../store/root-reducer';
 import { useDispatch } from 'react-redux';
 import { signOutStart } from '../../store/user/user.action';
-import './Navbar.styles.scss';
 
 function NavigationBar() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [isSmallScreen] = useMediaQuery("(max-width: 600px)");
+  // const [isSmallScreen] = useMediaQuery("(max-width: 600px)");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const user = useSelector((state: IRootState) => getCurrentUser(state.user));
 
@@ -42,21 +28,21 @@ function NavigationBar() {
     dispatch(signOutStart());
   }
 
-  const renderMenuItems = () => (
-    <>
-      <MenuItem onClick={() => navigate('/')}>Home</MenuItem>
-      <MenuItem onClick={() => navigate('recipies')}>Recipes</MenuItem>
-      {isLoggedIn ? (
-        <>
-          <MenuItem onClick={() => navigate('myaccount')}>My Account</MenuItem>
-          <MenuItem onClick={() => navigate('myrecipies')}>My Recipes</MenuItem>
-          <MenuItem onClick={onLogout}>Logout</MenuItem>
-        </>
-      ) : (
-        <MenuItem onClick={() => navigate('login')}>Login</MenuItem>
-      )}
-    </>
-  );
+  // const renderMenuItems = () => (
+  //   <>
+  //     <MenuItem onClick={() => navigate('/')}>Home</MenuItem>
+  //     <MenuItem onClick={() => navigate('recipies')}>Recipes</MenuItem>
+  //     {isLoggedIn ? (
+  //       <>
+  //         <MenuItem onClick={() => navigate('myaccount')}>My Account</MenuItem>
+  //         <MenuItem onClick={() => navigate('myrecipies')}>My Recipes</MenuItem>
+  //         <MenuItem onClick={onLogout}>Logout</MenuItem>
+  //       </>
+  //     ) : (
+  //       <MenuItem onClick={() => navigate('login')}>Login</MenuItem>
+  //     )}
+  //   </>
+  // );
 
   return (
     <>
