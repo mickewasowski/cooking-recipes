@@ -12,7 +12,7 @@ export const emailSignIn = (data: UserSignIn): Promise<EmailSignInResponse> => {
     .then((res) => res.json())
     .then((res) => {
         if (res.success) {
-            return res.json();
+            return res;
         } else {
             throw new Error(res.message);
         }
@@ -34,7 +34,7 @@ export const registerUser = (data: UserRegisterStart): Promise<RegisterResponse>
     .then((res) => res.json())
     .then((res) => {
         if (res.success) {
-            return res.json();
+            return res;
         } else {
             throw new Error(res.message);
         }
@@ -63,7 +63,7 @@ export const updateUserData = (data: UserEditStart): Promise<EditUserResponse> =
     .then((res) => res.json())
     .then((res) => {
         if (res.success) {
-            return res.json();
+            return res;
         } else {
             throw new Error(res.message);
         }
