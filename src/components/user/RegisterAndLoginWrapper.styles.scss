@@ -72,6 +72,8 @@
             label {
                 color: var(--light-grey);
                 margin-bottom: 10px;
+                display: flex;
+                justify-content: space-between;
             }
     
             input {
@@ -87,8 +89,6 @@
             }
 
             #errorMsg {
-                position: relative;
-                bottom: 33px;
                 color: var(--error-red);
                 align-self: flex-end;
             }

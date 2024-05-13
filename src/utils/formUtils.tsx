@@ -106,33 +106,41 @@ export const RegisterForm = () => {
             event.preventDefault();
             handleSubmit(event);
         }}>
-            <label>Please enter your name</label>
-            {
-                nameError
-                ? <p id="errorMsg">Name must be at least 3 characters!</p>
-                : null
-            }
+            <label>
+                Please enter your name
+                {
+                    nameError
+                    ? <p id="errorMsg">Name must be at least 3 characters!</p>
+                    : null
+                }
+            </label>
             <input className={nameError ? classes : ''} type='text' id="fullname" onBlur={onBlur}/>
-            <label>Please enter your email</label>
-            {
-                emailError
-                ? <p id="errorMsg">Invalid email address!</p>
-                : null
-            }
+            <label>
+                Please enter your email
+                {
+                    emailError
+                    ? <p id="errorMsg">Invalid email address!</p>
+                    : null
+                }
+            </label>
             <input className={emailError ? classes : ''} type='email' id="email" onBlur={onBlur}/>
-            <label>Please enter your password</label>
-            {
-                passError
-                ? <p id="errorMsg">Password must be at least 8 characters!</p>
-                : null
-            }
+            <label>
+                Please enter your password
+                {
+                    passError
+                    ? <p id="errorMsg">Password must be at least 8 characters!</p>
+                    : null
+                }
+            </label>
             <input ref={passRef} className={passError ? classes : ''} type='password' id="password" onBlur={onBlur}/>
-            <label>Please confirm your password</label>
-            {
-                confPassError
-                ? <p id="errorMsg">Passwords must match!</p>
-                : null
-            }
+            <label>
+                Please confirm your password
+                {
+                    confPassError
+                    ? <p id="errorMsg">Passwords must match!</p>
+                    : null
+                }
+            </label>
             <input className={confPassError ? classes : ''} type='password' id="confPassword" onBlur={onBlur}/>
             <input className={isSubmitDisabled ? 'greySubmitBtn' : ''} disabled={isSubmitDisabled} type='submit' value="Register"/>
         </form>
@@ -205,19 +213,23 @@ export const LoginForm = () => {
             event.preventDefault();
             handleSubmit(event);
         }}>
-            <label>Please enter your email</label>
-            {
-                emailError
-                ? <p id="errorMsg">Invalid email address!</p>
-                : null
-            }
+            <label>
+                Please enter your email
+                {
+                    emailError
+                    ? <p id="errorMsg">Invalid email address!</p>
+                    : null
+                }
+            </label>
             <input className={emailError ? classes : ''} onBlur={onBlur} type='email' id="email"/>
-            <label>Please enter your password</label>
-            {
-                passError
-                ? <p id="errorMsg">Password must be at least 8 characters!</p>
-                : null
-            }
+            <label>
+                Please enter your password
+                {
+                    passError
+                    ? <p id="errorMsg">Password must be at least 8 characters!</p>
+                    : null
+                }
+            </label>
             <input className={passError ? classes: ''} onBlur={onBlur} type='password' id="password"/>
             <input className={isSubmitDisabled ? 'greySubmitBtn' : ''} disabled={isSubmitDisabled} type='submit' value="Login"/>
         </form>
