@@ -21,8 +21,7 @@ export function* loginUserWithEmail({ payload: { email, password } }: EmailSignI
     try {
         const response = yield call(emailSignIn, { email, password });
         yield put(signInSuccess(response.user as User));
-
-        window.location.assign('/')
+        window.location.assign('/');
     } catch (error) {
         yield put(signInFailed(error as Error));
     }
@@ -31,9 +30,7 @@ export function* loginUserWithEmail({ payload: { email, password } }: EmailSignI
 export function* userSignOut() {
     try {
         yield put(signOutSuccess());
-
-        //TODO: route to home
-        
+        window.location.assign('/');
     } catch (error) {
         yield put(signOutFailed(error as Error));
     }
@@ -43,9 +40,7 @@ export function* userRegister({ payload: { email, fullName, password }}: Registe
     try {
         yield call(registerUser, { email, fullName, password });
         yield put(registerSuccess());
-
-        //TODO: route to login
-        
+        window.location.assign('/login');
     } catch (error) {
         yield put(registerFailed(error as Error));
     }
