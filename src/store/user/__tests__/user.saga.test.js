@@ -73,7 +73,7 @@ describe('User saga', () => {
         const mockedData = {
             payload: mockUserData
         };
-        const mockError = new Error('Network request failed');
+        const mockError = new Error('User not found');
 
         return expectSaga(loginUserWithEmail, mockedData)
             .provide([
