@@ -81,6 +81,18 @@
                 margin-bottom: 1.5rem;
             }
 
+            .inputErrorOutline {
+                border: none;
+                outline: 2px solid var(--error-red);
+            }
+
+            #errorMsg {
+                position: relative;
+                bottom: 33px;
+                color: var(--error-red);
+                align-self: flex-end;
+            }
+
             input[type='submit'] {
                 margin-top: 3rem;
                 border: none;
@@ -95,6 +107,10 @@
                     background-color: var(--lighter-green-outline);
                     cursor: pointer;
                 }
+            }
+
+            input[type='submit'].greySubmitBtn {
+                background-color: var(--light-grey);
             }
         }
     }

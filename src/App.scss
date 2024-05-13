@@ -6,6 +6,7 @@ $lighter-green-outline: #62a365;
 $very-dark-grey: #181818;
 $white: #FFFFFF;
 $light-grey: #989797;
+$error-red: #ec404e;
 
 :root {
     --light-green-outline: #{$light-green-outline};
@@ -13,6 +14,7 @@ $light-grey: #989797;
     --very-dark-grey: #{$very-dark-grey};
     --white: #{$white};
     --light-grey: #{$light-grey};
+    --error-red: #{$error-red};
 }
 
 * {
