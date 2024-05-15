@@ -15,7 +15,6 @@ import {
 } from './user.action';
 import { USER_ACTION_TYPES, UserEditSuccess } from './user.types';
 import { User } from './user.reducer';
-import { redirect } from "react-router-dom";
 
 export function* loginUserWithEmail({ payload: { email, password } }: EmailSignInStart) {
     try {
@@ -23,6 +22,9 @@ export function* loginUserWithEmail({ payload: { email, password } }: EmailSignI
         yield put(signInSuccess(response.user as User));
         window.location.assign('/');
     } catch (error) {
+        //TODO: dont save the error in the state
+        //simply set the loading store state to false
+        //and emit an event to create a notification for the failure
         yield put(signInFailed(error as Error));
     }
 }

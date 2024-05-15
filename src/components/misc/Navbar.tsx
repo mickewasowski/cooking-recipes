@@ -1,15 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { Outlet, useNavigate } from 'react-router-dom';
+import { Outlet } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { getCurrentUser } from '../../store/user/user.selector';
 import { IRootState } from '../../store/root-reducer';
 import { useDispatch } from 'react-redux';
 import { signOutStart } from '../../store/user/user.action';
+import { NavLink } from 'react-router-dom';
 
 function NavigationBar() {
-  const navigate = useNavigate();
   const dispatch = useDispatch();
-  // const [isSmallScreen] = useMediaQuery("(max-width: 600px)");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const user = useSelector((state: IRootState) => getCurrentUser(state.user));
 
@@ -23,64 +22,21 @@ function NavigationBar() {
 
   const onLogout = async (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     event.preventDefault();
-
-    //TODO: use redux saga for logout
     dispatch(signOutStart());
   }
 
-  // const renderMenuItems = () => (
-  //   <>
-  //     <MenuItem onClick={() => navigate('/')}>Home</MenuItem>
-  //     <MenuItem onClick={() => navigate('recipies')}>Recipes</MenuItem>
-  //     {isLoggedIn ? (
-  //       <>
-  //         <MenuItem onClick={() => navigate('myaccount')}>My Account</MenuItem>
-  //         <MenuItem onClick={() => navigate('myrecipies')}>My Recipes</MenuItem>
-  //         <MenuItem onClick={onLogout}>Logout</MenuItem>
-  //       </>
-  //     ) : (
-  //       <MenuItem onClick={() => navigate('login')}>Login</MenuItem>
-  //     )}
-  //   </>
-  // );
-
   return (
     <>
-      {/* <Flex px="4" py="2" color='#FEECEB' marginBottom='5' align="center" justifyContent='flex-end' bg="#191815" position="sticky" top="0" width="100%" zIndex="1">
-        {isSmallScreen ? (
-          <Menu>
-            <MenuButton as={IconButton} icon={<HamburgerIcon />} />
-            <MenuList>
-              {renderMenuItems()}
-            </MenuList>
-          </Menu>
-        ) : (
-          <>
-            <Button color='#F1FAFF' variant="ghost" _hover={{ bg: '#bfdaa41a' }} mx="2" onClick={() => navigate('/')}>Home</Button>
-            <Button color='#F1FAFF' variant="ghost" _hover={{ bg: '#bfdaa41a' }} mx="2" onClick={() => navigate('recipies')}>Recipes</Button>
-            {isLoggedIn ? (
-              <>
-                <Button color='#F1FAFF' variant="ghost" _hover={{ bg: '#bfdaa41a' }} mx="2" onClick={() => navigate('myaccount')}>My Account</Button>
-                <Button color='#F1FAFF' variant="ghost" _hover={{ bg: '#bfdaa41a' }} mx="2" onClick={() => navigate('myrecipies')}>My Recipes</Button>
-                <Button color='#F1FAFF' variant="ghost" _hover={{ bg: '#bfdaa41a' }} mx="2" onClick={() => navigate('addrecipe')}>Add Recipe</Button>
-                <Button color='#F1FAFF' variant="ghost" _hover={{ bg: '#bfdaa41a' }} mx="2" onClick={onLogout}>Logout</Button>
-              </>
-            ) : (
-              <Button color='#F1FAFF' variant="ghost" mx="2" _hover={{ bg: '#bfdaa41a' }} onClick={() => navigate('login')}>Login</Button>
-            )}
-          </>
-        )}
-      </Flex> */}
       <nav className='navigation-wrapper'>
         <ul>
-          <li>Home</li>
-          <li>All Recipes</li>
-          <li>Login</li>
-          <li>Register</li>
-          <li>Logout</li>
-          <li>Account</li>
-          <li>My recipes</li>
-          <li>Add recipe</li>
+          <li><NavLink to={'/'}>Home</NavLink></li>
+          <li><NavLink to={'/recipies'}>All Recipes</NavLink></li>
+          <li><NavLink to={'/login'}>Login</NavLink></li>
+          <li><NavLink to={'/register'}>Register</NavLink></li>
+          <li onClick={() => onLogout}><NavLink to={''}>Logout</NavLink></li>
+          <li><NavLink to={'/myaccount'}>Account</NavLink></li>
+          <li><NavLink to={'/myrecipies'}>My recipes</NavLink></li>
+          <li><NavLink to={'/addrecipe'}>Add recipe</NavLink></li>
         </ul>
       </nav>
       <Outlet />
