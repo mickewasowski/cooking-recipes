@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Outlet } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { getCurrentUser } from '../../store/user/user.selector';
@@ -9,6 +9,8 @@ import { NavLink } from 'react-router-dom';
 
 function NavigationBar() {
   const dispatch = useDispatch();
+  const menuRef = useRef(null);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const user = useSelector((state: IRootState) => getCurrentUser(state.user));
 
@@ -25,10 +27,19 @@ function NavigationBar() {
     dispatch(signOutStart());
   }
 
+  const toggleMenu = () => {
+    //TODO: show.hide menu
+    console.log(menuRef.current.target.styles)
+  }
+
   return (
     <>
       <nav className='navigation-wrapper'>
-        <ul>
+        <input id='menu-toggle' type='checkbox'/>
+        <div className='menu-button-container'>
+          <div className='menu-button' onClick={() => toggleMenu}></div>
+        </div>
+        <ul ref={menuRef}>
           <li><NavLink to={'/'}>Home</NavLink></li>
           <li><NavLink to={'/recipies'}>All Recipes</NavLink></li>
           <li><NavLink to={'/login'}>Login</NavLink></li>
