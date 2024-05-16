@@ -3,47 +3,41 @@
     justify-content: flex-end;
     height: 50px;
     background-color: var(--light-green-outline);
+    user-select: none;
 
-    /*Container for menu button  */
-    .menu-button-container {
-        display: none;
-        height: 100%;
-        width: 30px;
-        cursor: pointer;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-    }
-
-    #menu-toggle {
-        display: none;
-    }
-    
-    .menu-button {
-        top: 2.5%;
-        right: 2%;
-    }
-
-    /*  Creating the menu button */
-    .menu-button,
-    .menu-button::before,
-    .menu-button::after {
-        display: block;
-        background-color: #fff;
+    #menu-button {
+        width: 20px;
+        height: 14px;
+        border-bottom: 2px solid var(--white);
         position: absolute;
-        height: 3px;
-        width: 32px;
-        border-radius: 3px;
+        top: 2%;
+        right: 2%;
+
+        &:hover {
+            cursor: pointer;
+        }
     }
-    
-    .menu-button::before {
-    content: '';
-        margin-top: -8px;
+
+    #menu-button::before {
+        content: '';
+        width: 20px;
+        height: 2px;
+        background-color: var(--white);
+        margin-bottom: 4px;
     }
-    
-    .menu-button::after {
-    content: '';
-        margin-top: 8px;
+
+    #menu-button::after {
+        content: '';
+        width: 20px;
+        height: 2px;
+        background-color: var(--white);
+        margin-top: 4px;
+    }
+
+    #menu-button,
+    #menu-button::before,
+    #menu-button::after {
+        display: none;
     }
 
     ul {
@@ -56,12 +50,66 @@
     }
 
     @media screen and (max-width: 1000px) {
-        .menu-button-container {
+        #menu-button,
+        #menu-button::before,
+        #menu-button::after {
             display: block;
+        }
+
+        #menu-close {
+            display: block;
+            width: 20px;
+            height: 20px;
+            position: absolute;
+            top: 2%;
+            right: 2%;
+            &:hover {
+                cursor: pointer;
+            }
+        }
+
+        #menu-close::before,
+        #menu-close::after {
+            content: '';
+            width: 20px;
+            height: 2px;
+            display: block;
+            background-color: var(--white);
+        }
+
+        #menu-close::before {
+            transform: translateY(1px) rotate(45deg);
+            margin-top: 2px;
+        }
+
+        #menu-close::after {
+            transform: translateY(-1px) rotate(-45deg);
         }
 
         ul {
             display: none;
+        }
+
+        .isMenuShowing {
+            display: flex;
+            flex-direction: column;
+            height: fit-content;
+            width: 150px;
+            background-color: var(--light-green-outline);
+            z-index: 2;
+            margin-top: 50px;
+            border-bottom-left-radius: 5px;
+
+            li {
+                width: 100%;
+                text-align: center;
+            }
+
+            li:hover {
+                background-color: var(--lighter-green-outline);
+                cursor: pointer;
+                transition: ease-in-out 400ms;
+            }
         }
     }
 }
