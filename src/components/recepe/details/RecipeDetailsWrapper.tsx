@@ -1,6 +1,5 @@
 import OwnerRecipeDetails from "./OwnerRecipeDetails";
 import GuestRecipeDetails from "./GuestRecipeDetails";
-import { Box } from "@chakra-ui/react";
 import { useSelector } from "react-redux";
 import { getCurrentUser } from "../../../store/user/user.selector";
 import { getRecipeById } from "../../../store/recipe/recipe.selector";
@@ -15,13 +14,13 @@ function RecipeDetailsWrapper() {
     if (!recipe) return null;
 
     return(
-        <Box
-            display='flex'
-            alignContent='center'
-            justifyContent='center'
-            flexDirection='column'
-            paddingLeft={20}
-            paddingRight={20}
+        <div
+            // display='flex'
+            // alignContent='center'
+            // justifyContent='center'
+            // flexDirection='column'
+            // paddingLeft={20}
+            // paddingRight={20}
 
         >
             {
@@ -29,7 +28,7 @@ function RecipeDetailsWrapper() {
                 ? <OwnerRecipeDetails recipe={recipe} />
                 : <GuestRecipeDetails recipe={recipe} />
             }
-        </Box>
+        </div>
     )
 }
 

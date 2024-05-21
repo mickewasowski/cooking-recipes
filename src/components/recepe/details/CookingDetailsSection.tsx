@@ -1,29 +1,28 @@
-import { Box, Flex, Text, Icon } from '@chakra-ui/react';
 import { FaHeart, FaClock, FaUtensils } from 'react-icons/fa';
 
 
 const CookingDetailsSection = () => {
 
   return (
-    <Flex align="center" justify="space-around" p={4} background="#bfdaa41a" borderRadius="md" marginTop={5}>
+    <div>
       {/* Favorites */}
-      <Box textAlign="center">
-        <Icon as={FaHeart} boxSize={6} />
-        <Text mt={2}>Likes</Text>
-      </Box>
+      <div textAlign="center">
+        {/* <Icon as={FaHeart} boxSize={6} />
+        <Text mt={2}>Likes</Text> */}
+      </div>
 
       {/* Cooking Time */}
-      <Flex direction="column" align="center">
-        <Icon as={FaClock} boxSize={6} />
-        <Text mt={2}>Cooking time 25min</Text>
-      </Flex>
+      <div>
+        {/* <Icon as={FaClock} boxSize={6} />
+        <Text mt={2}>Cooking time 25min</Text> */}
+      </div>
 
       {/* Portions */}
-      <Flex direction="column" align="center">
-        <Icon as={FaUtensils} boxSize={6} />
-        <Text mt={2}>Portions 10</Text>
-      </Flex>
-    </Flex>
+      <div>
+        {/* <Icon as={FaUtensils} boxSize={6} />
+        <Text mt={2}>Portions 10</Text> */}
+      </div>
+    </div>
   );
 };
 

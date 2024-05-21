@@ -1,6 +1,4 @@
 import React, { useState } from 'react';
-import { Input, InputGroup, InputRightElement, Button } from '@chakra-ui/react';
-import { SearchIcon } from '@chakra-ui/icons';
 import { useDispatch } from 'react-redux';
 import { searchRecipiesStart } from '../../store/recipe/recipe.action';
 
@@ -20,20 +18,20 @@ function SearchBar() {
   };
 
   return (
-    <InputGroup size="md">
-      <Input
-        pr="2.5rem"
+    <div>
+      <input
+        // pr="2.5rem"
         type="text"
         placeholder="Search..."
         value={searchQuery}
         onChange={handleInputChange}
       />
-      <InputRightElement width="4.5rem">
-        <Button h="1.75rem" size="sm" onClick={handleSearch}>
-          <SearchIcon />
-        </Button>
-      </InputRightElement>
-    </InputGroup>
+      <div>
+        <button onClick={handleSearch}>
+          {/* <SearchIcon /> */}
+        </button>
+      </div>
+    </div>
   );
 }
 

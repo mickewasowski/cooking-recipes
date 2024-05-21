@@ -1,6 +1,4 @@
 import React, { ChangeEvent, MouseEventHandler, useState } from 'react';
-import { Box, Input, Textarea, Image, Button, Switch, FormControl, FormLabel, IconButton } from '@chakra-ui/react';
-import { AddIcon } from '@chakra-ui/icons';
 import { useDispatch } from 'react-redux';
 import { updateRecipeStart } from '../../../store/recipe/recipe.action';
 import { useSelector } from 'react-redux';
@@ -88,112 +86,115 @@ function OwnerRecipeDetails({ recipe }: IProps) {
   }
 
   return (
-    <Box p={2} display='flex' flexDirection='column' width='90%' alignItems='center' justifyItems='center'>
-      <Box display='flex' flexDirection='row' gap='5' alignItems='center' justifyContent='center' width='100%'>
-        <Box width='40%'>
-          {image && <Image src={image} alt="Recipe Image" />}
-        </Box>
-        <Box width='60%'>
-          <FormControl display="flex" alignItems="center">
-            <FormLabel htmlFor="edit-toggle" mb="0">
-              Edit Mode
-            </FormLabel>
-            <Switch id="edit-toggle" onChange={handleEditToggle} />
-          </FormControl>
-          <FormControl isDisabled={!isEditable} mt="4">
-            <FormLabel>Title</FormLabel>
-            <Input
-              placeholder="Title"
-              value={recipeState.title}
-              isDisabled={!isEditable}
-              name="title"
-              onChange={handleChange}
-            />
-          </FormControl>
-          <FormControl isDisabled={!isEditable} mt="4">
-            <FormLabel>Description</FormLabel>
-            <Textarea
-              placeholder="Description"
-              value={recipeState.description}
-              isDisabled={!isEditable}
-              name="description"
-              onChange={handleChange}
-            />
-          </FormControl>
-          <FormControl isDisabled={!isEditable} mt="4">
-            <FormLabel>Image URL</FormLabel>
-            <Input
-              placeholder="Image URL"
-              value={recipeState.image}
-              isDisabled={!isEditable}
-              name="imageURL"
-              onChange={handleChange}
-            />
-          </FormControl>
+    <div>
+      empty div
+    </div>
+    // <Box p={2} display='flex' flexDirection='column' width='90%' alignItems='center' justifyItems='center'>
+    //   <Box display='flex' flexDirection='row' gap='5' alignItems='center' justifyContent='center' width='100%'>
+    //     <Box width='40%'>
+    //       {image && <Image src={image} alt="Recipe Image" />}
+    //     </Box>
+    //     <Box width='60%'>
+    //       <FormControl display="flex" alignItems="center">
+    //         <FormLabel htmlFor="edit-toggle" mb="0">
+    //           Edit Mode
+    //         </FormLabel>
+    //         <Switch id="edit-toggle" onChange={handleEditToggle} />
+    //       </FormControl>
+    //       <FormControl isDisabled={!isEditable} mt="4">
+    //         <FormLabel>Title</FormLabel>
+    //         <Input
+    //           placeholder="Title"
+    //           value={recipeState.title}
+    //           isDisabled={!isEditable}
+    //           name="title"
+    //           onChange={handleChange}
+    //         />
+    //       </FormControl>
+    //       <FormControl isDisabled={!isEditable} mt="4">
+    //         <FormLabel>Description</FormLabel>
+    //         <Textarea
+    //           placeholder="Description"
+    //           value={recipeState.description}
+    //           isDisabled={!isEditable}
+    //           name="description"
+    //           onChange={handleChange}
+    //         />
+    //       </FormControl>
+    //       <FormControl isDisabled={!isEditable} mt="4">
+    //         <FormLabel>Image URL</FormLabel>
+    //         <Input
+    //           placeholder="Image URL"
+    //           value={recipeState.image}
+    //           isDisabled={!isEditable}
+    //           name="imageURL"
+    //           onChange={handleChange}
+    //         />
+    //       </FormControl>
           
-          <FormControl isDisabled={!isEditable} mt="4">
-            <FormLabel>Time to Prepare (minutes)</FormLabel>
-            <Input
-              placeholder="Time to Prepare (minutes)"
-              type="number"
-              value={recipeState.timeToPrepare}
-              isDisabled={!isEditable}
-              name="timeToPrepare"
-              onChange={handleChange}
-            />
-          </FormControl>
-          <FormControl isDisabled={!isEditable} mt="4">
-            <FormLabel>Number of Portions</FormLabel>
-            <Input
-              placeholder="Number of Portions"
-              type="number"
-              value={recipeState.numberOfPortions}
-              isDisabled={!isEditable}
-              name="numberOfPortions"
-              onChange={handleChange}
-            />
-          </FormControl>
-          <FormControl isDisabled={!isEditable} mt="4">
-            <FormLabel>Ingredients</FormLabel>
-            {recipeState.ingredients.map((ingredient, index) => (
-              <Box key={index} display="flex" flexDirection='column' alignItems="center" marginY={2}>
-                <Input
-                  placeholder={`Ingredient ${index + 1}`}
-                  value={ingredient}
-                  isDisabled={!isEditable}
-                  name={`ingredient-${index}`}
-                  onChange={handleChange}
-                />
-                {isEditable && index === recipeState.ingredients.length - 1 && (
-                  <IconButton
-                    aria-label="Add ingredient"
-                    icon={<AddIcon />}
-                    onClick={addIngredientField}
-                    ml={2}
-                    marginY={2}
-                  />
-                )}
-              </Box>
-            ))}
-          </FormControl>
-          <FormControl isDisabled={!isEditable} mt="4">
-            <FormLabel>How to Prepare</FormLabel>
-            <Textarea name="howToPrepare" value={recipeState.howToPrepare} onChange={handleChange} />
-          </FormControl>
-        </Box>
-      </Box>
+    //       <FormControl isDisabled={!isEditable} mt="4">
+    //         <FormLabel>Time to Prepare (minutes)</FormLabel>
+    //         <Input
+    //           placeholder="Time to Prepare (minutes)"
+    //           type="number"
+    //           value={recipeState.timeToPrepare}
+    //           isDisabled={!isEditable}
+    //           name="timeToPrepare"
+    //           onChange={handleChange}
+    //         />
+    //       </FormControl>
+    //       <FormControl isDisabled={!isEditable} mt="4">
+    //         <FormLabel>Number of Portions</FormLabel>
+    //         <Input
+    //           placeholder="Number of Portions"
+    //           type="number"
+    //           value={recipeState.numberOfPortions}
+    //           isDisabled={!isEditable}
+    //           name="numberOfPortions"
+    //           onChange={handleChange}
+    //         />
+    //       </FormControl>
+    //       <FormControl isDisabled={!isEditable} mt="4">
+    //         <FormLabel>Ingredients</FormLabel>
+    //         {recipeState.ingredients.map((ingredient, index) => (
+    //           <Box key={index} display="flex" flexDirection='column' alignItems="center" marginY={2}>
+    //             <Input
+    //               placeholder={`Ingredient ${index + 1}`}
+    //               value={ingredient}
+    //               isDisabled={!isEditable}
+    //               name={`ingredient-${index}`}
+    //               onChange={handleChange}
+    //             />
+    //             {isEditable && index === recipeState.ingredients.length - 1 && (
+    //               <IconButton
+    //                 aria-label="Add ingredient"
+    //                 icon={<AddIcon />}
+    //                 onClick={addIngredientField}
+    //                 ml={2}
+    //                 marginY={2}
+    //               />
+    //             )}
+    //           </Box>
+    //         ))}
+    //       </FormControl>
+    //       <FormControl isDisabled={!isEditable} mt="4">
+    //         <FormLabel>How to Prepare</FormLabel>
+    //         <Textarea name="howToPrepare" value={recipeState.howToPrepare} onChange={handleChange} />
+    //       </FormControl>
+    //     </Box>
+    //   </Box>
 
-      {isEditable && (
-        <Box display='flex' alignContent='center' justifyContent='center' marginTop={3} marginBottom={2}>
-          <Button colorScheme="blue" mr={3} onClick={handleUpdateRecipe}>
-            Save
-          </Button>
-          <Button colorScheme="red" onClick={handleCancel}>
-            Cancel
-          </Button>
-        </Box>
-      )}
-    </Box>
+    //   {isEditable && (
+    //     <Box display='flex' alignContent='center' justifyContent='center' marginTop={3} marginBottom={2}>
+    //       <Button colorScheme="blue" mr={3} onClick={handleUpdateRecipe}>
+    //         Save
+    //       </Button>
+    //       <Button colorScheme="red" onClick={handleCancel}>
+    //         Cancel
+    //       </Button>
+    //     </Box>
+    //   )}
+    // </Box>
   );
 }
 

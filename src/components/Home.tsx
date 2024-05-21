@@ -1,8 +1,6 @@
-import React, { useEffect } from 'react';
-import { Box, Heading, SimpleGrid, Button } from '@chakra-ui/react';
+import { useEffect } from 'react';
 import SearchBar from './misc/SearchBar'; // Import your SearchBar component
 import RecipeCard from './recepe/RecipeCard'; // Import your RecipeCard component
-import RecipeWrapper from './recepe/RecipeWrapper';
 import { useDispatch, useSelector } from 'react-redux';
 import { IRootState } from '../store/root-reducer';
 import { getLatestRecipes } from '../store/recipe/recipe.selector';
@@ -18,11 +16,11 @@ function HomePage() {
   }, []);
 
   return (
-    <Box>
-      <Box p="4">
-        <Heading as="h1" size="xl" mb="6">Welcome to MyRecipes!</Heading>
+    <div>
+      <div>
+        <h2>Welcome to MyRecipes!</h2>
         <SearchBar />
-        <Heading as="h2" size="lg" mt="10" mb="6">Popular Recipes</Heading>
+        <h2>Popular Recipes</h2>
         <div>
           {
             allRecipies?.map(recipe => (
@@ -30,8 +28,8 @@ function HomePage() {
             ))
           }
         </div>
-      </Box>
-    </Box>
+      </div>
+    </div>
   );
 }
 

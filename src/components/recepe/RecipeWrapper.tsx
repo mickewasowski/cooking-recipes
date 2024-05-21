@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from 'react';
-import { Flex, Button, Text, Box } from '@chakra-ui/react';
+import { useState, useEffect } from 'react';
 import RecipeCard from './RecipeCard';
 import { useDispatch, useSelector } from 'react-redux';
 import { IRootState } from '../../store/root-reducer';
@@ -45,22 +44,23 @@ const AllRecipes = () => {
   };
 
   return (
-    <Box>
-        <Flex wrap="wrap" justify="center" gap="20px">
-            {allRecipies?.map(recipe => (
-                <RecipeCard key={recipe?.id} {...recipe} />
-            ))}
-        </Flex>
-        <Flex justify="center" align="center" mt="20px">
-            <Button onClick={handlePreviousClick} disabled={currentPage === 1}>
-                Previous
-            </Button>
-            <Text mx="15px">Page {currentPage} of {totalPages}</Text>
-            <Button onClick={handleNextClick} disabled={currentPage === totalPages}>
-                Next
-            </Button>
-        </Flex>
-    </Box>
+    null
+    // <Box>
+    //     <Flex wrap="wrap" justify="center" gap="20px">
+    //         {allRecipies?.map(recipe => (
+    //             <RecipeCard key={recipe?.id} {...recipe} />
+    //         ))}
+    //     </Flex>
+    //     <Flex justify="center" align="center" mt="20px">
+    //         <Button onClick={handlePreviousClick} disabled={currentPage === 1}>
+    //             Previous
+    //         </Button>
+    //         <Text mx="15px">Page {currentPage} of {totalPages}</Text>
+    //         <Button onClick={handleNextClick} disabled={currentPage === totalPages}>
+    //             Next
+    //         </Button>
+    //     </Flex>
+    // </Box>
   );
 };
 
