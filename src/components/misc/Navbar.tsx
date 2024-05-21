@@ -7,12 +7,19 @@ import { useDispatch } from 'react-redux';
 import { signOutStart } from '../../store/user/user.action';
 import { NavLink } from 'react-router-dom';
 import classNames from 'classnames';
+import { useOutsideClick } from '../hooks/useOutsideClick';
 
 function NavigationBar() {
   const dispatch = useDispatch();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const user = useSelector((state: IRootState) => getCurrentUser(state.user));
+
+  const ref = useOutsideClick(() => {
+    if (isMenuOpen) {
+      setIsMenuOpen(false);
+    }
+  });
 
   useEffect(() => {
     if (user) {
@@ -35,14 +42,12 @@ function NavigationBar() {
 
   return (
     <>
-      <nav className='navigation-wrapper'>
+      <nav className='navigation-wrapper' ref={ref}>
         <span id={isMenuOpen ? 'menu-close' : 'menu-button'} onClick={toggleMenu}></span>
         <ul className={menuClasses}>
           <li><NavLink to={'/'}>Home</NavLink></li>
           <li><NavLink to={'/recipies'}>All Recipes</NavLink></li>
-          <li><NavLink to={'/addrecipe'}>Add recipe</NavLink></li>
-          <li><NavLink to={'/myrecipies'}>My recipes</NavLink></li>
-          <li><NavLink to={'/myaccount'}>Account</NavLink></li>
+          
           {
             !isLoggedIn
             ? (
@@ -55,7 +60,12 @@ function NavigationBar() {
           {
             isLoggedIn
             ? (
-              <li onClick={(event) => onLogout(event)}><NavLink to={''}>Logout</NavLink></li>
+              <>
+                <li><NavLink to={'/addrecipe'}>Add recipe</NavLink></li>
+                <li><NavLink to={'/myrecipies'}>My recipes</NavLink></li>
+                <li><NavLink to={'/myaccount'}>Account</NavLink></li>
+                <li onClick={(event) => onLogout(event)}><NavLink to={''}>Logout</NavLink></li>
+              </>
             ) : null
           }
         </ul>

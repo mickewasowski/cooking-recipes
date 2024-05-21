@@ -31,7 +31,7 @@
         width: 20px;
         height: 2px;
         background-color: var(--white);
-        margin-top: 4px;
+        margin-top: 5px;
     }
 
     #menu-button,
@@ -46,6 +46,11 @@
         li {
             list-style-type: none;
             padding: 1rem;
+
+            a {
+                color: var(--white);
+                text-decoration: none;
+            }
         }
     }
 
@@ -99,10 +104,19 @@
             z-index: 2;
             margin-top: 50px;
             border-bottom-left-radius: 5px;
+            padding: 0;
+            align-items: center;
 
             li {
                 width: 100%;
                 text-align: center;
+                padding-left: 0;
+                padding-right: 0;
+
+
+                &:hover {
+                    border-radius: 5px;
+                }
             }
 
             li:hover {
