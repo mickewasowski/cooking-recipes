@@ -13,6 +13,9 @@ import {
     RegisterStart,
     EditStart
 } from './user.action';
+import {
+    redirectToStart
+} from '../routing/routing.action';
 import { USER_ACTION_TYPES, UserEditSuccess } from './user.types';
 import { User } from './user.reducer';
 
@@ -20,7 +23,7 @@ export function* loginUserWithEmail({ payload: { email, password } }: EmailSignI
     try {
         const response = yield call(emailSignIn, { email, password });
         yield put(signInSuccess(response.user as User));
-        window.location.assign('/');
+        yield put(redirectToStart('/'));
     } catch (error) {
         //TODO: dont save the error in the state
         //simply set the loading store state to false
@@ -32,7 +35,7 @@ export function* loginUserWithEmail({ payload: { email, password } }: EmailSignI
 export function* userSignOut() {
     try {
         yield put(signOutSuccess());
-        window.location.assign('/');
+        yield put(redirectToStart('/'));
     } catch (error) {
         yield put(signOutFailed(error as Error));
     }
@@ -42,7 +45,7 @@ export function* userRegister({ payload: { email, fullName, password }}: Registe
     try {
         yield call(registerUser, { email, fullName, password });
         yield put(registerSuccess());
-        window.location.assign('/login');
+        yield put(redirectToStart('/login'));
     } catch (error) {
         yield put(registerFailed(error as Error));
     }
