@@ -1,20 +1,34 @@
 @import url('../src/components/misc/Navbar.styles.scss');
 @import url('../src/components/user/RegisterAndLoginWrapper.styles.scss');
+@import url('../src/components/Home.styles.scss');
+@import url('../src/components/recepe/Recipe.styles.scss');
 
+$very-light-green: #98C095;
 $light-green-outline: #469856;
 $lighter-green-outline: #62a365;
 $very-dark-grey: #181818;
 $white: #FFFFFF;
 $light-grey: #989797;
 $error-red: #ec404e;
+$baby-blue: #42A2E0;
+$mustard: #B8A237;
+$light-purple: #576296;
+$pastel-blue: #468898;
+$light-pastel-blue: #54a5b9;
 
 :root {
+    --very-light-green: #{$very-light-green};
     --light-green-outline: #{$light-green-outline};
     --lighter-green-outline: #{$lighter-green-outline};
     --very-dark-grey: #{$very-dark-grey};
     --white: #{$white};
     --light-grey: #{$light-grey};
     --error-red: #{$error-red};
+    --baby-blue: #{$baby-blue};
+    --mustard: #{$mustard};
+    --light-purple: #{$light-purple};
+    --pastel-blue: #{$pastel-blue};
+    --light-pastel-blue:#{$light-pastel-blue};
 }
 
 * {
@@ -25,7 +39,6 @@ html, body {
     height: 100%;
     margin: 0;
     padding: 0;
-    overflow: hidden;
 }
 
 #root {

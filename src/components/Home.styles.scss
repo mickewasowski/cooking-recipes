@@ -1,0 +1,104 @@
+.home-wrapper {
+    color: var(--light-green-outline);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem 4rem 0 4rem;
+
+    .main-heading {
+        font-size: 5rem;
+        font-weight: 900;
+        text-align: center;
+        background: -webkit-linear-gradient(var(--very-light-green), var(--light-green-outline));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        line-height: 1.2;
+    }
+
+    .text-carousel {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-top: 10px;
+        height: 7rem;
+        overflow-y: hidden;
+
+        .animation-container {
+            background-color: transparent;
+            translate: none;
+            rotate: none;
+            scale: none;
+            animation: 4s ease-in-out infinite slide;
+
+            div {
+                width: 17rem;
+                font-size: 4rem;
+                text-align: center;
+                border-radius: 10px;
+                margin: 2rem 0;
+                color: var(--white);
+                font-weight: 700;
+            }
+    
+            div:nth-child(1) {
+                background-color: var(--lighter-green-outline);
+            }
+    
+            div:nth-child(2) {
+                background-color: var(--mustard);
+            }
+    
+            div:nth-child(3) {
+                background-color: var(--light-purple);
+            }
+    
+            div:nth-child(4) {
+                background-color: var(--baby-blue);
+            }
+        }
+    }
+
+    .recipes-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-top: 2rem;
+        color: var(--pastel-blue);
+
+        h2 {
+            font-size: 2rem;
+        }
+
+        .recipes-wrapper {
+            display: flex;
+            gap: 2rem;
+            margin-top: 1rem;
+            background-image: url('images/vegetable-pattern.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            border-radius: 10px;
+            border: 2px solid var(--pastel-blue);
+            padding: 2rem;
+        }
+    }
+
+}
+
+@keyframes slide {
+    0% {
+        transform: translate(0%, -6%) translate3d(0px, 0px, 0px);
+    }
+    
+    25% {
+        transform: translate(0%, -29%) translate3d(0px, 0px, 0px);
+    }
+    
+    50% {
+        transform: translate(0%, -52%) translate3d(0px, 0px, 0px);
+    }
+
+    100% {
+        transform: translate(0%, -75%) translate3d(0px, 0px, 0px);
+    }
+}
