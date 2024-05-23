@@ -27,33 +27,16 @@ function RecipeCard({ id, image, title, description }: RecipeCardProps) {
   }
 
   return (
-    <div>
-      empty
+    <div className='recipe-item-container'>
+      <div className='image-wrapper'>
+        <img src={image} alt={`Image of ${title}`} />
+      </div>
+      <div className='details-wrapper'>
+        <h2>{title}</h2>
+        <p>{truncateDescription(description, 30)}</p>
+        <button onClick={openRecipe}>Details</button>
+      </div>
     </div>
-    // <Box
-    //     display='flex'
-    //     flexDirection='column'
-    //     justifyContent='center'
-    //     alignItems='center'
-    //     w='350px'
-    //     h='350px'
-    //     borderWidth="1px"
-    //     borderRadius="md"
-    //     overflow="hidden"
-    //     borderColor='#D5E7B8'
-    //     bg='#bfdaa41a'
-    //     p="1"
-    //     key={id}
-    //   >
-    //   <Image boxSize='200px' objectFit='cover' src={image} alt={`Image of ${title}`} />
-    //   <Box p="3">
-    //     <Stack spacing="2">
-    //       <Heading fontSize="xl">{title}</Heading>
-    //       <Text fontSize="md">{truncateDescription(description, 30)}</Text>
-    //       <Button color='#384031' bgColor='#D5E7B8' _hover={{ bg: "#505C45", color: '#D4F3B7' }} onClick={openRecipe}>Details</Button>
-    //     </Stack>
-    //   </Box>
-    // </Box>
   );
 }
 
