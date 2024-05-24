@@ -18,7 +18,7 @@ function HomePage() {
 
   return (
     <div className='home-wrapper'>
-      <div>
+      <div className='inner-container'>
         <h1 className='main-heading'>Unlock you appetite</h1>
         <div className='text-carousel'>
           <div className='animation-container'>

@@ -3,7 +3,19 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 2rem 4rem 0 4rem;
+    padding: 0rem 4rem 0rem 4rem;
+    height: 100%;
+    background-image: url('images/blunt-vegetable-pattern.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    .inner-container {
+        background-color: rgba(255, 255, 255, 0.61);
+        border-radius: 10px;
+        box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.623);
+        padding: 0 1rem 1rem 1rem;
+    }
 
     .main-heading {
         font-size: 5rem;
@@ -73,41 +85,47 @@
             display: flex;
             gap: 2rem;
             margin-top: 1rem;
-            background-image: url('images/vegetable-pattern.jpg');
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
             border-radius: 10px;
             border: 2px solid var(--pastel-blue);
             padding: 2rem;
+
+            .recipe-item-container {
+                box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.623);
+            }
         }
     }
 }
 
 @media screen and (max-width: 1200px) {
     .home-wrapper {
-        padding-bottom: 1rem;
+        padding: unset;
+        height: fit-content;
 
-        .recipes-wrapper {
-            flex-direction: column;
+        .inner-container {
             width: 100%;
-            align-items: center;
-    
-            .recipe-item-container {
-                width: 80%;
-                height: 30rem;
-    
-                h2, p {
-                    text-align: center;
-                }
-    
-                .image-wrapper {
-                    height: 60%;
-                }
-    
-                .details-wrapper {
-                    height: 40%;
-                    justify-content: center;
+            border-radius: unset;
+
+            .recipes-wrapper {
+                flex-direction: column;
+                width: 90%;
+                align-items: center;
+        
+                .recipe-item-container {
+                    width: 80%;
+                    height: 30rem;
+        
+                    h2, p {
+                        text-align: center;
+                    }
+        
+                    .image-wrapper {
+                        height: 60%;
+                    }
+        
+                    .details-wrapper {
+                        height: 40%;
+                        justify-content: center;
+                    }
                 }
             }
         }
