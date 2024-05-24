@@ -129,13 +129,31 @@ export const searchRecipiesByQueryString = (querySearch: string) => {
 }
 
 export const getRecipiesPerOwner = (data: RecipesForOwner) => {
-    const { ownerId, userToken } = data;
+    const { ownerId, userToken, page, limit } = data;
 
-    return fetch(`http://localhost:5000/api/item/owned?ownerId=${ownerId}`, {
+    return fetch(`http://localhost:5000/api/item/owned?page=${page}&limit=${limit}&id=${ownerId}`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${userToken}`
+        },
+    })
+    .then(res => res.json())
+    .then((res) => {
+        if (res.success) {
+            return res;
+        } else {
+            throw new Error(res.message);
+        }
+    })
+    .catch((error) => { throw new Error(error.message) });
+}
+
+export const getRecipesCountPerOwner = (userId: string) => {
+    return fetch(`http://localhost:5000/api/item/ownedCount?ownerId=${userId}`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
         },
     })
     .then(res => res.json())

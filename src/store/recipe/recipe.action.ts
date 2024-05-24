@@ -1,4 +1,4 @@
-import { RECIPE_ACTION_TYPES, TotalRecipesCount, RecipeCreated, GetRecipes, RecipeAddStart, RecipeUpdate, SearchRecipesSuccess, RecipesForOwner } from "./recipe.types";
+import { RECIPE_ACTION_TYPES, TotalRecipesCount, RecipeCreated, GetRecipes, RecipeAddStart, RecipeUpdate, SearchRecipesSuccess, RecipesForOwner, OwnedRecipesCount } from "./recipe.types";
 import { ActionWithPayload } from "../../utils/reducerUtils";
 
 export type AddRecipeStart = ActionWithPayload<RECIPE_ACTION_TYPES.ADD_RECIPE_START, RecipeAddStart>;
@@ -38,3 +38,7 @@ export const searchRecipiesFailed = (error: Error) => ({ type: RECIPE_ACTION_TYP
 export const getRecipiesForOwnerStart = (ownerData: RecipesForOwner) => ({ type: RECIPE_ACTION_TYPES.GET_OWNER_RECIPIES_START, payload: ownerData });
 export const getRecipiesForOwnerSuccess = (data: SearchRecipesSuccess) => ({ type: RECIPE_ACTION_TYPES.GET_OWNER_RECIPIES_SUCCESS, payload: data });
 export const getRecipiesForOwnerFailed = (error: Error) => ({ type: RECIPE_ACTION_TYPES.GET_OWNER_RECIPIES_FAILED, payload: error });
+
+export const getOwnedRecipeCountStart = () => ({ type: RECIPE_ACTION_TYPES.GET_OWNED_RECIPE_COUNT_START });
+export const getOwnedRecipeCountSuccess = ({ ownedRecipesCount }: OwnedRecipesCount) => ({ type: RECIPE_ACTION_TYPES.GET_OWNED_RECIPE_COUNT_SUCCESS, payload: { ownedRecipesCount } });
+export const getOwnedRecipeCountFailed = (error: Error) => ({ type: RECIPE_ACTION_TYPES.GET_OWNED_RECIPE_COUNT_FAILED, payload: error });

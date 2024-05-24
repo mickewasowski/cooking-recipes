@@ -20,10 +20,17 @@ export enum RECIPE_ACTION_TYPES {
     GET_LATEST_ADDED_RECIPES_START = 'recipe/GET_LATEST_ADDED_RECIPES_START',
     GET_LATEST_ADDED_RECIPES_SUCCESS = 'recipe/GET_LATEST_ADDED_RECIPES_SUCCESS',
     GET_LATEST_ADDED_RECIPES_FAILED = 'recipe/GET_LATEST_ADDED_RECIPES_FAILED',
+    GET_OWNED_RECIPE_COUNT_START = 'recipe/GET_OWNED_RECIPE_COUNT_START',
+    GET_OWNED_RECIPE_COUNT_SUCCESS = 'recipe/GET_OWNED_RECIPE_COUNT_SUCCESS',
+    GET_OWNED_RECIPE_COUNT_FAILED = 'recipe/GET_OWNED_RECIPE_COUNT_FAILED',
 }
 
 export type TotalRecipesCount = {
     totalRecipeCount: number;
+}
+
+export type OwnedRecipesCount = {
+    ownedRecipesCount: number;
 }
 
 export type Recipe = {
@@ -62,4 +69,6 @@ export type SearchRecipesSuccess = {
 export type RecipesForOwner = {
     ownerId: string;
     userToken: string;
+    page: number;
+    limit: number;
 }

@@ -68,7 +68,7 @@ export const recipeReducer = (state = INITIAL_STATE, action: AnyAction) => {
         case RECIPE_ACTION_TYPES.GET_OWNER_RECIPIES_START:
             return { ...state, isLoading: true };
         case RECIPE_ACTION_TYPES.GET_OWNER_RECIPIES_SUCCESS:
-            return { ...state, isLoading: false, ownedRecipes: action.payload.recipies, ownedRecipesCount: action.payload.count };
+            return { ...state, isLoading: false, ownedRecipes: action.payload.recipies };
         case RECIPE_ACTION_TYPES.GET_OWNER_RECIPIES_FAILED:
             return { ...state, isLoading: false, error: action.payload };
         case RECIPE_ACTION_TYPES.GET_LATEST_ADDED_RECIPES_START:
@@ -76,6 +76,12 @@ export const recipeReducer = (state = INITIAL_STATE, action: AnyAction) => {
         case RECIPE_ACTION_TYPES.GET_LATEST_ADDED_RECIPES_SUCCESS:
             return { ...state, isLoading: false, latestAdded: action.payload };
         case RECIPE_ACTION_TYPES.GET_LATEST_ADDED_RECIPES_FAILED:
+            return { ...state, isLoading: false, error: action.payload };
+        case RECIPE_ACTION_TYPES.GET_OWNED_RECIPE_COUNT_START:
+            return { ...state, isLoading: true };
+        case RECIPE_ACTION_TYPES.GET_OWNED_RECIPE_COUNT_SUCCESS:
+            return { ...state, isLoading: false, ownedRecipesCount: action.payload.ownedRecipesCount };
+        case RECIPE_ACTION_TYPES.GET_OWNED_RECIPE_COUNT_FAILED:
             return { ...state, isLoading: false, error: action.payload };
         default:
             return state;

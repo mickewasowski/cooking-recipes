@@ -20,6 +20,8 @@ import {
     GetRecipesType,
     getLatestRecipiesSuccess,
     getLatestRecipiesFailed,
+    getOwnedRecipeCountSuccess,
+    getOwnedRecipeCountFailed,
 } from './recipe.action';
 import {
     addRecipeRequest,
@@ -30,7 +32,8 @@ import {
     mapItemsFromDB,
     mapSingleItemFromDB,
     getRecipiesPerOwner,
-    getLatestRecipes
+    getLatestRecipes,
+    getRecipesCountPerOwner
 } from '../../utils/recipeUtils';
 
 export function* addRecipe(data: AddRecipeStart) {
@@ -82,14 +85,23 @@ export function* searchRecipies({ payload: searchString }: SearchRecipeStart) {
     }
 }
 
-export function* getOwnerRecipies({ payload: { ownerId, userToken }}: GetOwnerRecipes) {
+export function* getOwnerRecipies({ payload: { ownerId, userToken, page, limit }}: GetOwnerRecipes) {
     try {
-        const response = yield call(getRecipiesPerOwner, { ownerId, userToken });
+        const response = yield call(getRecipiesPerOwner, { ownerId, userToken, page, limit });
         const mappedRecipies = mapItemsFromDB(response.items);
-        //TODO: implement a separate state in the store for these recipes
         yield put(getRecipiesForOwnerSuccess({ recipies: mappedRecipies, count: response.count }));
     } catch (error) {
         yield put(getRecipiesForOwnerFailed(error as Error));
+    }
+}
+
+//TODO: write unit test for this one
+export function* getOwnerRecipesCount(userId: string) {
+    try {
+        const response = yield call(getRecipesCountPerOwner, userId);
+        yield put(getOwnedRecipeCountSuccess({ ownedRecipesCount: response.count }));
+    } catch (error) {
+        yield put(getOwnedRecipeCountFailed(error as Error));
     }
 }
 
@@ -127,6 +139,10 @@ export function* onGetRecipiesPerOwner() {
     yield takeLatest(RECIPE_ACTION_TYPES.GET_OWNER_RECIPIES_START, getOwnerRecipies);
 }
 
+export function* onGetOwnerRecipesCount() {
+    yield takeLatest(RECIPE_ACTION_TYPES.GET_OWNED_RECIPE_COUNT_START, getOwnerRecipesCount);
+}
+
 export function* onGetLatestAddedRecipes() {
     yield takeLatest(RECIPE_ACTION_TYPES.GET_LATEST_ADDED_RECIPES_START, getLatestAddedRecipes);
 }
@@ -140,5 +156,6 @@ export function* recipeSaga() {
         call(onSearchRecipiesStart),
         call(onGetRecipiesPerOwner),
         call(onGetLatestAddedRecipes),
+        call(onGetOwnerRecipesCount),
     ]);
 }
