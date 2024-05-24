@@ -1,6 +1,5 @@
 import { useEffect } from 'react';
-import SearchBar from './misc/SearchBar'; // Import your SearchBar component
-import RecipeCard from './recepe/RecipeCard'; // Import your RecipeCard component
+import RecipeCard from './recepe/RecipeCard';
 import { useDispatch, useSelector } from 'react-redux';
 import { IRootState } from '../store/root-reducer';
 import { getLatestRecipes } from '../store/recipe/recipe.selector';
@@ -9,7 +8,6 @@ import { getLatestRecipiesStart } from '../store/recipe/recipe.action';
 
 function HomePage() {
   const dispatcher = useDispatch();
-  //TODO: take the latest 3 added
   const allRecipies = useSelector((state: IRootState) => getLatestRecipes(state.recipe));
 
   useEffect(() => {

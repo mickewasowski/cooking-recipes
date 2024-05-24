@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes, redirect, useNavigate } from 'react-router-dom';
+import { Route, Routes, useNavigate } from 'react-router-dom';
 import './App.scss';
 import NavBar from './components/misc/Navbar';
 import HomePage from './components/Home';
@@ -14,6 +14,7 @@ import { IRootState } from './store/root-reducer';
 import { getCurrentRedirectPath } from './store/routing/routing.selector';
 import { useEffect } from 'react';
 import { redirectToFinish } from './store/routing/routing.action';
+import { RecipesToLoad } from './utils/recipeUtils.types';
 
 export const emitter = new EventEmitter();
 
@@ -27,7 +28,6 @@ function App() {
 
   useEffect(() => {
     if (currentRedirectPath) {
-      //redirect(currentRedirectPath);
       navigate(currentRedirectPath);
 
       currentTimeout = setTimeout(() => {
@@ -48,11 +48,11 @@ function App() {
       <Routes>
         <Route path='/' element={<NavBar />}>
           <Route index element={<HomePage />} />
-          <Route path='recipies' element={<RecipesWrapper wrapperType='all'/>} />
+          <Route path='recipies' element={<RecipesWrapper recipesToLoad={RecipesToLoad.All}/>} />
           <Route path='login' element={<RegisterAndLoginWrapper isRegister={false} />} />
           <Route path='register' element={<RegisterAndLoginWrapper isRegister={true}/>} />
           <Route path='myaccount' element={<MyAccount />} />
-          <Route path='myrecipies' element={<RecipesWrapper wrapperType='owned'/>} />
+          <Route path='myrecipies' element={<RecipesWrapper recipesToLoad={RecipesToLoad.Owned}/>} />
           <Route path='addrecipe' element={<AddRecipeForm />} />
           <Route path='recipeDetails/:recipeId' element={<RecipeDetailsWrapper />} />
         </Route>
