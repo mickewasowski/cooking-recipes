@@ -109,9 +109,10 @@
                 flex-direction: column;
                 width: 90%;
                 align-items: center;
+                border: unset;
         
                 .recipe-item-container {
-                    width: 80%;
+                    width: 70%;
                     height: 30rem;
         
                     h2, p {
@@ -120,12 +121,30 @@
         
                     .image-wrapper {
                         height: 60%;
+
+                        img {
+                            border-radius: 10px 10px 0 0;
+                        }
                     }
         
                     .details-wrapper {
                         height: 40%;
                         justify-content: center;
                     }
+                }
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .home-wrapper {
+        .inner-container {
+            .recipes-wrapper {
+                padding: unset;
+        
+                .recipe-item-container {
+                    width: 90%;
                 }
             }
         }
