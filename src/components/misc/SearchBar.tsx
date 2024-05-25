@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { searchRecipiesStart } from '../../store/recipe/recipe.action';
+import { IoSearch } from "react-icons/io5";
 
 function SearchBar() {
   const dispatcher = useDispatch();
@@ -14,23 +15,23 @@ function SearchBar() {
     //TODO: Make the search request with a saga to find all elements containing the word
     console.log('Searching for:', searchQuery);
     // Implement your search logic here
+
+    //TODO: make sure to search either for all or owned recipes
     dispatcher(searchRecipiesStart(searchQuery));
   };
 
   return (
-    <div>
+    <div className='search-box-wrapper'>
       <input
-        // pr="2.5rem"
+        className='search-input'
         type="text"
         placeholder="Search..."
         value={searchQuery}
         onChange={handleInputChange}
       />
-      <div>
-        <button onClick={handleSearch}>
-          {/* <SearchIcon /> */}
-        </button>
-      </div>
+      <button className='search-btn' onClick={handleSearch}>
+        <IoSearch />
+      </button>
     </div>
   );
 }

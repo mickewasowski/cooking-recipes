@@ -1,0 +1,36 @@
+.search-box-wrapper {
+    display: inline-block;
+    width: 16rem;
+    height: 1.5rem;
+    border-radius: 7px;
+    margin-top: 1rem;
+    outline: 2px solid var(--pastel-blue);
+    position: relative; 
+    left: 50%;
+    transform: translateX(-50%);
+
+    .search-input {
+        margin: 0;
+        padding: 0;
+        width: 15rem;
+        height: 1.5rem;
+        border: none;
+        margin-left: 3px;
+
+        &:focus {
+            outline: none;
+        }
+    }
+
+    .search-btn {
+        position: relative;
+        bottom: 89%;
+        left: 90%;
+        border: none;
+        background-color: transparent;
+
+        &:hover {
+            cursor: pointer;
+        }
+    }
+}
