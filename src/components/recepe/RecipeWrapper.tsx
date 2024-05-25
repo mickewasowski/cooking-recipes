@@ -2,23 +2,45 @@ import { useState, useEffect } from 'react';
 import RecipeCard from './RecipeCard';
 import { useDispatch, useSelector } from 'react-redux';
 import { IRootState } from '../../store/root-reducer';
-import { getRecipeCount, getRecipies } from '../../store/recipe/recipe.selector';
-import { getRecipeCountStart, getRecipiesStart } from '../../store/recipe/recipe.action';
+import { getRecipesCountByType, getRecipesByType } from '../../store/recipe/recipe.selector';
+import {
+  getRecipeCountStart,
+  getRecipiesStart,
+  getOwnedRecipeCountStart,
+  getRecipiesForOwnerStart,
+} from '../../store/recipe/recipe.action';
 import SearchBar from '../misc/SearchBar';
+import { RecipesToLoad } from '../../utils/recipeUtils.types';
+import { getCurrentUser } from '../../store/user/user.selector';
 
-const AllRecipes = () => {
+interface IProps {
+  recipesToLoad: RecipesToLoad;
+}
+
+const RecipesWrapper = ({ recipesToLoad }: IProps) => {
   const recipesPerPage = 10; // We will display 10 recipes per page
-  
   const dispatcher = useDispatch();
-  const recipeCount = useSelector((state: IRootState) => getRecipeCount(state.recipe));
-  const allRecipies = useSelector((state: IRootState) => getRecipies(state.recipe));
+  const recipeCount = useSelector((state: IRootState) => getRecipesCountByType(state.recipe, recipesToLoad));
+  const allRecipies = useSelector((state: IRootState) => getRecipesByType(state.recipe, recipesToLoad));
+  const user = useSelector((state: IRootState) => getCurrentUser(state.user));
 
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
 
   useEffect(() => {
+    if (recipesToLoad === RecipesToLoad.All) {
       dispatcher(getRecipeCountStart());
-  }, []);
+    } else if (recipesToLoad === RecipesToLoad.Owned) {
+      if (user) {
+        dispatcher(getOwnedRecipeCountStart(user.id));
+      }
+    }
+
+    return () => {
+      setCurrentPage(1);
+      setTotalPages(0);
+    }
+  }, [recipesToLoad]);
 
   useEffect(() => {
     const totalPages = Math.ceil(recipeCount/recipesPerPage);
@@ -27,12 +49,24 @@ const AllRecipes = () => {
 
   useEffect(() => {
     if (totalPages) {
-      dispatcher(getRecipiesStart({ page: currentPage, limit: recipesPerPage }));
+      if (recipesToLoad === RecipesToLoad.All) {
+        dispatcher(getRecipiesStart({ page: currentPage, limit: recipesPerPage }));
+      } else if (recipesToLoad === RecipesToLoad.Owned) {
+        if (user) {
+          dispatcher(getRecipiesForOwnerStart({ page: currentPage, limit: recipesPerPage, ownerId: user.id }));
+        }
+      }
     }
   }, [totalPages]);
 
   useEffect(() => {
-    dispatcher(getRecipiesStart({ page: currentPage, limit: recipesPerPage }));
+    if (recipesToLoad === RecipesToLoad.All) {
+      dispatcher(getRecipiesStart({ page: currentPage, limit: recipesPerPage }));
+    } else if (recipesToLoad === RecipesToLoad.Owned) {
+      if (user) {
+        dispatcher(getRecipiesForOwnerStart({ page: currentPage, limit: recipesPerPage, ownerId: user.id }));
+      }
+    }
   }, [currentPage]);
 
   const handlePreviousClick = () => {
@@ -44,24 +78,32 @@ const AllRecipes = () => {
   };
 
   return (
-    null
-    // <Box>
-    //     <Flex wrap="wrap" justify="center" gap="20px">
-    //         {allRecipies?.map(recipe => (
-    //             <RecipeCard key={recipe?.id} {...recipe} />
-    //         ))}
-    //     </Flex>
-    //     <Flex justify="center" align="center" mt="20px">
-    //         <Button onClick={handlePreviousClick} disabled={currentPage === 1}>
-    //             Previous
-    //         </Button>
-    //         <Text mx="15px">Page {currentPage} of {totalPages}</Text>
-    //         <Button onClick={handleNextClick} disabled={currentPage === totalPages}>
-    //             Next
-    //         </Button>
-    //     </Flex>
-    // </Box>
+    <div className='loaded-recipes-container'>
+      {
+        !allRecipies?.length
+        ? <p>No recipes found!</p>
+        : (
+          <>
+            <SearchBar />
+            <div className='recipes-container'>
+                {allRecipies?.map(recipe => (
+                    <RecipeCard key={recipe?.id} {...recipe} />
+                ))}
+            </div>
+            <div className='buttons-container'>
+                <button onClick={handlePreviousClick} disabled={currentPage === 1}>
+                    Previous
+                </button>
+                <p>Page {currentPage} of {totalPages}</p>
+                <button onClick={handleNextClick} disabled={currentPage === totalPages}>
+                    Next
+                </button>
+            </div>
+          </>
+        )
+      }
+    </div>
   );
 };
 
-export default AllRecipes;
+export default RecipesWrapper;

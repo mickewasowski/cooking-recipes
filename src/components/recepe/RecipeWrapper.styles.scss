@@ -1,0 +1,47 @@
+@mixin flexColumnCentered {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.loaded-recipes-container {
+    color: var(--pastel-blue);
+    @include flexColumnCentered;
+
+    .recipes-container {
+        @include flexColumnCentered;
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 2rem;
+    }
+
+    .buttons-container {
+        @include flexColumnCentered;
+        flex-direction: row;
+        margin: 2rem 0;
+
+        button {
+            display: inline;
+            width: 7rem;
+            height: 2rem;
+            border: none;
+            border-radius: 5px;
+            background-color: var(--pastel-blue);
+            color: var(--white);
+            font-size: 1rem;
+            font-weight: bold;
+            letter-spacing: 1px;
+
+            &:hover {
+                background-color: var(--light-pastel-blue);
+                cursor: pointer;
+            }
+        }
+
+        p {
+            margin: 0 1rem;
+        }
+    }
+}
+
