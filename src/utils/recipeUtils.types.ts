@@ -9,3 +9,8 @@ export type ItemFromDB = {
     createdAt: Date,
     updatedAt: Date,
 }
+
+export enum RecipesToLoad {
+    All = 'All',
+    Owned = 'Owned'
+}

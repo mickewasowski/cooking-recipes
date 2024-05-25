@@ -39,6 +39,6 @@ export const getRecipiesForOwnerStart = (ownerData: RecipesForOwner) => ({ type:
 export const getRecipiesForOwnerSuccess = (data: SearchRecipesSuccess) => ({ type: RECIPE_ACTION_TYPES.GET_OWNER_RECIPIES_SUCCESS, payload: data });
 export const getRecipiesForOwnerFailed = (error: Error) => ({ type: RECIPE_ACTION_TYPES.GET_OWNER_RECIPIES_FAILED, payload: error });
 
-export const getOwnedRecipeCountStart = () => ({ type: RECIPE_ACTION_TYPES.GET_OWNED_RECIPE_COUNT_START });
+export const getOwnedRecipeCountStart = (userId: string) => ({ type: RECIPE_ACTION_TYPES.GET_OWNED_RECIPE_COUNT_START, payload: { userId } });
 export const getOwnedRecipeCountSuccess = ({ ownedRecipesCount }: OwnedRecipesCount) => ({ type: RECIPE_ACTION_TYPES.GET_OWNED_RECIPE_COUNT_SUCCESS, payload: { ownedRecipesCount } });
 export const getOwnedRecipeCountFailed = (error: Error) => ({ type: RECIPE_ACTION_TYPES.GET_OWNED_RECIPE_COUNT_FAILED, payload: error });

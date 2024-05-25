@@ -129,13 +129,12 @@ export const searchRecipiesByQueryString = (querySearch: string) => {
 }
 
 export const getRecipiesPerOwner = (data: RecipesForOwner) => {
-    const { ownerId, userToken, page, limit } = data;
+    const { ownerId, page, limit } = data;
 
     return fetch(`http://localhost:5000/api/item/owned?page=${page}&limit=${limit}&id=${ownerId}`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${userToken}`
         },
     })
     .then(res => res.json())

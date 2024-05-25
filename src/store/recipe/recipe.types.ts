@@ -68,7 +68,6 @@ export type SearchRecipesSuccess = {
 
 export type RecipesForOwner = {
     ownerId: string;
-    userToken: string;
     page: number;
     limit: number;
 }

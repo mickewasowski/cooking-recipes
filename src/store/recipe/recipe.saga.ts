@@ -96,7 +96,7 @@ export function* getOwnerRecipies({ payload: { ownerId, userToken, page, limit }
 }
 
 //TODO: write unit test for this one
-export function* getOwnerRecipesCount(userId: string) {
+export function* getOwnerRecipesCount({ payload: { userId } }) {
     try {
         const response = yield call(getRecipesCountPerOwner, userId);
         yield put(getOwnedRecipeCountSuccess({ ownedRecipesCount: response.count }));
