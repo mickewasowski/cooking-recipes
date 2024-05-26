@@ -1,97 +1,112 @@
 .home-wrapper {
-    color: var(--light-green-outline);
+    color: var(--white);
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    height: fit-content;
     align-items: center;
-    padding: 0rem 4rem 0rem 4rem;
-    height: 100%;
-    background-image: url('images/blunt-vegetable-pattern.jpg');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
 
     .inner-container {
-        background-color: rgba(255, 255, 255, 0.61);
-        border-radius: 10px;
-        box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.623);
-        padding: 0 1rem 1rem 1rem;
-    }
+        width: 100%;
+        height: 40rem;
+        background-image: url('images/vegetables-white.jpg');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
 
-    .main-heading {
-        font-size: 5rem;
-        font-weight: 900;
-        text-align: center;
-        background: -webkit-linear-gradient(var(--very-light-green), var(--light-green-outline));
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        line-height: 1.2;
-    }
+        .hero-text-wrapper {
+            width: 100%;
+            height: 100%;
+            background-color: rgba(black, 0.25);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
 
-    .text-carousel {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        margin-top: 10px;
-        height: 7rem;
-        overflow-y: hidden;
-
-        .animation-container {
-            background-color: transparent;
-            translate: none;
-            rotate: none;
-            scale: none;
-            animation: 4s ease-in-out infinite slide;
-
-            div {
-                width: 17rem;
-                font-size: 4rem;
+            .main-heading {
+                font-size: 5rem;
+                font-weight: 900;
                 text-align: center;
-                border-radius: 10px;
-                margin: 2rem 0;
+                text-transform: uppercase;
                 color: var(--white);
-                font-weight: 700;
+                line-height: 1.2;
             }
     
-            div:nth-child(1) {
-                background-color: var(--lighter-green-outline);
+            .text-carousel {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                margin-top: 10px;
+                height: 7rem;
+                overflow-y: hidden;
+        
+                .animation-container {
+                    background-color: transparent;
+                    translate: none;
+                    rotate: none;
+                    scale: none;
+                    animation: 4s ease-in-out infinite slide;
+        
+                    div {
+                        width: 17rem;
+                        font-size: 4rem;
+                        text-align: center;
+                        border-radius: 10px;
+                        margin: 2rem 0;
+                        color: var(--white);
+                        font-weight: 700;
+                    }
+            
+                    div:nth-child(1) {
+                        background-color: var(--lighter-green-outline);
+                    }
+            
+                    div:nth-child(2) {
+                        background-color: var(--mustard);
+                    }
+            
+                    div:nth-child(3) {
+                        background-color: var(--light-purple);
+                    }
+            
+                    div:nth-child(4) {
+                        background-color: var(--baby-blue);
+                    }
+                }
             }
-    
-            div:nth-child(2) {
-                background-color: var(--mustard);
-            }
-    
-            div:nth-child(3) {
-                background-color: var(--light-purple);
-            }
-    
-            div:nth-child(4) {
-                background-color: var(--baby-blue);
+
+            .main-heading,
+            .text-carousel {
+                margin-left: 2rem;
             }
         }
+
     }
 
     .recipes-container {
+        width: 80%;
         display: flex;
         flex-direction: column;
         align-items: center;
+        justify-content: center;
         margin-top: 2rem;
         color: var(--pastel-blue);
+        padding-bottom: 2rem;
 
         h2 {
             font-size: 2rem;
+            text-transform: uppercase;
+            color: var(--very-dark-grey);
+            font-weight: 400;
+            text-align: center;
+            align-self: flex-start;
         }
 
         .recipes-wrapper {
             display: flex;
+            flex-direction: row;
             gap: 2rem;
             margin-top: 1rem;
-            border-radius: 10px;
-            // border: 2px solid var(--pastel-blue);
-            padding: 2rem;
-
-            .recipe-item-container {
-                box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.623);
-            }
+            width: 100%;
         }
     }
 }
@@ -101,55 +116,68 @@
         padding: unset;
         height: fit-content;
 
-        .inner-container {
-            width: 100%;
-            border-radius: unset;
-
+        // .inner-container {
+        //     width: 100%;
+        //     border-radius: unset;
+        // }
+        .recipes-container {
             .recipes-wrapper {
                 flex-direction: column;
-                width: 90%;
                 align-items: center;
-                border: unset;
-        
-                .recipe-item-container {
-                    width: 70%;
-                    height: 30rem;
-        
-                    h2, p {
-                        text-align: center;
-                    }
-        
-                    .image-wrapper {
-                        height: 60%;
 
-                        img {
-                            border-radius: 10px 10px 0 0;
+                .recipe-item-container {
+                    width: 100%;
+                    height: 25rem;
+                    position: relative;
+                    border-radius: 10px;
+                    overflow: hidden;
+                    
+                    .image-wrapper {
+                        height: 100%;
+                        border-radius: 10px;
+                        overflow: hidden;
+                    }
+
+                    .details-wrapper {
+                        height: 0;
+
+                        h2 {
+                            position: absolute;
+                            bottom: 0%;
+                            left: 0%;
+                            background-color: rgba(black, 0.45);
+                            width: 100%;
+                            text-align: start;
+                            padding: 1rem;
+                            color: var(--white);
+                            font-size: x-large;
+                            letter-spacing: 2px;
+                        }
+
+                        p {
+                            display: none;
                         }
                     }
-        
-                    .details-wrapper {
-                        height: 40%;
-                        justify-content: center;
-                    }
+
                 }
             }
         }
     }
 }
 
-@media screen and (max-width: 600px) {
-    .home-wrapper {
-        .inner-container {
-            .recipes-wrapper {
-                padding: unset;
+// @media screen and (max-width: 600px) {
+//     .home-wrapper {
+//         .inner-container {
+//             .recipes-wrapper {
+//                 padding: unset;
         
-                .recipe-item-container {
-                    width: 90%;
-                }
-            }
-        }
-    }
-}
+//                 .recipe-item-container {
+//                     width: 90%;
+//                 }
+//             }
+//         }
+//     }
+// }
 
 @keyframes slide {
     0% {
