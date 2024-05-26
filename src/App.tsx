@@ -1,13 +1,6 @@
 import { Route, Routes, useNavigate } from 'react-router-dom';
 import './App.scss';
-import NavBar from './components/misc/Navbar';
-import HomePage from './components/Home';
-import RecipesWrapper from './components/recepe/RecipeWrapper';
-import RegisterAndLoginWrapper from './components/user/RegisterAndLoginWrapper';
-import MyAccount from './components/user/MyAccount';
-import NotificationsWrapper from './components/misc/NotificationsWrapper';
-import RecipeDetailsWrapper from './components/recepe/details/RecipeDetailsWrapper';
-import AddRecipeForm from './components/recepe/AddRecipeForm';
+import { lazy, Suspense } from 'react';
 import EventEmitter from 'events';
 import { useSelector, useDispatch } from 'react-redux';
 import { IRootState } from './store/root-reducer';
@@ -15,6 +8,14 @@ import { getCurrentRedirectPath } from './store/routing/routing.selector';
 import { useEffect } from 'react';
 import { redirectToFinish } from './store/routing/routing.action';
 import { RecipesToLoad } from './utils/recipeUtils.types';
+const NavBar = lazy(() => import('./components/misc/Navbar'));
+const HomePage = lazy(() => import('./components/Home'));
+const RecipesWrapper = lazy(() => import('./components/recepe/RecipeWrapper'));
+const RegisterAndLoginWrapper = lazy(() => import('./components/user/RegisterAndLoginWrapper'));
+const MyAccount = lazy(() => import('./components/user/MyAccount'));
+const NotificationsWrapper = lazy(() => import('./components/misc/NotificationsWrapper'));
+const RecipeDetailsWrapper = lazy(() => import('./components/recepe/details/RecipeDetailsWrapper'));
+const AddRecipeForm = lazy(() => import('./components/recepe/AddRecipeForm'));
 
 export const emitter = new EventEmitter();
 
@@ -45,19 +46,21 @@ function App() {
 
   return (
     <>
-      <Routes>
-        <Route path='/' element={<NavBar />}>
-          <Route index element={<HomePage />} />
-          <Route path='recipies' element={<RecipesWrapper recipesToLoad={RecipesToLoad.All}/>} />
-          <Route path='login' element={<RegisterAndLoginWrapper isRegister={false} />} />
-          <Route path='register' element={<RegisterAndLoginWrapper isRegister={true}/>} />
-          <Route path='myaccount' element={<MyAccount />} />
-          <Route path='myrecipies' element={<RecipesWrapper recipesToLoad={RecipesToLoad.Owned}/>} />
-          <Route path='addrecipe' element={<AddRecipeForm />} />
-          <Route path='recipeDetails/:recipeId' element={<RecipeDetailsWrapper />} />
-        </Route>
-      </Routes>
-      <NotificationsWrapper />
+      <Suspense fallback={<div>Loading...</div>}>
+        <Routes>
+          <Route path='/' element={<NavBar />}>
+            <Route index element={<HomePage />} />
+            <Route path='recipies' element={<RecipesWrapper recipesToLoad={RecipesToLoad.All}/>} />
+            <Route path='login' element={<RegisterAndLoginWrapper isRegister={false} />} />
+            <Route path='register' element={<RegisterAndLoginWrapper isRegister={true}/>} />
+            <Route path='myaccount' element={<MyAccount />} />
+            <Route path='myrecipies' element={<RecipesWrapper recipesToLoad={RecipesToLoad.Owned}/>} />
+            <Route path='addrecipe' element={<AddRecipeForm />} />
+            <Route path='recipeDetails/:recipeId' element={<RecipeDetailsWrapper />} />
+          </Route>
+        </Routes>
+        <NotificationsWrapper />
+      </Suspense>
     </>
   )
 }
