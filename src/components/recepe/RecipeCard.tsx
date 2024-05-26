@@ -27,14 +27,13 @@ function RecipeCard({ id, image, title, description }: RecipeCardProps) {
   }
 
   return (
-    <div className='recipe-item-container'>
+    <div className='recipe-item-container' onClick={openRecipe}>
       <div className='image-wrapper'>
         <img src={image} alt={`Image of ${title}`} />
       </div>
       <div className='details-wrapper'>
         <h2>{title}</h2>
         <p>{truncateDescription(description, 30)}</p>
-        <button onClick={openRecipe}>Details</button>
       </div>
     </div>
   );
