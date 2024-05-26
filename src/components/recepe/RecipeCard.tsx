@@ -33,7 +33,7 @@ function RecipeCard({ id, image, title, description }: RecipeCardProps) {
       </div>
       <div className='details-wrapper'>
         <h2>{title}</h2>
-        <p>{truncateDescription(description, 30)}</p>
+        <p>{truncateDescription(description, 45)}</p>
       </div>
     </div>
   );
