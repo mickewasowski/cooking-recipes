@@ -107,6 +107,12 @@
             gap: 2rem;
             margin-top: 1rem;
             width: 100%;
+
+            .details-wrapper {
+                p {
+                    text-align: left;
+                }
+            }
         }
     }
 }
