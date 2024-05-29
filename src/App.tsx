@@ -15,7 +15,7 @@ const RegisterAndLoginWrapper = lazy(() => import('./components/user/RegisterAnd
 const MyAccount = lazy(() => import('./components/user/MyAccount'));
 const NotificationsWrapper = lazy(() => import('./components/misc/NotificationsWrapper'));
 const RecipeDetailsWrapper = lazy(() => import('./components/recepe/RecipeDetailsWrapper'));
-const AddRecipeForm = lazy(() => import('./components/recepe/AddRecipeForm'));
+const AddRecipeForm = lazy(() => import('./components/recepe/AddRecipe'));
 
 export const emitter = new EventEmitter();
 
