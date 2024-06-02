@@ -9,70 +9,61 @@ import { editUserStart } from '../../store/user/user.action';
 function MyAccount() {
   const dispatch = useDispatch();
   const currentUser = useSelector((state: IRootState) => getCurrentUser(state.user));
-  const [isEditable, setIsEditable] = useState(false);
   const [userInfo, setUserInfo] = useState({ email: currentUser?.email, fullName: currentUser?.fullName, password: null, newPassword: null });
 
-  const handleToggle = () => {
-    setIsEditable(!isEditable);
-  };
-
-  const handleCancel = () => {
+  const handleCancel = (e) => {
+    e.preventDefault();
     setUserInfo({ ...userInfo, password: null, newPassword: null });
-    setIsEditable(false);
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUserInfo({ ...userInfo, [e.target.name]: e.target.value });
   };
 
-  const handleUpdateUser = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+  const handleUpdateUser = (event: React.FormEvent) => {
     event.preventDefault();
 
     dispatch(editUserStart({ ...userInfo, token: currentUser?.token }));
   }
 
   return (
-    null
-    // <Box maxW="sm" mx="auto" mt="10">
-    //   <Flex justifyContent="space-between" alignItems="center">
-    //     <Heading mb="6">My Account</Heading>
-    //     <Flex alignItems="center">
-    //       <FormLabel htmlFor="edit-toggle" mb="0" mr="2">
-    //         Edit
-    //       </FormLabel>
-    //       <Switch id="edit-toggle" isChecked={isEditable} onChange={handleToggle} />
-    //     </Flex>
-    //   </Flex>
-    //   <Stack spacing="4" mt="4">
-    //     <FormControl isDisabled={!isEditable}>
-    //       <FormLabel>Email</FormLabel>
-    //       <Input type="email" name="email" value={userInfo.email} onChange={handleChange} />
-    //     </FormControl>
-    //     <FormControl isDisabled={!isEditable}>
-    //       <FormLabel>Full Name</FormLabel>
-    //       <Input type="text" name="fullName" value={userInfo.fullName} onChange={handleChange} />
-    //     </FormControl>
-    //     <FormControl isDisabled={!isEditable} isRequired>
-    //       <FormLabel>Password</FormLabel>
-    //       <Input type="password" name="password" value={userInfo.password} onChange={handleChange} />
-    //     </FormControl>
-    //     <FormControl isDisabled={!isEditable}>
-    //       <FormLabel>New Password</FormLabel>
-    //       <Input type="password" name="newPassword" value={userInfo.newPassword} onChange={handleChange} />
-    //     </FormControl>
-
-    //     {isEditable && (
-    //       <>
-    //         <Button colorScheme="blue" onClick={handleUpdateUser}>
-    //           Save Changes
-    //         </Button>
-    //         <Button colorScheme="red" onClick={handleCancel}>
-    //           Cancel
-    //         </Button>
-    //       </>
-    //     )}
-    //   </Stack>
-    // </Box>
+    <div className='account-settings-container'>
+      <div className='settings-heading'>
+        <h1>Settings</h1>
+      </div>
+      <div className='settings-body'>
+        {/* <div className='settings-menu'>
+          <p className='active'>User settings</p>
+        </div> */}
+        <div className='user-settings'>
+          <p>When updating any of the fields bellow the password field is always required.
+            Only fill the information you want to change.
+          </p>
+          <form onSubmit={handleUpdateUser}>
+            <div>
+              <label>Fullname:</label>
+              <input type='text' name='fullName' />
+            </div>
+            <div>
+              <label>Email:</label>
+              <input type='email' name='email' />
+            </div>
+            <div>
+              <label>Password: *</label>
+              <input type='password' name='password' />
+            </div>
+            <div>
+              <label>New password:</label>
+              <input type='password' name='newPassword' />
+            </div>
+            <div className='buttons'>
+              <button className='clear-btn' onClick={handleCancel}>Cancel</button>
+              <button className='submit-btn' type='submit'>Submit</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
   );
 }
 

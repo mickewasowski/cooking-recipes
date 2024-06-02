@@ -6,6 +6,7 @@
 @import url('../src/components/misc/SearchBar.styles.scss');
 @import url('../src/components/recepe/RecipeDetailsWrapper.styles.scss');
 @import url('../src/components/recepe/AddRecipe.styles.scss');
+@import url('../src/components/user/MyAccount.styles.scss');
 
 $very-light-green: #98C095;
 $light-green-outline: #469856;
@@ -22,6 +23,7 @@ $light-pastel-blue: #54a5b9;
 $recipe-card-details-green: #e0ede6;
 $light-yellow: #e1c745;
 $dark-yellow: #d3c14b;
+$very-light-gray: #98979757;
 
 :root {
     --very-light-green: #{$very-light-green};
@@ -39,6 +41,7 @@ $dark-yellow: #d3c14b;
     --recipe-card-details-green: #{$recipe-card-details-green};
     --light-yellow: #{$light-yellow};
     --dark-yellow: #{$dark-yellow};
+    --very-light-gray: #{$very-light-gray};
 }
 
 * {

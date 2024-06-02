@@ -1,0 +1,129 @@
+.account-settings-container {
+    font-family: "Roboto", sans-serif;
+    letter-spacing: 1px;
+    background-color: rgba(152, 192, 149, 0.15);
+    height: 100%;
+
+    .settings-heading {
+        border-bottom: 2px solid var(--light-grey);
+
+        h1 {
+            width: fit-content;
+            margin: auto;
+            padding: 2rem 0;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            font-size: 3rem;
+            color: var(--very-dark-grey)
+        }
+    }
+
+    .settings-body {
+        display: flex;
+        padding: 0 2rem;
+        padding-top: 2rem;
+
+        .settings-menu {
+            width: 30%;
+            padding-right: 1rem;
+
+            p {
+                border: 1px solid var(--light-grey);
+                text-align: center;
+                padding: 1rem;
+                font-size: 1.2rem;
+                text-transform: uppercase;
+
+                &:hover {
+                    background-color: var(--very-light-gray);
+                }
+            }
+
+            p.active {
+                background-color: var(--white);
+            }
+        }
+
+        .user-settings {
+            margin: auto;
+            width: 70%;
+            padding: 2rem;
+            padding-bottom: 5rem;
+            background-color: var(--white);
+
+            p {
+                color: var(--light-grey);
+                text-align: center;
+                margin-bottom: 1rem;
+            }
+            
+            form {
+                padding-top: 2rem;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                gap: 1rem;
+
+                div {
+                    width: 50%;
+                    display: flex;
+                    flex-direction: column;
+
+                    label {
+                        margin-bottom: .5rem;
+                    }
+
+                    input {
+                        border: 2px solid var(--very-light-gray);
+                        border-radius: 5px;
+                        font-size: 1rem;
+                        padding: .3rem;
+
+                        &:focus {
+                            outline: none;
+                        }
+                    }
+                }
+
+                .buttons {
+                    margin-top: 2rem;
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: center;
+                    gap: 1rem;
+
+                    button {
+                        width: 30%;
+                        display: inline;
+                        padding: .4rem;
+                        border-radius: 5px;
+                        text-transform: uppercase;
+                        letter-spacing: 1px;
+                        font-weight: 600;
+
+                        &:hover {
+                            cursor: pointer;
+                        }
+                    }
+
+                    .clear-btn {
+                        background-color: transparent;
+                        border: 1px solid var(--light-grey);
+                        color: var(--light-grey);
+                    }
+        
+                    .submit-btn {
+                        border: none;
+                        background-color: var(--dark-yellow);
+                        color: var(--white);
+        
+                        &:hover {
+                            background-color: var(--light-yellow);
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
