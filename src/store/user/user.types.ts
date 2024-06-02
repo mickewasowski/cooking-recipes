@@ -23,7 +23,7 @@ export type UserRegisterStart = UserSignIn & {
 }
 
 export type UserEditStart = UserRegisterStart & {
-    newPassword: string;
+    newPassword: string | null;
     token: string;
 }
 

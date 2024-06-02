@@ -84,6 +84,25 @@
                             outline: none;
                         }
                     }
+
+                    input.error {
+                        border: 2px solid var(--error-red);
+                    }
+                }
+
+                #password-container {
+                    position: relative;
+
+                    #passwordDescription {
+                        position: absolute;
+                        width: 20rem;
+                        background-color: var(--white);
+                        border: 1px solid var(--error-red);
+                        border-radius: 5px;
+                        padding: .2rem;
+                        left: 102%;
+                        bottom: -15px;
+                    }
                 }
 
                 .buttons {
@@ -121,6 +140,26 @@
                         &:hover {
                             background-color: var(--light-yellow);
                         }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .account-settings-container {
+        .settings-body {
+            padding: unset;
+
+            .user-settings {
+                width: 100%;
+
+                form {
+                    width: 100%;
+
+                    div {
+                        width: 90%;
                     }
                 }
             }
