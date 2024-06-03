@@ -33,6 +33,12 @@ export const getRecipesCountByType = (state: RecipeState, type: string) => {
 }
 
 const getRecipeObjectById = (state: RecipeState, id: string) => {
-    const recipe = state.recipies.find(x => x.id === id);
+    let recipe = state.recipies.find(x => x.id === id);
+    if (!recipe) {
+        recipe = state.ownedRecipes.find(x => x.id === id);
+    }
+    if (!recipe) {
+        recipe = state.latestAdded.find(x => x.id === id);
+    }
     return recipe;
 }
