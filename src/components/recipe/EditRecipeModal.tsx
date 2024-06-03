@@ -33,8 +33,8 @@ function EditRecipeModal({ refElement, recipeData }) {
             <h2>Edit Recipe Details</h2>
             <form method="dialog">
                  <div>
-                    <label>Image URL:</label>
                     <img src={editedImage}/>
+                    <label>Image URL:</label>
                     <input value={editedImage}/>
                 </div>
                 <div>

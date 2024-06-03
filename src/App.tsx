@@ -12,12 +12,12 @@ import ErrorPage from './components/misc/ErrorPage';
 import Loading from './components/misc/LoadingSpinner';
 const NavBar = lazy(() => import('./components/misc/Navbar'));
 const HomePage = lazy(() => import('./components/Home'));
-const RecipesWrapper = lazy(() => import('./components/recepe/RecipeWrapper'));
+const RecipesWrapper = lazy(() => import('./components/recipe/RecipeWrapper'));
 const RegisterAndLoginWrapper = lazy(() => import('./components/user/RegisterAndLoginWrapper'));
 const MyAccount = lazy(() => import('./components/user/MyAccount'));
 const NotificationsWrapper = lazy(() => import('./components/misc/NotificationsWrapper'));
-const RecipeDetailsWrapper = lazy(() => import('./components/recepe/RecipeDetailsWrapper'));
-const AddRecipeForm = lazy(() => import('./components/recepe/AddRecipe'));
+const RecipeDetailsWrapper = lazy(() => import('./components/recipe/RecipeDetailsWrapper'));
+const AddRecipeForm = lazy(() => import('./components/recipe/AddRecipe'));
 
 export const emitter = new EventEmitter();
 

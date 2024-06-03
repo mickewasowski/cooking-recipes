@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import RecipeCard from './recepe/RecipeCard';
+import RecipeCard from './recipe/RecipeCard';
 import { useDispatch, useSelector } from 'react-redux';
 import { IRootState } from '../store/root-reducer';
 import { getLatestRecipes } from '../store/recipe/recipe.selector';
