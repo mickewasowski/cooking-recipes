@@ -1,19 +1,32 @@
+import { useState } from "react";
 
 function EditRecipeModal({ refElement, recipeData }) {
     const {
         title,
         description,
-        type,
         image: imageURL,
         owner: ownerId,
         additionalData
     } = recipeData;
-    const servings = true //additionalData && additionalData.get('servings');
-    const prepTime = true //additionalData && additionalData.get('prepTime');
-    const cookingTime = true //additionalData && additionalData.get('cookingTime');
-    // ingredients => should go in prep => make sure its array of strings
-    const ingredientsArray = additionalData && additionalData.get('ingredients');
+    const [recipeEdited, setRecipeEdited] = useState({
+        title,
+        description,
+        image: imageURL,
+        owner: ownerId,
+        additionalData
+    });
     
+    const {
+        title: editedTitle,
+        description: editedDescription,
+        image: editedImage,
+        additionalData: editedAdditionalData
+    } = recipeEdited;
+    const servings = editedAdditionalData && editedAdditionalData.servings;
+    const prepTime = editedAdditionalData && editedAdditionalData.prepTime;
+    const cookingTime = editedAdditionalData && editedAdditionalData.cookingTime;
+    const ingredientsArray = editedAdditionalData && editedAdditionalData.ingredients;
+    const ingredsToString = ingredientsArray.join(',\n');
 
     return (
         <dialog ref={refElement} className="edit-recipe-modal">
@@ -21,32 +34,32 @@ function EditRecipeModal({ refElement, recipeData }) {
             <form method="dialog">
                  <div>
                     <label>Image URL:</label>
-                    <input />
-                    <img />
+                    <img src={editedImage}/>
+                    <input value={editedImage}/>
                 </div>
                 <div>
                     <label>Title:</label>
-                    <input />
+                    <input value={editedTitle}/>
                 </div>
                 <div>
                     <label>Preparation time: (in minutes)</label>
-                    <input />
+                    <input value={prepTime}/>
                 </div>
                 <div>
                     <label>Cooking time: (in minutes)</label>
-                    <input />
+                    <input value={cookingTime}/>
                 </div>
                 <div>
                     <label>Servings:</label>
-                    <input />
+                    <input value={servings}/>
                 </div>
                 <div>
                     <label>Ingredients: (separated by comma)</label>
-                    <textarea />
+                    <textarea value={ingredsToString}/>
                 </div>
                 <div>
                     <label>How to prepare:</label>
-                    <textarea />
+                    <textarea value={editedDescription}/>
                 </div>
                 <div className="buttons-container">
                     <button className="clear-btn">Cancel</button>

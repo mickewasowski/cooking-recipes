@@ -3,11 +3,10 @@ import { getCurrentUser } from "../../store/user/user.selector";
 import { getRecipeById } from "../../store/recipe/recipe.selector";
 import { IRootState } from "../../store/root-reducer";
 import { useParams } from "react-router-dom";
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import EditRecipeModal from "./EditRecipeModal";
 
 function RecipeDetailsWrapper() {
-    const [showEditRecipe, setShowEditRecipe] = useState(true);
     const editRecipeModalRef = useRef(null);
     const { recipeId } = useParams();
     const user = useSelector((state: IRootState) => getCurrentUser(state.user));
@@ -16,23 +15,17 @@ function RecipeDetailsWrapper() {
     const {
         title,
         description,
-        type,
         image: imageURL,
         owner: ownerId,
         additionalData,
     } = recipe;
 
-    //TODO: check if additionalData has the following:
-    // servings, prepTime, cookingTime  => these should go in the prep-details
-    const servings = true //additionalData && additionalData.get('servings');
-    const prepTime = true //additionalData && additionalData.get('prepTime');
-    const cookingTime = true //additionalData && additionalData.get('cookingTime');
-    // ingredients => should go in prep => make sure its array of strings
-    const ingredientsArray = additionalData && additionalData.get('ingredients');
+    const servings = additionalData && additionalData.servings;
+    const prepTime = additionalData && additionalData.prepTime;
+    const cookingTime = additionalData && additionalData.cookingTime;
+    const ingredientsArray = additionalData && additionalData.ingredients;
     const isOwned = ownerId === user?.id;
 
-    //TODO: attach the click event to the button
-    //it should create a dialog to edit the recipe
     const showEditModal = () => {
         if (editRecipeModalRef?.current) {
             editRecipeModalRef.current.showModal();
@@ -61,22 +54,16 @@ function RecipeDetailsWrapper() {
                         <div className="ingredients">
                             <h3>ingredients</h3>
                             {
-                                ingredientsArray?.map((ingred, index) => {
+                                ingredientsArray?.map((ingred: string, index: number) => {
                                     return (
                                         <p key={index}>{ingred}</p>
                                     )
                                 })
                             }
-                            <p>100 ml milk</p>
-                            <p>50 g butter</p>
-                            <p>3 eggs</p>
-                            <p>1 tbs cocoa</p>
-                            <p>2 tsp baking soda</p>
                         </div>
                         <div className="instructions">
                             <h3>directions</h3>
-                            {/* <p>{description}</p> */}
-                            <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).</p>
+                            <p>{description}</p>
                         </div>
                     </div>
             </main>
