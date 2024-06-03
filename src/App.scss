@@ -61,4 +61,70 @@ html, body {
     font-family: "Roboto", sans-serif;
     height: 100%;
     width: 100%;
+
+
+}
+
+.spinner {
+    display: inline-block;
+    width: 80px;
+    height: 80px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.spinner::after {
+    content: " ";
+    display: block;
+    width: 64px;
+    height: 64px;
+    margin: 8px;
+    border-radius: 50%;
+    border: 6px solid grey;
+    border-color: grey transparent grey transparent;
+    animation: spin 1.2s linear infinite;
+}
+
+.error-page {
+    height: 80%;
+    display: flex;
+    gap: 1rem;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-family: "Roboto", sans-serif;
+
+    h1 {
+        font-size: 7rem;
+        color: var(--error-red);
+    }
+
+    h3 {
+        font-size: 2rem;
+    }
+
+    .back-home {
+        text-decoration: none;
+        color: var(--light-green-outline);
+        border: 1px solid var(--lighter-green-outline);
+        padding: .5rem;
+        border-radius: 5px;
+
+        &:hover {
+            cursor: pointer;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25);
+            transition: ease-in-out 200ms;
+        }
+    }
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
 }

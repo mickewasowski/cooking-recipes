@@ -8,6 +8,8 @@ import { getCurrentRedirectPath } from './store/routing/routing.selector';
 import { useEffect } from 'react';
 import { redirectToFinish } from './store/routing/routing.action';
 import { RecipesToLoad } from './utils/recipeUtils.types';
+import ErrorPage from './components/misc/ErrorPage';
+import Loading from './components/misc/LoadingSpinner';
 const NavBar = lazy(() => import('./components/misc/Navbar'));
 const HomePage = lazy(() => import('./components/Home'));
 const RecipesWrapper = lazy(() => import('./components/recepe/RecipeWrapper'));
@@ -46,7 +48,7 @@ function App() {
 
   return (
     <>
-      <Suspense fallback={<div>Loading...</div>}>
+      <Suspense fallback={<Loading />}>
         <Routes>
           <Route path='/' element={<NavBar />}>
             <Route index element={<HomePage />} />
@@ -57,6 +59,7 @@ function App() {
             <Route path='myrecipies' element={<RecipesWrapper recipesToLoad={RecipesToLoad.Owned}/>} />
             <Route path='addrecipe' element={<AddRecipeForm />} />
             <Route path='recipeDetails/:recipeId' element={<RecipeDetailsWrapper />} />
+            <Route path='*' element={<ErrorPage />}/>
           </Route>
         </Routes>
         <NotificationsWrapper />
