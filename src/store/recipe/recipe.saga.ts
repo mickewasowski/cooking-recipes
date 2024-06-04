@@ -35,6 +35,7 @@ import {
     getLatestRecipes,
     getRecipesCountPerOwner
 } from '../../utils/recipeUtils';
+import { redirectToStart } from '../routing/routing.action';
 
 export function* addRecipe(data: AddRecipeStart) {
     try {

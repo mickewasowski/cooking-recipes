@@ -7,7 +7,7 @@ import { useRef } from "react";
 import EditRecipeModal from "./EditRecipeModal";
 
 function RecipeDetailsWrapper() {
-    const editRecipeModalRef = useRef(null);
+    const editRecipeModalRef = useRef<HTMLDialogElement>(null);
     const { recipeId } = useParams();
     const user = useSelector((state: IRootState) => getCurrentUser(state.user));
     const recipe = recipeId && useSelector((state: IRootState) => getRecipeById(state.recipe, recipeId));
@@ -68,7 +68,9 @@ function RecipeDetailsWrapper() {
                     </div>
             </main>
             </div>
-            <EditRecipeModal refElement={editRecipeModalRef} recipeData={recipe}/>
+            { user && user.id === ownerId ? (
+                <EditRecipeModal refElement={editRecipeModalRef} recipeData={recipe}/>
+            ) : null }
         </>
     )
 }

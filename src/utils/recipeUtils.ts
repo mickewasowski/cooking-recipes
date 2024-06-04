@@ -79,7 +79,7 @@ export const updateRecipeData = ({ id, title, description, image, userToken, typ
         description,
         image,
         type,
-        additionalData
+        additionalData: JSON.stringify([...additionalData.entries()])
     }
 
     return fetch('http://localhost:5000/api/item', {

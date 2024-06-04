@@ -50,6 +50,11 @@
                 }
             }
 
+            input.errorOutline,
+            textarea.errorOutline {
+                border: 2px solid var(--error-red);
+            }
+
             textarea {
                 min-height: 5rem;
                 resize: vertical;

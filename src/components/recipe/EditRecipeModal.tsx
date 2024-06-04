@@ -1,68 +1,145 @@
-import { useState } from "react";
+import React, { useState } from "react";
+import { Recipe } from "../../store/recipe/recipe.reducer";
+import { useDispatch, useSelector } from "react-redux";
+import { IRootState } from "../../store/root-reducer";
+import { getCurrentUser } from "../../store/user/user.selector";
+import { updateRecipeStart } from "../../store/recipe/recipe.action";
+import { validateRecipeInputData } from "./utils";
 
-function EditRecipeModal({ refElement, recipeData }) {
+interface IProps {
+    refElement: React.RefObject<HTMLDialogElement>;
+    recipeData: Recipe;
+}
+
+function EditRecipeModal({ refElement, recipeData }: IProps) {
+    const user = useSelector((state: IRootState) => getCurrentUser(state.user));
+    const dispatch = useDispatch();
     const {
+        id,
         title,
+        type,
         description,
         image: imageURL,
         owner: ownerId,
         additionalData
     } = recipeData;
     const [recipeEdited, setRecipeEdited] = useState({
+        id,
         title,
+        type,
         description,
         image: imageURL,
         owner: ownerId,
-        additionalData
+        prepTime: additionalData.prepTime,
+        cookingTime: additionalData.cookingTime,
+        servings: additionalData.servings,
+        ingredients: additionalData.ingredients
     });
     
     const {
         title: editedTitle,
+        type: editedType,
         description: editedDescription,
         image: editedImage,
-        additionalData: editedAdditionalData
+        prepTime,
+        cookingTime,
+        servings,
+        ingredients
     } = recipeEdited;
-    const servings = editedAdditionalData && editedAdditionalData.servings;
-    const prepTime = editedAdditionalData && editedAdditionalData.prepTime;
-    const cookingTime = editedAdditionalData && editedAdditionalData.cookingTime;
-    const ingredientsArray = editedAdditionalData && editedAdditionalData.ingredients;
-    const ingredsToString = ingredientsArray.join(',\n');
+    const ingredsToString = ingredients.join(', ');
+
+    const handleClose = () => {
+        refElement.current?.close();
+    }
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement> | React.ChangeEvent<HTMLTextAreaElement>) => {
+        const { name, value } = e.target;
+        const isValidData = validateRecipeInputData(name, value);
+        if (isValidData) {
+            e.target.className = '';
+            if (['prepTime', 'cookingTime', 'servings'].includes(value)) {
+                const valueToNumber = parseInt(value);
+                setRecipeEdited({ ...recipeEdited, [name]: valueToNumber });
+            } else if (name === 'ingredients') {
+                const splitString = value.split(',');
+                const allIngredients = splitString.map((ing: string) => ing.trim());
+                setRecipeEdited({ ...recipeEdited, [name as string]: allIngredients });
+            } else {
+                const statePropName = name === 'imageUrl' ? 'image' : name;
+                setRecipeEdited({ ...recipeEdited, [statePropName]: value });
+            }
+        } else {
+            e.target.className = 'errorOutline';
+        }
+    };
+
+    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+        if (!user) {
+            return;
+        }
+
+        const {
+            title: editedTitle,
+            type: editedType,
+            description: editedDescription,
+            image: editedImage,
+            prepTime,
+            servings,
+            cookingTime,
+            ingredients
+        } = recipeEdited;
+
+        if (!editedTitle || !editedDescription || !editedImage || !ingredients.length || !prepTime || !cookingTime || !servings) {
+            return;
+        }
+
+        const additionalData = new Map<string, any>();
+        additionalData.set('ingredients', ingredients);
+        additionalData.set('prepTime', prepTime);
+        additionalData.set('cookingTime', cookingTime);
+        additionalData.set('servings', servings);
+
+        if (user) {
+            dispatch(updateRecipeStart({ id, title: editedTitle, image: editedImage, description: editedDescription, type: editedType, userToken: user.token, additionalData }));
+        }
+    };
 
     return (
         <dialog ref={refElement} className="edit-recipe-modal">
             <h2>Edit Recipe Details</h2>
-            <form method="dialog">
+            <form method="dialog" onSubmit={handleSubmit}>
                  <div>
                     <img src={editedImage}/>
                     <label>Image URL:</label>
-                    <input value={editedImage}/>
+                    <input name='imageUrl' defaultValue={editedImage} onChange={handleChange}/>
                 </div>
                 <div>
                     <label>Title:</label>
-                    <input value={editedTitle}/>
+                    <input name='title' defaultValue={editedTitle} onChange={handleChange}/>
                 </div>
                 <div>
                     <label>Preparation time: (in minutes)</label>
-                    <input value={prepTime}/>
+                    <input name='prepTime' defaultValue={prepTime} onChange={handleChange}/>
                 </div>
                 <div>
                     <label>Cooking time: (in minutes)</label>
-                    <input value={cookingTime}/>
+                    <input name='cookingTime' defaultValue={cookingTime} onChange={handleChange}/>
                 </div>
                 <div>
                     <label>Servings:</label>
-                    <input value={servings}/>
+                    <input name='servings' defaultValue={servings} onChange={handleChange}/>
                 </div>
                 <div>
                     <label>Ingredients: (separated by comma)</label>
-                    <textarea value={ingredsToString}/>
+                    <textarea name='ingredients' defaultValue={ingredsToString} onChange={handleChange}/>
                 </div>
                 <div>
                     <label>How to prepare:</label>
-                    <textarea value={editedDescription}/>
+                    <textarea name='description' defaultValue={editedDescription} onChange={handleChange}/>
                 </div>
                 <div className="buttons-container">
-                    <button className="clear-btn">Cancel</button>
+                    <button className="clear-btn" onClick={handleClose}>Cancel</button>
                     <button className="submit-btn">Submit</button>
                 </div>
             </form>
