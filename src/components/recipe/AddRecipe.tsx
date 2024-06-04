@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { IRootState } from '../../store/root-reducer';
 import { addRecipeStart } from '../../store/recipe/recipe.action';
 import { getCurrentUser } from '../../store/user/user.selector';
+import { validateRecipeInputData } from './utils';
 
 function AddRecipeForm() {
     const dispatch = useDispatch();
@@ -11,26 +12,51 @@ function AddRecipeForm() {
 
     const [formData, setFormData] = useState({
         title: '',
-        type: 'salad', // default to the first option
+        type: '', // default to the first option
         description: '',
         imageUrl: '',
         ingredients: [],
-        prepTime: null,
-        cookingTime: null,
-        servings: null,
+        prepTime: '',
+        cookingTime: '',
+        servings: '',
     });
 
-    const handleInputChange = (e) => {
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement> | React.ChangeEvent<HTMLTextAreaElement>) => {
         const { name, value } = e.target;
-        setFormData({ ...formData, [name]: value });
+        const isValidData = validateRecipeInputData(name, value);
+        if (isValidData) {
+            e.target.className = '';
+            if (['prepTime', 'cookingTime', 'servings'].includes(value)) {
+                const valueToNumber = parseInt(value);
+                setFormData({ ...formData, [name]: valueToNumber });
+            } else if (name === 'ingredients') {
+                const splitString = value.split(',');
+                const allIngredients = splitString.map((ing: string) => ing.trim());
+                setFormData({ ...formData, [name as string]: allIngredients });
+            } else {
+                setFormData({ ...formData, [name]: value });
+            }
+        } else {
+            e.target.className = 'errorOutline';
+        }
     };
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
+    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+        const { title, type, description, imageUrl, ingredients, prepTime, cookingTime, servings } = formData;
+        if (!title || !type || !description || !imageUrl || !ingredients || !prepTime || !cookingTime || !servings) {
+            return;
+        }
 
         const additionalData = new Map<string, any>();
+        additionalData.set('ingredients', ingredients);
+        additionalData.set('prepTime', prepTime);
+        additionalData.set('cookingTime', cookingTime);
+        additionalData.set('servings', servings);
 
-        dispatch(addRecipeStart({ title: formData.title, image: formData.imageUrl, description: formData.description, type: formData.type, userToken: user.token, additionalData }));
+        if (user) {
+            dispatch(addRecipeStart({ title: formData.title, image: formData.imageUrl, description: formData.description, type: formData.type, userToken: user.token, additionalData }));
+        }
     };
 
     return (
@@ -38,17 +64,18 @@ function AddRecipeForm() {
             <form onSubmit={handleSubmit}>
                 <div className='image-wrapper'>
                     <img src={formData.imageUrl || ''} />
-                    <input type='text' placeholder='Place your image url here' />
+                    <input defaultValue={formData.imageUrl} name='imageUrl' type='text' placeholder='Place your image url here' onChange={handleChange} />
                 </div>
                 <div className='title-time-container'>
                     <div className='title-type-wrapper'>
                         <div className='recipe-title'>
                             <label>Recipe title: *</label>
-                            <input type='text' />
+                            <input defaultValue={formData.title} name='title' type='text' onChange={handleChange}/>
                         </div>
                         <div className='recipe-type'>
                             <label>Recipe type: *</label>
-                            <select>
+                            <select defaultValue={formData.type} name='type' onChange={handleChange}>
+                                <option></option>
                                 <option>Salad</option>
                                 <option>Soup</option>
                                 <option>Dessert</option>
@@ -63,25 +90,25 @@ function AddRecipeForm() {
                     <div className='time-container'>
                         <div>
                             <label>Preparation Time: * (in minutes)</label>
-                            <input type='number' />
+                            <input defaultValue={formData.prepTime} name='prepTime' type='number' onChange={handleChange}/>
                         </div>
                         <div>
                             <label>Cooking Time: * (in minutes)</label>
-                            <input type='number' />
+                            <input defaultValue={formData.cookingTime} name='cookingTime' type='number' onChange={handleChange}/>
                         </div>
                         <div>
                             <label>Servings: *</label>
-                            <input type='number' />
+                            <input defaultValue={formData.servings} name='servings' type='number' onChange={handleChange}/>
                         </div>
                     </div>
                 </div>
                 <div className='ingredients'>
                     <label>Ingredients: (separated by comma) *</label>
-                    <textarea></textarea>
+                    <textarea defaultValue={formData.ingredients} name='ingredients' onChange={handleChange}></textarea>
                 </div>
                 <div className='description'>
                     <label>How to prepare: *</label>
-                    <textarea></textarea>
+                    <textarea defaultValue={formData.description} name='description' onChange={handleChange}></textarea>
                 </div>
                 <div className='buttons-container'>
                     <button className='clear-btn'>Clear</button>

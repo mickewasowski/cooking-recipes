@@ -14,7 +14,7 @@ export const addRecipeRequest = ({ title, description, image, userToken, type, a
         description,
         image,
         type,
-        additionalData
+        additionalData: JSON.stringify([...additionalData.entries()])
     }
 
     return fetch('http://localhost:5000/api/item', {

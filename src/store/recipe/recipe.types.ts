@@ -38,7 +38,7 @@ export type Recipe = {
     image: string;
     type: string;
     description: string;
-    additionalData?: Map<string, any>;
+    additionalData: Map<string, any>;
 }
 
 export type RecipeAddStart = Recipe & {
