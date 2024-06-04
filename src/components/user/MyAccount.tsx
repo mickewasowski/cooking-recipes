@@ -72,11 +72,12 @@ function MyAccount() {
           <form onSubmit={handleUpdateUser}>
             <div>
               <label>Fullname:</label>
-              <input type='text' name='fullName' className={userInfoErrors.fullName ? 'error' : ''} onChange={handleChange}/>
+              <input defaultValue={currentUser?.fullName} type='text' name='fullName' className={userInfoErrors.fullName ? 'error' : ''} onChange={handleChange}/>
             </div>
             <div>
               <label>Email:</label>
-              <input type='email' name='email' className={userInfoErrors.email ? 'error' : ''} onChange={handleChange}/>
+              <input disabled defaultValue={currentUser?.email} type='email' name='email' className={userInfoErrors.email ? 'error' : ''} /> 
+              {/* //onChange={handleChange} */}
             </div>
             <div id='password-container'>
               <label>Password: *</label>
