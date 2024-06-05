@@ -44,7 +44,7 @@ function AddRecipeForm() {
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const { title, type, description, imageUrl, ingredients, prepTime, cookingTime, servings } = formData;
-        if (!title || !type || !description || !imageUrl || !ingredients || !prepTime || !cookingTime || !servings) {
+        if (!user || !title || !type || !description || !imageUrl || !ingredients || !prepTime || !cookingTime || !servings) {
             return;
         }
 

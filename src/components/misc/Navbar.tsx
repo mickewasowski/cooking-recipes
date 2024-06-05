@@ -12,7 +12,6 @@ import { useOutsideClick } from '../hooks/useOutsideClick';
 function NavigationBar() {
   const dispatch = useDispatch();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const user = useSelector((state: IRootState) => getCurrentUser(state.user));
 
   const ref = useOutsideClick(() => {
@@ -20,14 +19,6 @@ function NavigationBar() {
       setIsMenuOpen(false);
     }
   });
-
-  useEffect(() => {
-    if (user) {
-      setIsLoggedIn(true);
-    } else {
-      setIsLoggedIn(false);
-    }
-  }, [user]);
 
   const onLogout = async (event: React.MouseEvent<HTMLLIElement, MouseEvent>) => {
     event.preventDefault();
@@ -49,7 +40,7 @@ function NavigationBar() {
           <li><NavLink to={'/recipies'}>All Recipes</NavLink></li>
           
           {
-            !isLoggedIn
+            !user
             ? (
               <>
                 <li><NavLink to={'/login'}>Login</NavLink></li>
@@ -58,7 +49,7 @@ function NavigationBar() {
             ) : null
           }
           {
-            isLoggedIn
+            user
             ? (
               <>
                 <li><NavLink to={'/addrecipe'}>Add recipe</NavLink></li>
