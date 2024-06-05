@@ -21,15 +21,13 @@ function RecipeCard({ id, image, title, description }: RecipeCardProps) {
 
   const openRecipe = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     event.preventDefault();
-
-    //TODO: route to the details page of the recipe
     navigate(`/recipeDetails/${id}`);
   }
 
   return (
     <div className='recipe-item-container' onClick={openRecipe}>
       <div className='image-wrapper'>
-        <img src={image} alt={`Image of ${title}`} />
+        <img src={image} alt={`Image of ${title}`} loading="lazy" />
       </div>
       <div className='details-wrapper'>
         <h2>{title}</h2>

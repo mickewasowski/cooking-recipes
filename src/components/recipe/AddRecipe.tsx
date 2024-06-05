@@ -63,7 +63,7 @@ function AddRecipeForm() {
         <div className='add-recipe-wrapper'>
             <form onSubmit={handleSubmit}>
                 <div className='image-wrapper'>
-                    <img src={formData.imageUrl || ''} />
+                    <img src={formData.imageUrl || ''} loading="lazy" />
                     <input defaultValue={formData.imageUrl} name='imageUrl' type='text' placeholder='Place your image url here' onChange={handleChange} />
                 </div>
                 <div className='title-time-container'>

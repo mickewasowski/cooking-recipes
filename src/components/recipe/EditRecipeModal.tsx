@@ -110,7 +110,7 @@ function EditRecipeModal({ refElement, recipeData }: IProps) {
             <h2>Edit Recipe Details</h2>
             <form method="dialog" onSubmit={handleSubmit}>
                  <div>
-                    <img src={editedImage}/>
+                    <img src={editedImage} loading="lazy" />
                     <label>Image URL:</label>
                     <input name='imageUrl' defaultValue={editedImage} onChange={handleChange}/>
                 </div>

@@ -38,7 +38,7 @@ function RecipeDetailsWrapper() {
             { isOwned && <button className="edit-recipe-btn" onClick={showEditModal}>Edit</button> }
             <header>
                     <div className="recipe-img-container">
-                        <img src={imageURL} alt={title}/>
+                        <img src={imageURL} alt={title} loading="lazy" />
                     </div>
                     <div className="recipe-title-container">
                         <h2>{title}</h2>
