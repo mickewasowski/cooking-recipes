@@ -94,11 +94,12 @@ function EditRecipeModal({ refElement, recipeData }: IProps) {
             return;
         }
 
-        const additionalData = new Map<string, any>();
-        additionalData.set('ingredients', ingredients);
-        additionalData.set('prepTime', prepTime);
-        additionalData.set('cookingTime', cookingTime);
-        additionalData.set('servings', servings);
+        const additionalData = {
+            ingredients,
+            prepTime: Number(prepTime),
+            cookingTime: Number(cookingTime),
+            servings: Number(servings)
+        };
 
         if (user) {
             dispatch(updateRecipeStart({ id, title: editedTitle, image: editedImage, description: editedDescription, type: editedType, userToken: user.token, additionalData }));

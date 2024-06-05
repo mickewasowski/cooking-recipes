@@ -1,13 +1,20 @@
 import { RECIPE_ACTION_TYPES } from "./recipe.types";
 import { AnyAction } from "redux-saga";
 
+export type AdditionalData = {
+    prepTime: number;
+    cookingTime: number;
+    servings: number;
+    ingredients: string[];
+}
+
 export type Recipe = {
     title: string,
     description: string,
     type: string,
     image: string,
     owner: string,
-    additionalData?: Map<string, any>,
+    additionalData: AdditionalData,
     id: string,
     createdAt: Date,
     updatedAt: Date,

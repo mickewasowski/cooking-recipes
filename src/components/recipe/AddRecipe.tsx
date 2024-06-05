@@ -48,11 +48,12 @@ function AddRecipeForm() {
             return;
         }
 
-        const additionalData = new Map<string, any>();
-        additionalData.set('ingredients', ingredients);
-        additionalData.set('prepTime', prepTime);
-        additionalData.set('cookingTime', cookingTime);
-        additionalData.set('servings', servings);
+        const additionalData = {
+            ingredients,
+            prepTime: Number(prepTime),
+            cookingTime: Number(cookingTime),
+            servings: Number(servings)
+        };
 
         if (user) {
             dispatch(addRecipeStart({ title: formData.title, image: formData.imageUrl, description: formData.description, type: formData.type, userToken: user.token, additionalData }));
@@ -83,6 +84,7 @@ function AddRecipeForm() {
                                 <option>Grill</option>
                                 <option>Sandwitch</option>
                                 <option>Baked goods</option>
+                                <option>Beverage</option>
                                 <option>Other</option>
                             </select>
                         </div>

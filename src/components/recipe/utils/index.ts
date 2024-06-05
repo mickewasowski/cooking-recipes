@@ -44,13 +44,13 @@ export const validateRecipeInputData = (type: string, value: string | number): b
         case 'ingredients': {
             const match = String(value)
                 .toLowerCase()
-                .match(/^(?=.{3,50}$)(?:[A-Z a-z]+(?:, ?[A-Z a-z]+)*| [A-Z a-z]+)$/g);
+                .match(/^(?=.{3,200}$)[A-Za-z0-9,.\s⁄½⅓⅔¼¾⅛⅜⅝⅞]*$/g);
             return !!(match?.length);
         }
         case 'description': {
             const match = String(value)
                 .toLowerCase()
-                .match(/^(?=.{6,500}$)([A-Za-z0-9,.]+\s*)*$/g);
+                .match(/^(?=.{6,1000}$)([A-Za-z0-9,.:;'\- \n]*)$/m);
             return !!(match?.length);
         }
         default:

@@ -42,6 +42,7 @@ export function* addRecipe(data: AddRecipeStart) {
         const response = yield call(addRecipeRequest, data.payload);
         const recipe = mapSingleItemFromDB(response.item);
         yield put(addRecipeSuccess(recipe));
+        yield put(redirectToStart('/'));
     } catch (error) {
         yield put(addRecipeFailed(error as Error));
     }
@@ -71,6 +72,7 @@ export function* updateRecipe(data: UpdateRecipeStart) {
         const response = yield call(updateRecipeData, data.payload);
         const recipe = mapSingleItemFromDB(response.item);
         yield put(updateRecipeSuccess({...recipe}));
+        yield put(redirectToStart('/'));
     } catch (error) {
         yield put(updateRecipeFailed(error as Error));
     }
