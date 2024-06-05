@@ -49,7 +49,7 @@ export const RegisterForm = () => {
         dispatcher(registerStart({ email: email.value, fullName: fullname.value, password: password.value }));
     }
 
-    const onBlur = (event) => {
+    const handleChange = (event) => {
         const inputValue = event.target.value;
         switch (event.target.id) {
             case 'fullname': {
@@ -114,7 +114,7 @@ export const RegisterForm = () => {
                     : null
                 }
             </label>
-            <input className={nameError ? classes : ''} type='text' id="fullname" onBlur={onBlur}/>
+            <input className={nameError ? classes : ''} type='text' id="fullname" onChange={handleChange}/>
             <label>
                 Please enter your email
                 {
@@ -123,7 +123,7 @@ export const RegisterForm = () => {
                     : null
                 }
             </label>
-            <input className={emailError ? classes : ''} type='email' id="email" onBlur={onBlur}/>
+            <input className={emailError ? classes : ''} type='email' id="email" onChange={handleChange}/>
             <label>
                 Please enter your password
                 {
@@ -132,7 +132,7 @@ export const RegisterForm = () => {
                     : null
                 }
             </label>
-            <input ref={passRef} className={passError ? classes : ''} type='password' id="password" onBlur={onBlur}/>
+            <input ref={passRef} className={passError ? classes : ''} type='password' id="password" onChange={handleChange}/>
             <label>
                 Please confirm your password
                 {
@@ -141,7 +141,7 @@ export const RegisterForm = () => {
                     : null
                 }
             </label>
-            <input className={confPassError ? classes : ''} type='password' id="confPassword" onBlur={onBlur}/>
+            <input className={confPassError ? classes : ''} type='password' id="confPassword" onChange={handleChange}/>
             <input className={isSubmitDisabled ? 'greySubmitBtn' : ''} disabled={isSubmitDisabled} type='submit' value="Register"/>
         </form>
     )
@@ -176,7 +176,7 @@ export const LoginForm = () => {
         dispatcher(signInWithEmail({ email: email.value, password: password.value }));
     }
 
-    const onBlur = (event) => {
+    const handleChange = (event) => {
         const inputValue = event.target.value;
         switch (event.target.id) {
             case 'email': {
@@ -221,7 +221,7 @@ export const LoginForm = () => {
                     : null
                 }
             </label>
-            <input className={emailError ? classes : ''} onBlur={onBlur} type='email' id="email"/>
+            <input className={emailError ? classes : ''} onChange={handleChange} type='email' id="email"/>
             <label>
                 Please enter your password
                 {
@@ -230,7 +230,7 @@ export const LoginForm = () => {
                     : null
                 }
             </label>
-            <input className={passError ? classes: ''} onBlur={onBlur} type='password' id="password"/>
+            <input className={passError ? classes: ''} onChange={handleChange} type='password' id="password"/>
             <input className={isSubmitDisabled ? 'greySubmitBtn' : ''} disabled={isSubmitDisabled} type='submit' value="Login"/>
         </form>
     )
