@@ -1,10 +1,10 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from 'react-redux';
-import { registerStart, signInWithEmail } from '../store/user/user.action';
 import { FormEvents } from '../utils/eventEmitterTypes';
 import { emitter } from "../App";
 import { useRef, useState } from "react";
 import classNames from 'classnames';
+import { fetchEmailSignIn, fetchUserRegister } from "../store/user/user.thunk";
 
 const ALL_FIELDS_REQUIRED_MSG = 'All fields are required!';
 const INVALID_EMAIL = 'The email you provided is invalid!';
@@ -23,6 +23,7 @@ export const RegisterHeader = () => {
 }
 
 export const RegisterForm = () => {
+    const navigate = useNavigate();
     const dispatcher = useDispatch();
     const passRef = useRef(null);
     const [nameError, setNameError] = useState(false);
@@ -30,7 +31,7 @@ export const RegisterForm = () => {
     const [passError, setPassError] = useState(false);
     const [confPassError, setConfPassError] = useState(false);
 
-    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const { fullname, email, password, confPassword } = event.target.elements;
         if (!fullname.value || !email.value || !password.value || !confPassword.value) {
@@ -46,7 +47,10 @@ export const RegisterForm = () => {
             return;
         }
 
-        dispatcher(registerStart({ email: email.value, fullName: fullname.value, password: password.value }));
+        const result = await dispatcher(fetchUserRegister({ email: email.value, fullName: fullname.value, password: password.value }));
+        if (result.payload.success) {
+            navigate('/login');
+        }
     }
 
     const handleChange = (event) => {
@@ -173,7 +177,7 @@ export const LoginForm = () => {
             return;
         }
 
-        dispatcher(signInWithEmail({ email: email.value, password: password.value }));
+        dispatcher(fetchEmailSignIn({ email: email.value, password: password.value }));
     }
 
     const handleChange = (event) => {

@@ -1,12 +1,7 @@
-import { Route, Routes, useNavigate } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import './App.scss';
 import { lazy, Suspense } from 'react';
 import EventEmitter from 'events';
-import { useSelector, useDispatch } from 'react-redux';
-import { IRootState } from './store/root-reducer';
-import { getCurrentRedirectPath } from './store/routing/routing.selector';
-import { useEffect } from 'react';
-import { redirectToFinish } from './store/routing/routing.action';
 import { RecipesToLoad } from './utils/recipeUtils.types';
 import ErrorPage from './components/misc/ErrorPage';
 import Loading from './components/misc/LoadingSpinner';
@@ -21,31 +16,7 @@ const AddRecipeForm = lazy(() => import('./components/recipe/AddRecipe'));
 
 export const emitter = new EventEmitter();
 
-const RESET_ROUTING_PATH_TIMEOUT = 1000;
-
 function App() {
-  let currentTimeout: number | null = null;
-  const dispatcher = useDispatch();
-  const navigate = useNavigate();
-  const currentRedirectPath = useSelector((state: IRootState) => getCurrentRedirectPath(state.routing));
-
-  useEffect(() => {
-    if (currentRedirectPath) {
-      navigate(currentRedirectPath);
-
-      currentTimeout = setTimeout(() => {
-        dispatcher(redirectToFinish());
-      }, RESET_ROUTING_PATH_TIMEOUT) as unknown as number;
-
-      return () => {
-        if (currentTimeout) {
-          clearTimeout(currentTimeout);
-          currentTimeout = null;
-        }
-      }
-    }
-  }, [currentRedirectPath]);
-
   return (
     <>
       <Suspense fallback={<Loading />}>

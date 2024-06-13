@@ -23,7 +23,7 @@ export const validateInputValue = (input: string, type: string) => {
             return String(input)
                 .toLowerCase()
                 .match(
-                    /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/
+                    /^(?=.*[0-9a-zA-Z])[a-zA-Z0-9!@#$%^&*]{6,20}$$/
                 );
         }
         case 'newPassword': {

@@ -8,6 +8,7 @@ import { signOutStart } from '../../store/user/user.action';
 import { NavLink } from 'react-router-dom';
 import classNames from 'classnames';
 import { useOutsideClick } from '../hooks/useOutsideClick';
+import { setCurrentUser } from '../../store/user/user.slice';
 
 function NavigationBar() {
   const dispatch = useDispatch();
@@ -22,7 +23,7 @@ function NavigationBar() {
 
   const onLogout = async (event: React.MouseEvent<HTMLLIElement, MouseEvent>) => {
     event.preventDefault();
-    dispatch(signOutStart());
+    dispatch(setCurrentUser(null));
   }
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);

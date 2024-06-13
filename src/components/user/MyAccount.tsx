@@ -4,8 +4,8 @@ import { useSelector } from 'react-redux';
 import { getCurrentUser } from '../../store/user/user.selector';
 import { IRootState } from '../../store/root-reducer';
 import { useDispatch } from 'react-redux';
-import { editUserStart } from '../../store/user/user.action';
 import { validateInputValue } from './utils';
+import { fetchUserEdit } from '../../store/user/user.thunk';
 
 function MyAccount() {
   const dispatch = useDispatch();
@@ -52,7 +52,13 @@ function MyAccount() {
     event.preventDefault();
 
     if (!isSubmitDisabled && currentUser && userInfo.password) {
-      dispatch(editUserStart({ ...userInfo, token: currentUser.token }));
+      const data = {
+        email: userInfo.email,
+        fullName: userInfo.fullName,
+        password: userInfo.password,
+        ...(userInfo.newPassword && {newPassword: userInfo.newPassword})
+      };
+      dispatch(fetchUserEdit({ ...data, token: currentUser.token }));
     }
   }
 

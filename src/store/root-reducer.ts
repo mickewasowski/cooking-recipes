@@ -1,12 +1,10 @@
-import { combineReducers } from "redux";
-import { userReducer } from "./user/user.reducer";
+import { combineReducers } from "@reduxjs/toolkit";
+import { userReducer } from "./user/user.slice";
 import { recipeReducer } from "./recipe/recipe.reducer";
-import { routingReducer } from "./routing/routing.reducer";
 
 export const rootReducer = combineReducers({
     user: userReducer,
     recipe: recipeReducer,
-    routing: routingReducer,
 });
 
-export type IRootState = ReturnType<typeof rootReducer>
+export type IRootState = ReturnType<typeof rootReducer>;

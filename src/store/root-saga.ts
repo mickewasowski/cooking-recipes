@@ -1,5 +1,5 @@
 import { call, all } from 'typed-redux-saga';
-import { userSagas } from './user/user.saga';
+import { userSagas } from './user/user.thunk';
 import { recipeSaga } from './recipe/recipe.saga';
 
 export function* rootSaga() {

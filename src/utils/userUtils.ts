@@ -1,4 +1,4 @@
-import { UserSignIn, UserRegisterStart, UserEditStart } from '../store/user/user.types';
+import { UserSignIn, UserRegister, UserEditStart } from '../store/user/user.types';
 
 export const emailSignIn = (data: UserSignIn): Promise<EmailSignInResponse> => {
     return fetch("http://localhost:5000/api/user/login", {
@@ -22,7 +22,7 @@ export const emailSignIn = (data: UserSignIn): Promise<EmailSignInResponse> => {
     });
 }
 
-export const registerUser = (data: UserRegisterStart): Promise<RegisterResponse> => {
+export const registerUser = (data: UserRegister): Promise<RegisterResponse> => {
     return fetch("http://localhost:5000/api/user/register", {
         method: "POST",
         mode: "cors",
