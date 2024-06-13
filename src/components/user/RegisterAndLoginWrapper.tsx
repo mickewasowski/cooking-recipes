@@ -1,3 +1,4 @@
+import { isNotAuth } from '../../hoc/isNotAuth';
 import {
   RegisterHeader,
   RegisterForm,
@@ -40,4 +41,5 @@ function RegisterAndLoginWrapper({ isRegister }: IProps): JSX.Element {
   );
 }
 
-export default RegisterAndLoginWrapper;
+const EnhancedComponent = isNotAuth(RegisterAndLoginWrapper);
+export default EnhancedComponent;

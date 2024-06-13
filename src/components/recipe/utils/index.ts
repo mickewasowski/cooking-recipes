@@ -50,7 +50,7 @@ export const validateRecipeInputData = (type: string, value: string | number): b
         case 'description': {
             const match = String(value)
                 .toLowerCase()
-                .match(/^(?=.{6,1000}$)([A-Za-z0-9,.:;'\- \n]*)$/m);
+                .match(/^(?=.{6,1000}$)([A-Za-z0-9,.:;!'’\- \n]*)$/m);
             return !!(match?.length);
         }
         default:

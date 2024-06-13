@@ -45,7 +45,7 @@ export const recipeReducer = (state = INITIAL_STATE, action: AnyAction) => {
         case RECIPE_ACTION_TYPES.ADD_RECIPE_START:
             return { ...state, isLoading: true };
         case RECIPE_ACTION_TYPES.ADD_RECIPE_SUCCESS:
-            return { ...state, isLoading: false, recipies: [ ...state.recipies, { ...action.payload } ]};
+            return { ...state, isLoading: false, recipies: [ ...state.recipies, { ...action.payload } ]}; //TODO: does this return the brand new recipe only ?
         case RECIPE_ACTION_TYPES.ADD_RECIPE_FAILED:
             return { ...state, isLoading: false, error: action.payload };
         case RECIPE_ACTION_TYPES.GET_RECIPIES_START:
