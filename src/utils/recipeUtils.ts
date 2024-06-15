@@ -2,13 +2,13 @@ import {
     ItemFromDB
 } from './recipeUtils.types';
 import {
-    RecipeAddStart,
+    RecipeAdd,
     GetRecipes,
     RecipeUpdate,
     RecipesForOwner
 } from '../store/recipe/recipe.types';
 
-export const addRecipeRequest = ({ title, description, image, userToken, type, additionalData }: RecipeAddStart) => {
+export const addRecipeRequest = ({ title, description, image, userToken, type, additionalData }: RecipeAdd) => {
     const itemObject = {
         name: title,
         description,
