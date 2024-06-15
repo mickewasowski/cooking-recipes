@@ -1,5 +1,5 @@
 import { RecipesToLoad } from "../../utils/recipeUtils.types";
-import { RecipeState } from "./recipe.reducer";
+import { RecipeState } from "./recipe.slice";
 
 export const getRecipies = (state: RecipeState) => state.recipies;
 export const getRecipeCount = (state: RecipeState) => state.totalRecipeCount;

@@ -1,30 +1,14 @@
-import { AdditionalData } from "./recipe.reducer";
+import { AdditionalData } from "./recipe.slice";
 
 export enum RECIPE_ACTION_TYPES {
-    ADD_RECIPE_START = 'recipe/ADD_RECIPE_START',
-    ADD_RECIPE_SUCCESS = 'recipe/ADD_RECIPE_SUCCESS',
-    ADD_RECIPE_FAILED = 'recipe/ADD_RECIPE_FAILED',
-    GET_RECIPIES_START = 'recipe/GET_RECIPIES_START',
-    GET_RECIPIES_SUCCESS = 'recipe/GET_RECIPIES_SUCCESS',
-    GET_RECIPIES_FAILED = 'recipe/GET_RECIPIES_FAILED',
-    GET_RECIPE_COUNT_START = 'recipe/GET_RECIPE_COUNT_START',
-    GET_RECIPE_COUNT_SUCCESS = 'recipe/GET_RECIPE_COUNT_SUCCESS',
-    GET_RECIPE_COUNT_FAILED = 'recipe/GET_RECIPE_COUNT_FAILED',
-    UPDATE_RECIPE_START = 'recipe/UPDATE_RECIPE_START',
-    UPDATE_RECIPE_SUCCESS = 'recipe/UPDATE_RECIPE_SUCCESS',
-    UPDATE_RECIPE_FAILED = 'recipe/UPDATE_RECIPE_FAILED',
-    SEARCH_RECIPIES_START = 'recipe/SEARCH_RECIPIES_START',
-    SEARCH_RECIPIES_SUCCESS = 'recipe/SEARCH_RECIPIES_SUCCESS',
-    SEARCH_RECIPIES_FAILED = 'recipe/SEARCH_RECIPIES_FAILED',
-    GET_OWNER_RECIPIES_START = 'recipe/GET_OWNER_RECIPIES_START',
-    GET_OWNER_RECIPIES_SUCCESS = 'recipe/GET_OWNER_RECIPIES_SUCCESS',
-    GET_OWNER_RECIPIES_FAILED = 'recipe/GET_OWNER_RECIPIES_FAILED',
-    GET_LATEST_ADDED_RECIPES_START = 'recipe/GET_LATEST_ADDED_RECIPES_START',
-    GET_LATEST_ADDED_RECIPES_SUCCESS = 'recipe/GET_LATEST_ADDED_RECIPES_SUCCESS',
-    GET_LATEST_ADDED_RECIPES_FAILED = 'recipe/GET_LATEST_ADDED_RECIPES_FAILED',
-    GET_OWNED_RECIPE_COUNT_START = 'recipe/GET_OWNED_RECIPE_COUNT_START',
-    GET_OWNED_RECIPE_COUNT_SUCCESS = 'recipe/GET_OWNED_RECIPE_COUNT_SUCCESS',
-    GET_OWNED_RECIPE_COUNT_FAILED = 'recipe/GET_OWNED_RECIPE_COUNT_FAILED',
+    ADD_RECIPE = 'recipe/addRecipe',
+    GET_RECIPIES = 'recipe/getRecipes',
+    GET_RECIPES_COUNT = 'recipe/getRecipeCount',
+    UPDATE_RECIPE = 'recipe/updateRecipe',
+    SEARCH_RECIPIES = 'recipe/searchRecipes',
+    GET_OWNER_RECIPIES = 'recipe/getOwnerRecipes',
+    GET_LATEST_ADDED_RECIPES = 'recipe/getLatestAdded',
+    GET_OWNED_RECIPE_COUNT= 'recipe/getOwnerRecipesCount',
 }
 
 export type TotalRecipesCount = {
@@ -43,11 +27,11 @@ export type Recipe = {
     additionalData: AdditionalData;
 }
 
-export type RecipeAddStart = Recipe & {
+export type RecipeAdd = Recipe & {
     userToken: string;
 }
 
-export type RecipeUpdate = RecipeAddStart & {
+export type RecipeUpdate = RecipeAdd & {
     id: string;
 }
 
