@@ -3,15 +3,10 @@ import RecipeCard from './RecipeCard';
 import { useDispatch, useSelector } from 'react-redux';
 import { IRootState } from '../../store/root-reducer';
 import { getRecipesCountByType, getRecipesByType } from '../../store/recipe/recipe.selector';
-import {
-  getRecipeCountStart,
-  getRecipiesStart,
-  getOwnedRecipeCountStart,
-  getRecipiesForOwnerStart,
-} from '../../store/recipe/recipe.action';
 import SearchBar from '../misc/SearchBar';
-import { RecipesToLoad } from '../../utils/recipeUtils.types';
+import { RecipeRoutes, RecipesToLoad } from '../../utils/recipeUtils.types';
 import { getCurrentUser } from '../../store/user/user.selector';
+import { getOwnerRecipes, getOwnerRecipesCount, getRecipeCount, getRecipesPerPageWithLimit } from '../../store/recipe/recipe.thunk';
 
 interface IProps {
   recipesToLoad: RecipesToLoad;
@@ -29,10 +24,10 @@ const RecipesWrapper = ({ recipesToLoad }: IProps) => {
 
   useEffect(() => {
     if (recipesToLoad === RecipesToLoad.All) {
-      dispatcher(getRecipeCountStart());
+      dispatcher(getRecipeCount());
     } else if (recipesToLoad === RecipesToLoad.Owned) {
       if (user) {
-        dispatcher(getOwnedRecipeCountStart(user.id));
+        dispatcher(getOwnerRecipesCount(user.id));
       }
     }
 
@@ -50,10 +45,10 @@ const RecipesWrapper = ({ recipesToLoad }: IProps) => {
   useEffect(() => {
     if (totalPages) {
       if (recipesToLoad === RecipesToLoad.All) {
-        dispatcher(getRecipiesStart({ page: currentPage, limit: recipesPerPage }));
+        dispatcher(getRecipesPerPageWithLimit({ page: currentPage, limit: recipesPerPage }));
       } else if (recipesToLoad === RecipesToLoad.Owned) {
         if (user) {
-          dispatcher(getRecipiesForOwnerStart({ page: currentPage, limit: recipesPerPage, ownerId: user.id }));
+          dispatcher(getOwnerRecipes({ page: currentPage, limit: recipesPerPage, ownerId: user.id }));
         }
       }
     }
@@ -61,10 +56,10 @@ const RecipesWrapper = ({ recipesToLoad }: IProps) => {
 
   useEffect(() => {
     if (recipesToLoad === RecipesToLoad.All) {
-      dispatcher(getRecipiesStart({ page: currentPage, limit: recipesPerPage }));
+      dispatcher(getRecipesPerPageWithLimit({ page: currentPage, limit: recipesPerPage }));
     } else if (recipesToLoad === RecipesToLoad.Owned) {
       if (user) {
-        dispatcher(getRecipiesForOwnerStart({ page: currentPage, limit: recipesPerPage, ownerId: user.id }));
+        dispatcher(getOwnerRecipes({ page: currentPage, limit: recipesPerPage, ownerId: user.id }));
       }
     }
   }, [currentPage]);
@@ -77,6 +72,8 @@ const RecipesWrapper = ({ recipesToLoad }: IProps) => {
       setCurrentPage(currentPage => Math.min(currentPage + 1, totalPages));
   };
 
+  const recipeRoute = recipesToLoad === RecipesToLoad.All ? RecipeRoutes.AllRecipes : RecipeRoutes.OwnedRecipes;
+
   return (
     <div className='loaded-recipes-container'>
       {
@@ -87,7 +84,7 @@ const RecipesWrapper = ({ recipesToLoad }: IProps) => {
             <SearchBar />
             <div className='recipes-container'>
                 {allRecipies?.map(recipe => (
-                    <RecipeCard key={recipe?.id} {...recipe} />
+                    <RecipeCard key={recipe?.id} {...recipe} routePrefix={recipeRoute} />
                 ))}
             </div>
             <div className='buttons-container'>

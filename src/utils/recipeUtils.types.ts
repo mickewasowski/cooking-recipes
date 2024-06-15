@@ -1,3 +1,5 @@
+import { AdditionalData } from "../store/recipe/recipe.slice";
+
 export type ItemFromDB = {
     _id: string,
     name: string,
@@ -5,7 +7,7 @@ export type ItemFromDB = {
     image: string,
     type: string,
     owner: string,
-    additionalData: Map<string, any>,
+    additionalData: AdditionalData,
     createdAt: Date,
     updatedAt: Date,
 }
@@ -13,4 +15,10 @@ export type ItemFromDB = {
 export enum RecipesToLoad {
     All = 'All',
     Owned = 'Owned'
+}
+
+export enum RecipeRoutes {
+    AllRecipes = 'allRecipes',
+    OwnedRecipes = 'ownedRecipes',
+    LatestAdded = 'latestAdded'
 }

@@ -23,13 +23,15 @@ function App() {
         <Routes>
           <Route path='/' element={<NavBar />}>
             <Route index element={<HomePage />} />
-            <Route path='recipies' element={<RecipesWrapper recipesToLoad={RecipesToLoad.All}/>} />
+            <Route path='allRecipes' element={<RecipesWrapper recipesToLoad={RecipesToLoad.All}/>} />
             <Route path='login' element={<RegisterAndLoginWrapper isRegister={false} />} />
             <Route path='register' element={<RegisterAndLoginWrapper isRegister={true}/>} />
             <Route path='myaccount' element={<MyAccount />} />
-            <Route path='myrecipies' element={<RecipesWrapper recipesToLoad={RecipesToLoad.Owned}/>} />
+            <Route path='ownedRecipes' element={<RecipesWrapper recipesToLoad={RecipesToLoad.Owned}/>} />
             <Route path='addrecipe' element={<AddRecipeForm />} />
-            <Route path='recipeDetails/:recipeId' element={<RecipeDetailsWrapper />} />
+            <Route path='latestAdded/recipeDetails/:recipeId' element={<RecipeDetailsWrapper />} />
+            <Route path='allRecipes/recipeDetails/:recipeId' element={<RecipeDetailsWrapper />} />
+            <Route path='ownedRecipes/recipeDetails/:recipeId' element={<RecipeDetailsWrapper />} />
             <Route path='*' element={<ErrorPage />}/>
           </Route>
         </Routes>

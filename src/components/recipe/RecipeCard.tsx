@@ -6,9 +6,10 @@ type RecipeCardProps = {
   title: string;
   id: string;
   description: string;
+  routePrefix: string;
 }
 
-function RecipeCard({ id, image, title, description }: RecipeCardProps) {
+function RecipeCard({ id, image, title, description, routePrefix }: RecipeCardProps) {
   const navigate = useNavigate();
 
   function truncateDescription(text: string, maxLength: number) {
@@ -21,7 +22,7 @@ function RecipeCard({ id, image, title, description }: RecipeCardProps) {
 
   const openRecipe = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     event.preventDefault();
-    navigate(`/recipeDetails/${id}`);
+    navigate(`/${routePrefix}/recipeDetails/${id}`);
   }
 
   return (
