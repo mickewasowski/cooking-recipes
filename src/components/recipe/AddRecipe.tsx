@@ -2,11 +2,13 @@ import { useState } from 'react';
 import { isAuth } from '../../hoc/isAuth';
 import { useSelector, useDispatch } from 'react-redux';
 import { IRootState } from '../../store/root-reducer';
-import { addRecipeStart } from '../../store/recipe/recipe.action';
 import { getCurrentUser } from '../../store/user/user.selector';
 import { validateRecipeInputData } from './utils';
+import { addRecipe } from '../../store/recipe/recipe.thunk';
+import { useNavigate } from 'react-router-dom';
 
 function AddRecipeForm() {
+    const navigate = useNavigate();
     const dispatch = useDispatch();
     const user = useSelector((state: IRootState) => getCurrentUser(state.user));
 
@@ -41,7 +43,7 @@ function AddRecipeForm() {
         }
     };
 
-    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const { title, type, description, imageUrl, ingredients, prepTime, cookingTime, servings } = formData;
         if (!user || !title || !type || !description || !imageUrl || !ingredients || !prepTime || !cookingTime || !servings) {
@@ -56,7 +58,10 @@ function AddRecipeForm() {
         };
 
         if (user) {
-            dispatch(addRecipeStart({ title: formData.title, image: formData.imageUrl, description: formData.description, type: formData.type, userToken: user.token, additionalData }));
+            const result = await dispatch(addRecipe({ title: formData.title, image: formData.imageUrl, description: formData.description, type: formData.type, userToken: user.token, additionalData }));
+            if (result?.payload?.success) {
+                navigate('/');
+            }
         }
     };
 

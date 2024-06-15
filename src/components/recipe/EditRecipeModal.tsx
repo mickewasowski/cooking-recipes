@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import { Recipe } from "../../store/recipe/recipe.reducer";
+import { Recipe } from "../../store/recipe/recipe.slice";
 import { useDispatch, useSelector } from "react-redux";
 import { IRootState } from "../../store/root-reducer";
 import { getCurrentUser } from "../../store/user/user.selector";
-import { updateRecipeStart } from "../../store/recipe/recipe.action";
 import { validateRecipeInputData } from "./utils";
+import { updateRecipe } from "../../store/recipe/recipe.thunk";
 
 interface IProps {
     refElement: React.RefObject<HTMLDialogElement>;
@@ -73,7 +73,7 @@ function EditRecipeModal({ refElement, recipeData }: IProps) {
         }
     };
 
-    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         if (!user) {
             return;
@@ -102,7 +102,10 @@ function EditRecipeModal({ refElement, recipeData }: IProps) {
         };
 
         if (user) {
-            dispatch(updateRecipeStart({ id, title: editedTitle, image: editedImage, description: editedDescription, type: editedType, userToken: user.token, additionalData }));
+           const result = await dispatch(updateRecipe({ id, title: editedTitle, image: editedImage, description: editedDescription, type: editedType, userToken: user.token, additionalData }));
+            if (result?.payload?.success) {
+                handleClose();
+            }
         }
     };
 

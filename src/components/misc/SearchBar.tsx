@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { searchRecipiesStart } from '../../store/recipe/recipe.action';
 import { IoSearch } from "react-icons/io5";
+import { searchRecipes } from '../../store/recipe/recipe.thunk';
 
 function SearchBar() {
   const dispatcher = useDispatch();
@@ -17,7 +17,7 @@ function SearchBar() {
     // Implement your search logic here
 
     //TODO: make sure to search either for all or owned recipes
-    dispatcher(searchRecipiesStart(searchQuery));
+    dispatcher(searchRecipes(searchQuery));
   };
 
   return (
