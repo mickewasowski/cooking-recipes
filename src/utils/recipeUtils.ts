@@ -101,7 +101,7 @@ export const updateRecipeData = ({ id, title, description, image, userToken, typ
     .catch((error) => { throw new Error(error.message) });
 }
 
-export const searchRecipiesByQueryString = (querySearch: string) => {
+export const searchRecipiesByQueryString = (querySearch: string, currentPage: number, recipeLimit: number) => {
     const arrayOfWords = querySearch.split(' ');
     const mappedSearchWords: string[] = [];
     arrayOfWords.forEach((word, index) => {
@@ -110,8 +110,7 @@ export const searchRecipiesByQueryString = (querySearch: string) => {
     });
 
     const searchQuery = mappedSearchWords.join('&');
-
-    return fetch(`http://localhost:5000/api/item/search?${searchQuery}`, {
+    return fetch(`http://localhost:5000/api/item/search?${searchQuery}&page=${currentPage}&limit=${recipeLimit}`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',

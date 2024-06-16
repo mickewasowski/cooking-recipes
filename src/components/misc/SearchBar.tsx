@@ -1,24 +1,39 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { IoSearch } from "react-icons/io5";
+import { useDispatch, useSelector } from 'react-redux';
+import { IoSearch, IoClose } from "react-icons/io5";
 import { searchRecipes } from '../../store/recipe/recipe.thunk';
+import { setSearchQueryString } from '../../store/recipe/recipe.slice';
+import { getStoredSearchString } from '../../store/recipe/recipe.selector';
+import { IRootState } from '../../store/root-reducer';
 
-function SearchBar() {
+interface IProps {
+  recipeLimit: number;
+  currentPage: number;
+  recipesOwnership: string;
+}
+
+function SearchBar({ currentPage, recipeLimit, recipesOwnership }: IProps) {
   const dispatcher = useDispatch();
-  const [searchQuery, setSearchQuery] = useState('');
+  const storedSearch = useSelector((state: IRootState) => getStoredSearchString(state.recipe));
+  const [searchQuery, setSearchQuery] = useState(storedSearch);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(event.target.value);
   };
 
   const handleSearch = () => {
-    //TODO: Make the search request with a saga to find all elements containing the word
     console.log('Searching for:', searchQuery);
-    // Implement your search logic here
 
     //TODO: make sure to search either for all or owned recipes
-    dispatcher(searchRecipes(searchQuery));
+    //recipesOwnership
+
+    dispatcher(setSearchQueryString(searchQuery));
+    dispatcher(searchRecipes({ searchQuery, currentPage, recipeLimit, recipesOwnership }));
   };
+
+  const handleClearSearch = () => {
+    dispatcher(setSearchQueryString(''));
+  }
 
   return (
     <div className='search-box-wrapper'>
@@ -31,6 +46,9 @@ function SearchBar() {
       />
       <button className='search-btn' onClick={handleSearch}>
         <IoSearch />
+      </button>
+      <button className='search-btn clear-btn' onClick={handleClearSearch}>
+        <IoClose />
       </button>
     </div>
   );

@@ -22,8 +22,9 @@ export const updateRecipe = createAsyncThunk(RECIPE_ACTION_TYPES.UPDATE_RECIPE, 
     return res;
 });
 
-export const searchRecipes = createAsyncThunk(RECIPE_ACTION_TYPES.SEARCH_RECIPIES, async (data: string) => {
-    const res = await searchRecipiesByQueryString(data);
+export const searchRecipes = createAsyncThunk(RECIPE_ACTION_TYPES.SEARCH_RECIPIES, async (data) => {
+    const { searchQuery, currentPage, recipeLimit } = data;
+    const res = await searchRecipiesByQueryString(searchQuery, currentPage, recipeLimit);
     return res;
 });
 

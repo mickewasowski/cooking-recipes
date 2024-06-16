@@ -29,6 +29,7 @@ export type RecipeState = {
     readonly latestAdded: Recipe[] | [],
     readonly ownedRecipes: Recipe[] | [],
     readonly ownedRecipesCount: number,
+    readonly searchString: string,
 }
 
 export const INITIAL_STATE: RecipeState = {
@@ -38,12 +39,17 @@ export const INITIAL_STATE: RecipeState = {
     latestAdded: [],
     ownedRecipes: [],
     ownedRecipesCount: 0,
+    searchString: '',
 }
 
 export const recipeSlice = createSlice({
     name: 'recipe',
     initialState: INITIAL_STATE,
-    reducers: {},
+    reducers: {
+        setSearchQueryString: (state, action) => {
+            state.searchString = action.payload;
+        }
+    },
     extraReducers: (builder) => {
         builder.addCase(addRecipe.pending, (state) => {
             state.isLoading = true;
@@ -111,7 +117,7 @@ export const recipeSlice = createSlice({
                 state.recipies = mappedRecipies;
             }
         });
-        builder.addCase(searchRecipes.rejected, (state) => {
+        builder.addCase(searchRecipes.rejected, (state, action) => {
             state.isLoading = false;
         });
         builder.addCase(getOwnerRecipes.pending, (state) => {
@@ -154,5 +160,7 @@ export const recipeSlice = createSlice({
         });
     }
 });
+
+export const { setSearchQueryString } = recipeSlice.actions;
 
 export const recipeReducer = recipeSlice.reducer;

@@ -7,6 +7,7 @@ export const getRecipeById = (state: RecipeState, id: string) => getRecipeObject
 export const getLatestRecipes = (state: RecipeState) => state.latestAdded;
 export const getOwnedRecipesCount = (state: RecipeState) => state.ownedRecipesCount;
 export const getOwnedRecipes = (state: RecipeState) => state.ownedRecipes;
+export const getStoredSearchString = (state: RecipeState) => state.searchString;
 
 export const getRecipesByType = (state: RecipeState, type: string) => {
     switch (type) {

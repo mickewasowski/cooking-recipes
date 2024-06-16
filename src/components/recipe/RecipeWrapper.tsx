@@ -81,7 +81,7 @@ const RecipesWrapper = ({ recipesToLoad }: IProps) => {
         ? <p>No recipes found!</p>
         : (
           <>
-            <SearchBar />
+            <SearchBar currentPage={currentPage} recipeLimit={recipesPerPage} recipesOwnership={recipesToLoad} />
             <div className='recipes-container'>
                 {allRecipies?.map(recipe => (
                     <RecipeCard key={recipe?.id} {...recipe} routePrefix={recipeRoute} />
