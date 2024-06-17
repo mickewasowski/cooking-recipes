@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { mapItemsFromDB, mapSingleItemFromDB } from "../../utils/recipeUtils";
-import { addRecipe, getLatestAdded, getOwnerRecipes, getOwnerRecipesCount, getRecipeCount, getRecipesPerPageWithLimit, searchRecipes, updateRecipe } from "./recipe.thunk";
+import { addRecipe, getLatestAdded, getOwnerRecipes, getOwnerRecipesCount, getRecipeCount, getRecipesPerPageWithLimit, updateRecipe } from "./recipe.thunk";
 import { RecipeRoutes } from "../../utils/recipeUtils.types";
 
 export type AdditionalData = {
@@ -107,19 +107,6 @@ export const recipeSlice = createSlice({
         builder.addCase(updateRecipe.rejected, (state) => {
             state.isLoading = false;
         });
-        builder.addCase(searchRecipes.pending, (state) => {
-            state.isLoading = true;
-        });
-        builder.addCase(searchRecipes.fulfilled, (state, { payload }) => {
-            state.isLoading = false;
-            if (payload?.success) {
-                const mappedRecipies = mapItemsFromDB(payload.items);
-                state.recipies = mappedRecipies;
-            }
-        });
-        builder.addCase(searchRecipes.rejected, (state, action) => {
-            state.isLoading = false;
-        });
         builder.addCase(getOwnerRecipes.pending, (state) => {
             state.isLoading = true;
         });
@@ -130,7 +117,7 @@ export const recipeSlice = createSlice({
                 state.ownedRecipes = mappedRecipies;
             }
         });
-        builder.addCase(getOwnerRecipes.rejected, (state) => {
+        builder.addCase(getOwnerRecipes.rejected, (state, action) => {
             state.isLoading = false;
         });
         builder.addCase(getOwnerRecipesCount.pending, (state) => {
@@ -140,9 +127,12 @@ export const recipeSlice = createSlice({
             state.isLoading = false;
             if (payload?.success) {
                 state.ownedRecipesCount = payload.count;
+                if (!payload.count) {
+                    state.ownedRecipes = [];
+                }
             }
         });
-        builder.addCase(getOwnerRecipesCount.rejected, (state) => {
+        builder.addCase(getOwnerRecipesCount.rejected, (state, action) => {
             state.isLoading = false;
         });
         builder.addCase(getLatestAdded.pending, (state) => {

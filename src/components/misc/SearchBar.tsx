@@ -1,34 +1,27 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { IoSearch, IoClose } from "react-icons/io5";
-import { searchRecipes } from '../../store/recipe/recipe.thunk';
 import { setSearchQueryString } from '../../store/recipe/recipe.slice';
 import { getStoredSearchString } from '../../store/recipe/recipe.selector';
 import { IRootState } from '../../store/root-reducer';
 
-interface IProps {
-  recipeLimit: number;
-  currentPage: number;
-  recipesOwnership: string;
-}
-
-function SearchBar({ currentPage, recipeLimit, recipesOwnership }: IProps) {
+function SearchBar() {
   const dispatcher = useDispatch();
   const storedSearch = useSelector((state: IRootState) => getStoredSearchString(state.recipe));
   const [searchQuery, setSearchQuery] = useState(storedSearch);
+
+  useEffect(() => {
+    if (searchQuery !== storedSearch) {
+      setSearchQuery(storedSearch);
+    }
+  }, [storedSearch]);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(event.target.value);
   };
 
   const handleSearch = () => {
-    console.log('Searching for:', searchQuery);
-
-    //TODO: make sure to search either for all or owned recipes
-    //recipesOwnership
-
-    dispatcher(setSearchQueryString(searchQuery));
-    dispatcher(searchRecipes({ searchQuery, currentPage, recipeLimit, recipesOwnership }));
+    dispatcher(setSearchQueryString(searchQuery.trim()));
   };
 
   const handleClearSearch = () => {

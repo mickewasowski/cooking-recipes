@@ -12,8 +12,8 @@ export const getRecipesPerPageWithLimit = createAsyncThunk(RECIPE_ACTION_TYPES.G
     return res;
 });
 
-export const getRecipeCount = createAsyncThunk(RECIPE_ACTION_TYPES.GET_RECIPES_COUNT, async () => {
-    const res = await getRecipeCountFromDatabase();
+export const getRecipeCount = createAsyncThunk(RECIPE_ACTION_TYPES.GET_RECIPES_COUNT, async ({ searchString }) => {
+    const res = await getRecipeCountFromDatabase(searchString);
     return res;
 });
 
@@ -22,19 +22,13 @@ export const updateRecipe = createAsyncThunk(RECIPE_ACTION_TYPES.UPDATE_RECIPE, 
     return res;
 });
 
-export const searchRecipes = createAsyncThunk(RECIPE_ACTION_TYPES.SEARCH_RECIPIES, async (data) => {
-    const { searchQuery, currentPage, recipeLimit } = data;
-    const res = await searchRecipiesByQueryString(searchQuery, currentPage, recipeLimit);
-    return res;
-});
-
 export const getOwnerRecipes = createAsyncThunk(RECIPE_ACTION_TYPES.GET_OWNER_RECIPIES, async (data: RecipesForOwner) => {
     const res = await getRecipiesPerOwner(data);
     return res;
 });
 
-export const getOwnerRecipesCount = createAsyncThunk(RECIPE_ACTION_TYPES.GET_OWNED_RECIPE_COUNT, async (data: string) => {
-    const res = await getRecipesCountPerOwner(data);
+export const getOwnerRecipesCount = createAsyncThunk(RECIPE_ACTION_TYPES.GET_OWNED_RECIPE_COUNT, async ({userId, searchString}) => {
+    const res = await getRecipesCountPerOwner(userId, searchString);
     return res;
 });
 

@@ -36,8 +36,19 @@ export const addRecipeRequest = ({ title, description, image, userToken, type, a
     .catch((error) => { throw new Error(error.message) });
 };
 
-export const getRecipiesFromDatabase = ({ page, limit }: GetRecipes) => {
-    return fetch(`http://localhost:5000/api/item?page=${page}&limit=${limit}`, {
+export const getRecipiesFromDatabase = ({ page, limit, searchString }: GetRecipes) => {
+    const arrayOfWords = searchString.split(' ');
+    const mappedSearchWords: string[] = [];
+    arrayOfWords.forEach((word, index) => {
+        let constructedString = `q${index + 1}=${word}`;
+        mappedSearchWords.push(constructedString);
+    });
+
+    const searchQuery = mappedSearchWords.join('&');
+    const requestString = searchQuery
+        ? `http://localhost:5000/api/item?page=${page}&limit=${limit}&${searchQuery}`
+        : `http://localhost:5000/api/item?page=${page}&limit=${limit}`;
+    return fetch(requestString, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
@@ -54,8 +65,19 @@ export const getRecipiesFromDatabase = ({ page, limit }: GetRecipes) => {
     .catch((error) => { throw new Error(error.message) });
 }
 
-export const getRecipeCountFromDatabase = () => {
-    return fetch('http://localhost:5000/api/item/count', {
+export const getRecipeCountFromDatabase = (searchString: string) => {
+    const arrayOfWords = searchString.split(' ');
+    const mappedSearchWords: string[] = [];
+    arrayOfWords.forEach((word, index) => {
+        let constructedString = `q${index + 1}=${word}`;
+        mappedSearchWords.push(constructedString);
+    });
+
+    const searchQuery = mappedSearchWords.join('&');
+    const requestString = searchQuery
+        ? `http://localhost:5000/api/item/count?${searchQuery}`
+        : 'http://localhost:5000/api/item/count';
+    return fetch(requestString, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
@@ -101,16 +123,48 @@ export const updateRecipeData = ({ id, title, description, image, userToken, typ
     .catch((error) => { throw new Error(error.message) });
 }
 
-export const searchRecipiesByQueryString = (querySearch: string, currentPage: number, recipeLimit: number) => {
-    const arrayOfWords = querySearch.split(' ');
+//DEPRECATED
+// export const searchRecipiesByQueryString = (querySearch: string, currentPage: number, recipeLimit: number) => {
+//     const arrayOfWords = querySearch.split(' ');
+//     const mappedSearchWords: string[] = [];
+//     arrayOfWords.forEach((word, index) => {
+//         let constructedString = `q${index + 1}=${word}`;
+//         mappedSearchWords.push(constructedString);
+//     });
+
+//     const searchQuery = mappedSearchWords.join('&');
+//     return fetch(`http://localhost:5000/api/item/search?${searchQuery}&page=${currentPage}&limit=${recipeLimit}`, {
+//         method: 'GET',
+//         headers: {
+//             'Content-Type': 'application/json',
+//         },
+//     })
+//     .then(res => res.json())
+//     .then((res) => {
+//         if (res.success) {
+//             return res;
+//         } else {
+//             throw new Error(res.message);
+//         }
+//     })
+//     .catch((error) => { throw new Error(error.message) });
+// }
+
+export const getRecipiesPerOwner = (data: RecipesForOwner) => {
+    const { ownerId, page, limit, searchString } = data;
+    console.log('searchString ', searchString)
+    const arrayOfWords = searchString?.split(' ');
     const mappedSearchWords: string[] = [];
-    arrayOfWords.forEach((word, index) => {
+    arrayOfWords?.forEach((word, index) => {
         let constructedString = `q${index + 1}=${word}`;
         mappedSearchWords.push(constructedString);
     });
-
     const searchQuery = mappedSearchWords.join('&');
-    return fetch(`http://localhost:5000/api/item/search?${searchQuery}&page=${currentPage}&limit=${recipeLimit}`, {
+    const requestString = searchQuery
+        ? `http://localhost:5000/api/item/owned?page=${page}&limit=${limit}&id=${ownerId}&${searchQuery}`
+        : `http://localhost:5000/api/item/owned?page=${page}&limit=${limit}&id=${ownerId}`;
+
+    return fetch(requestString, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
@@ -127,28 +181,20 @@ export const searchRecipiesByQueryString = (querySearch: string, currentPage: nu
     .catch((error) => { throw new Error(error.message) });
 }
 
-export const getRecipiesPerOwner = (data: RecipesForOwner) => {
-    const { ownerId, page, limit } = data;
+export const getRecipesCountPerOwner = (userId: string, searchString: string) => {
+    const arrayOfWords = searchString?.split(' ');
+    const mappedSearchWords: string[] = [];
+    arrayOfWords?.forEach((word, index) => {
+        let constructedString = `q${index + 1}=${word}`;
+        mappedSearchWords.push(constructedString);
+    });
+    const searchQuery = mappedSearchWords.join('&');
 
-    return fetch(`http://localhost:5000/api/item/owned?page=${page}&limit=${limit}&id=${ownerId}`, {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-    })
-    .then(res => res.json())
-    .then((res) => {
-        if (res.success) {
-            return res;
-        } else {
-            throw new Error(res.message);
-        }
-    })
-    .catch((error) => { throw new Error(error.message) });
-}
+    const requestString = searchQuery
+        ? `http://localhost:5000/api/item/ownedCount?ownerId=${userId}&${searchQuery}`
+        : `http://localhost:5000/api/item/ownedCount?ownerId=${userId}`;
 
-export const getRecipesCountPerOwner = (userId: string) => {
-    return fetch(`http://localhost:5000/api/item/ownedCount?ownerId=${userId}`, {
+    return fetch(requestString, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',

@@ -45,6 +45,7 @@ export type RecipeCreated = Recipe & {
 export type GetRecipes = {
     page: number;
     limit: number;
+    searchString: string;
 }
 
 export type SearchRecipesSuccess = {
@@ -56,4 +57,5 @@ export type RecipesForOwner = {
     ownerId: string;
     page: number;
     limit: number;
+    searchString: string;
 }
