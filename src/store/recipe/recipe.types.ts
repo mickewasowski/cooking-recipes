@@ -8,7 +8,8 @@ export enum RECIPE_ACTION_TYPES {
     SEARCH_RECIPIES = 'recipe/searchRecipes',
     GET_OWNER_RECIPIES = 'recipe/getOwnerRecipes',
     GET_LATEST_ADDED_RECIPES = 'recipe/getLatestAdded',
-    GET_OWNED_RECIPE_COUNT= 'recipe/getOwnerRecipesCount',
+    GET_OWNED_RECIPE_COUNT = 'recipe/getOwnerRecipesCount',
+    GET_RECIPE_BY_ID = 'recipe/getRecipeById',
 }
 
 export type TotalRecipesCount = {
@@ -19,12 +20,22 @@ export type OwnedRecipesCount = {
     ownedRecipesCount: number;
 }
 
+export type Comment = {
+    id: string;
+    userId: string;
+    isAnon: boolean;
+    content: string;
+    createdAt: Date;
+    updatedAt: Date;
+}
+
 export type Recipe = {
     title: string;
     image: string;
     type: string;
     description: string;
     additionalData: AdditionalData;
+    comments?: Comment[],
 }
 
 export type RecipeAdd = Recipe & {

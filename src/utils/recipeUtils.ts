@@ -229,6 +229,24 @@ export const getLatestRecipes = () => {
     .catch((error) => { throw new Error(error.message) });
 }
 
+export const getRecipeByIdFromDB = (recipeId: string) => {
+    return fetch(`http://localhost:5000/api/item/get?id=${recipeId}`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    })
+    .then(res => res.json())
+    .then((res) => {
+        if (res.success) {
+            return res;
+        } else {
+            throw new Error(res.message);
+        }
+    })
+    .catch((error) => { throw new Error(error.message) });
+}
+
 export const mapItemsFromDB = (items: ItemFromDB[]) => {
     const mappedRecipies = items.map(recipe => {
         return mapSingleItemFromDB(recipe)
@@ -246,6 +264,7 @@ export const mapSingleItemFromDB = (item: ItemFromDB) => {
         type: item.type,
         owner: item.owner,
         additionalData: item.additionalData,
+        comments: item.comments,
         createdAt: item.createdAt,
         updatedAt: item.updatedAt
     };

@@ -5,6 +5,7 @@ import { IRootState } from "../../store/root-reducer";
 import { useParams } from "react-router-dom";
 import { useRef } from "react";
 import EditRecipeModal from "./EditRecipeModal";
+import CommentsSection from "./CommentsSection";
 
 function RecipeDetailsWrapper() {
     const editRecipeModalRef = useRef<HTMLDialogElement>(null);
@@ -45,27 +46,28 @@ function RecipeDetailsWrapper() {
                     </div>
             </header>
             <main>
-                    <div className="prep-details">
-                        { servings && <p>servings: {servings}</p> }
-                        { prepTime && <p>prepping time: {prepTime}</p> }
-                        { cookingTime && <p>cooking time: {cookingTime}</p> }
+                <div className="prep-details">
+                    { servings && <p>servings: {servings}</p> }
+                    { prepTime && <p>prepping time: {prepTime}</p> }
+                    { cookingTime && <p>cooking time: {cookingTime}</p> }
+                </div>
+                <div className="prep-description">
+                    <div className="ingredients">
+                        <h3>ingredients</h3>
+                        {
+                            ingredientsArray?.map((ingred: string, index: number) => {
+                                return (
+                                    <p key={index}>{ingred}</p>
+                                )
+                            })
+                        }
                     </div>
-                    <div className="prep-description">
-                        <div className="ingredients">
-                            <h3>ingredients</h3>
-                            {
-                                ingredientsArray?.map((ingred: string, index: number) => {
-                                    return (
-                                        <p key={index}>{ingred}</p>
-                                    )
-                                })
-                            }
-                        </div>
-                        <div className="instructions">
-                            <h3>directions</h3>
-                            <p>{description}</p>
-                        </div>
+                    <div className="instructions">
+                        <h3>directions</h3>
+                        <p>{description}</p>
                     </div>
+                </div>
+                <CommentsSection recipeId={recipeId}/>
             </main>
             </div>
             { user && user.id === ownerId ? (

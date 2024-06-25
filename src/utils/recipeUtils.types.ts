@@ -1,4 +1,5 @@
 import { AdditionalData } from "../store/recipe/recipe.slice";
+import { Comment } from "../store/recipe/recipe.types";
 
 export type ItemFromDB = {
     _id: string,
@@ -8,6 +9,7 @@ export type ItemFromDB = {
     type: string,
     owner: string,
     additionalData: AdditionalData,
+    comments?: Comment[],
     createdAt: Date,
     updatedAt: Date,
 }

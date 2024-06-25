@@ -2,14 +2,14 @@ import { useEffect } from 'react';
 import RecipeCard from './recipe/RecipeCard';
 import { useDispatch, useSelector } from 'react-redux';
 import { IRootState } from '../store/root-reducer';
-import { getLatestRecipes } from '../store/recipe/recipe.selector';
 import { getLatestAdded } from '../store/recipe/recipe.thunk';
 import { RecipeRoutes } from '../utils/recipeUtils.types';
+import { latestSelectors } from '../store/recipe/recipe.slice';
 
 
 function HomePage() {
   const dispatcher = useDispatch();
-  const allRecipies = useSelector((state: IRootState) => getLatestRecipes(state.recipe));
+  const allRecipies = useSelector((state: IRootState) => latestSelectors.selectAll(state));  
 
   useEffect(() => {
     dispatcher(getLatestAdded());
@@ -44,6 +44,7 @@ function HomePage() {
         <h2>Checkout our latest entries</h2>
         <div className='recipes-wrapper'>
           {
+            allRecipies &&
             allRecipies?.map(recipe => (
               <RecipeCard key={recipe?.id} {...recipe} routePrefix={RecipeRoutes.LatestAdded} />
             ))

@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { addRecipeRequest, getLatestRecipes, getRecipeCountFromDatabase, getRecipesCountPerOwner, getRecipiesFromDatabase, getRecipiesPerOwner, searchRecipiesByQueryString, updateRecipeData } from "../../utils/recipeUtils";
-import { GetRecipes, RECIPE_ACTION_TYPES, RecipeAdd, RecipeUpdate, RecipesForOwner } from "./recipe.types";
+import { addRecipeRequest, getLatestRecipes, getRecipeByIdFromDB, getRecipeCountFromDatabase, getRecipesCountPerOwner, getRecipiesFromDatabase, getRecipiesPerOwner, searchRecipiesByQueryString, updateRecipeData } from "../../utils/recipeUtils";
+import { GetRecipes, RECIPE_ACTION_TYPES, Recipe, RecipeAdd, RecipeUpdate, RecipesForOwner } from "./recipe.types";
 
 export const addRecipe = createAsyncThunk(RECIPE_ACTION_TYPES.ADD_RECIPE, async (data: RecipeAdd) => {
     const res = await addRecipeRequest(data);
@@ -34,5 +34,10 @@ export const getOwnerRecipesCount = createAsyncThunk(RECIPE_ACTION_TYPES.GET_OWN
 
 export const getLatestAdded = createAsyncThunk(RECIPE_ACTION_TYPES.GET_LATEST_ADDED_RECIPES, async () => {
     const res = await getLatestRecipes();
+    return res;
+});
+
+export const getRecipeById = createAsyncThunk(RECIPE_ACTION_TYPES.GET_RECIPE_BY_ID, async (data: string) => {
+    const res = await getRecipeByIdFromDB(data);
     return res;
 });
