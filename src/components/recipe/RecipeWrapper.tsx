@@ -16,7 +16,7 @@ const RecipesWrapper = ({ recipesToLoad }: IProps) => {
   const recipesPerPage = 10; // We will display 10 recipes per page
   const dispatcher = useDispatch();
   const recipeCount = useSelector((state: IRootState) => getRecipesCountByType(state.recipe, recipesToLoad));
-  const allRecipies = useSelector((state: IRootState) => getRecipesByType(state.recipe, recipesToLoad));
+  const allRecipies = useSelector((state: IRootState) => getRecipesByType(state, recipesToLoad));
   const user = useSelector((state: IRootState) => getCurrentUser(state.user));
   const searchString = useSelector((state: IRootState) => getStoredSearchString(state.recipe));
 

@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Outlet } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { getCurrentUser } from '../../store/user/user.selector';
 import { IRootState } from '../../store/root-reducer';
 import { useDispatch } from 'react-redux';
-import { signOutStart } from '../../store/user/user.action';
 import { NavLink } from 'react-router-dom';
 import classNames from 'classnames';
 import { useOutsideClick } from '../hooks/useOutsideClick';
@@ -37,15 +36,15 @@ function NavigationBar() {
       <nav className='navigation-wrapper' ref={ref}>
         <span id={isMenuOpen ? 'menu-close' : 'menu-button'} onClick={toggleMenu}></span>
         <ul className={menuClasses}>
-          <li><NavLink to={'/'}>Home</NavLink></li>
-          <li><NavLink to={'/allRecipes'}>All Recipes</NavLink></li>
+          <li onClick={() => setIsMenuOpen(false)}><NavLink to={'/'}>Home</NavLink></li>
+          <li onClick={() => setIsMenuOpen(false)}><NavLink to={'/allRecipes'}>All Recipes</NavLink></li>
           
           {
             !user
             ? (
               <>
-                <li><NavLink to={'/login'}>Login</NavLink></li>
-                <li><NavLink to={'/register'}>Register</NavLink></li>
+                <li onClick={() => setIsMenuOpen(false)}><NavLink to={'/login'}>Login</NavLink></li>
+                <li onClick={() => setIsMenuOpen(false)}><NavLink to={'/register'}>Register</NavLink></li>
               </>
             ) : null
           }
@@ -53,10 +52,13 @@ function NavigationBar() {
             user
             ? (
               <>
-                <li><NavLink to={'/addrecipe'}>Add recipe</NavLink></li>
-                <li><NavLink to={'/ownedRecipes'}>My recipes</NavLink></li>
-                <li><NavLink to={'/myaccount'}>Account</NavLink></li>
-                <li onClick={(event) => onLogout(event)}><NavLink to={''}>Logout</NavLink></li>
+                <li onClick={() => setIsMenuOpen(false)}><NavLink to={'/addrecipe'}>Add recipe</NavLink></li>
+                <li onClick={() => setIsMenuOpen(false)}><NavLink to={'/ownedRecipes'}>My recipes</NavLink></li>
+                <li onClick={() => setIsMenuOpen(false)}><NavLink to={'/myaccount'}>Account</NavLink></li>
+                <li onClick={(event) => {
+                  onLogout(event);
+                  setIsMenuOpen(false);
+                }}><NavLink to={''}>Logout</NavLink></li>
               </>
             ) : null
           }

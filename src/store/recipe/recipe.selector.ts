@@ -1,15 +1,16 @@
 import { RecipesToLoad } from "../../utils/recipeUtils.types";
-import { RecipeState, latestSelectors, ownedSelectors, recipeSelectors } from "./recipe.slice";
+import { IRootState } from "../root-reducer";
+import { RecipeState, ownedSelectors, recipeSelectors } from "./recipe.slice";
 
-export const getRecipies = (state: RecipeState) => state.recipies;
+export const getRecipies = (state: IRootState) => recipeSelectors.selectAll(state);
 export const getRecipeCount = (state: RecipeState) => state.totalRecipeCount;
 export const getRecipeById = (state: RecipeState, id: string) => getRecipeObjectById(state, id);
 export const getLatestRecipes = (state: RecipeState) => state.latestAdded.entities;
 export const getOwnedRecipesCount = (state: RecipeState) => state.ownedRecipesCount;
-export const getOwnedRecipes = (state: RecipeState) => state.ownedRecipes;
+export const getOwnedRecipes = (state: IRootState) => ownedSelectors.selectAll(state);
 export const getStoredSearchString = (state: RecipeState) => state.searchString;
 
-export const getRecipesByType = (state: RecipeState, type: string) => {
+export const getRecipesByType = (state: IRootState, type: string) => {
     switch (type) {
         case RecipesToLoad.All: {
             return getRecipies(state);

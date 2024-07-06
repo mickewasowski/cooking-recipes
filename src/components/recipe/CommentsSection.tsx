@@ -19,8 +19,6 @@ function CommentsSection({ recipeId }: IProps) {
     const recipe = useSelector((state: IRootState) => getRecipeById(state.recipe, recipeId));
     const user = useSelector((state: IRootState) => getCurrentUser(state.user));
     const dispatcher = useDispatch();
-    console.log(recipe);
-
     
     useEffect(() => {
         if (!socket.connected) {
@@ -33,14 +31,12 @@ function CommentsSection({ recipeId }: IProps) {
         }
         socket.on('connect', onConnect);
 
-        socket.on('typing-event-send', () => {
-            console.log('someone is typing...')
-        });
+        // socket.on('typing-event-send', () => {
+        //     console.log('someone is typing...')
+        // });
 
         socket.on('add-comment-success', (recipeIdFromDB) => {
             if (recipeId === recipeIdFromDB) {
-                //TODO: dispatch an event to fetch the particular item by ID and update the store
-                console.log('new comment added')
                 dispatcher(getRecipeByIdThunk(recipeId));
             }
         });
@@ -48,7 +44,6 @@ function CommentsSection({ recipeId }: IProps) {
         return () => {
             if (socket.connected) {
                 socket.close();
-                console.log(`closing socket`, socket)
             }
             socket.off('connect', onConnect);
         }
@@ -61,27 +56,35 @@ function CommentsSection({ recipeId }: IProps) {
 
     const handleComment = () => {
         socket.emit('add-comment', { recipeId, authorId: user?.id, commentText});
+        setCommentText('');
     }
 
     return(
-        <section>
+        <section className='comments-setion_wrapper'>
+            <hr />
             <h2>Comments</h2>
-            <div>
-                <textarea onChange={emitEvent} placeholder="Type your comment here"></textarea>
-                <input type="radio" placeholder="Anonymous"/>
-                <button onClick={handleComment}>Comment</button>
+            <div className='comments-user-input'>
+                <textarea onChange={emitEvent} placeholder="Type your comment here" value={commentText}></textarea>
+                <div className='comments-buttons-container'>
+                    <span>
+                        <label>Anonymous: </label>
+                        <input type="radio" placeholder="Anonymous"/>
+                    </span>
+                    <button onClick={handleComment}>Comment</button>
+                </div>
             </div>
-            <div>
+            <div className='comments-contents'>
                 {/* we should render here all the comments with a load more button */}
-                { recipe.comments &&
-                    <section style={{ display: 'flex', flexDirection: 'column-reverse'}}>
+                { recipe.comments.length ?
+                    <section>
                         { recipe.comments.map((c) => {
-                            return (<div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', }}>
-                                <p>{c.content}</p>
-                                <p>{c.createdAt}</p>
+                            return (<div key={c.id} className='comment-content'>
+                                <p className='content-text'>{c.content}</p>
+                                <p>{new Date(c.createdAt).toDateString()}</p>
                             </div>)
                         }) }
                     </section>
+                    : <p className='none-added'>No comments yet</p>
                 }
             </div>
         </section>
