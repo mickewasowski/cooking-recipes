@@ -16,6 +16,7 @@ const socket = io('http://localhost:5505', {
 
 function CommentsSection({ recipeId }: IProps) {
     const [commentText, setCommentText] = useState('');
+    const [isAnon, setIsAnon] = useState(false);
     const recipe = useSelector((state: IRootState) => getRecipeById(state.recipe, recipeId));
     const user = useSelector((state: IRootState) => getCurrentUser(state.user));
     const dispatcher = useDispatch();
@@ -30,10 +31,6 @@ function CommentsSection({ recipeId }: IProps) {
             console.log(socket)
         }
         socket.on('connect', onConnect);
-
-        // socket.on('typing-event-send', () => {
-        //     console.log('someone is typing...')
-        // });
 
         socket.on('add-comment-success', (recipeIdFromDB) => {
             if (recipeId === recipeIdFromDB) {
@@ -50,13 +47,13 @@ function CommentsSection({ recipeId }: IProps) {
     }, [socket]);
 
     const emitEvent = (event) => {
-        //socket.emit('typing-event-send', recipeId);
         setCommentText(event.target.value);
     }
 
     const handleComment = () => {
-        socket.emit('add-comment', { recipeId, authorId: user?.id, commentText});
+        socket.emit('add-comment', { recipeId, authorId: user?.id, commentText, isAnon });
         setCommentText('');
+        setIsAnon(false);
     }
 
     return(
@@ -68,19 +65,19 @@ function CommentsSection({ recipeId }: IProps) {
                 <div className='comments-buttons-container'>
                     <span>
                         <label>Anonymous: </label>
-                        <input type="radio" placeholder="Anonymous"/>
+                        <input checked={isAnon} onChange={() => setIsAnon(!isAnon)} type="radio" placeholder="Anonymous"/>
                     </span>
                     <button onClick={handleComment}>Comment</button>
                 </div>
             </div>
             <div className='comments-contents'>
-                {/* we should render here all the comments with a load more button */}
                 { recipe.comments.length ?
                     <section>
                         { recipe.comments.map((c) => {
                             return (<div key={c.id} className='comment-content'>
                                 <p className='content-text'>{c.content}</p>
                                 <p>{new Date(c.createdAt).toDateString()}</p>
+                                { !c.isAnon && <p>{c.authorName}</p>}
                             </div>)
                         }) }
                     </section>
